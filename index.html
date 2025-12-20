@@ -40,7 +40,7 @@
             align-items: center;
             overflow-x: hidden;
             position: relative;
-            padding-bottom: 80px; /* เพิ่ม padding ด้านล่างเพื่อไม่ให้ FAB บัง */
+            padding-bottom: 80px;
         }
 
         @keyframes gradientShift {
@@ -49,7 +49,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Floating particles */
         .particles {
             position: fixed;
             top: 0;
@@ -103,7 +102,6 @@
             }
         }
 
-        /* Header Styles */
         header {
             text-align: center;
             margin-bottom: 25px;
@@ -167,7 +165,6 @@
             background-clip: text;
         }
 
-        /* Page Transitions */
         .page {
             display: none;
             animation: fadeInUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -186,7 +183,6 @@
             }
         }
 
-        /* Forms & Inputs */
         input, textarea, select {
             width: 100%;
             padding: 15px 20px;
@@ -206,7 +202,6 @@
             transform: translateY(-2px);
         }
 
-        /* Buttons */
         button {
             width: 100%;
             padding: 15px 25px;
@@ -277,7 +272,11 @@
             color: white;
         }
 
-        /* Cards & Lists */
+        .danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
         .list-container {
             max-height: 320px;
             overflow-y: auto;
@@ -326,7 +325,34 @@
             height: 20px;
         }
 
-        /* Tab System */
+        .list-item-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .list-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            width: auto !important;
+            padding: 8px 12px !important;
+            margin: 0 !important;
+            font-size: 0.9rem;
+            min-width: unset;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, var(--blue), #2980b9);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
         .tab-buttons {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -339,7 +365,6 @@
             font-size: 0.95rem;
         }
 
-        /* Modal Tab System */
         .modal-tabs {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -367,7 +392,6 @@
             display: block;
         }
 
-        /* Draw Page Special Styles */
         .draw-button {
             width: 200px !important;
             height: 200px !important;
@@ -401,7 +425,6 @@
             animation: none;
         }
 
-        /* Result Display */
         .result-box {
             font-size: 2.5rem;
             font-weight: 700;
@@ -449,7 +472,6 @@
             100% { transform: scale(1) rotate(0deg); filter: blur(0); }
         }
 
-        /* Mission Box */
         .mission-box {
             background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
             padding: 20px;
@@ -484,7 +506,6 @@
             line-height: 1.4;
         }
 
-        /* Hint Text Style */
         .hint-text {
             font-size: 1.3rem;
             color: var(--dark);
@@ -507,7 +528,6 @@
             letter-spacing: 3px;
         }
 
-        /* Options Container */
         .options-container {
             background: linear-gradient(135deg, #a8edea, #fed6e3);
             padding: 20px;
@@ -535,7 +555,6 @@
             cursor: pointer;
         }
 
-        /* FAB - ปรับปรุงสำหรับมือถือ */
         .fab-container {
             position: fixed;
             bottom: 20px;
@@ -574,7 +593,6 @@
             transform: scale(1.1) rotate(-15deg);
         }
 
-        /* Modal */
         .overlay {
             position: fixed;
             top: 0;
@@ -642,7 +660,6 @@
             transform: rotate(90deg);
         }
 
-        /* QR Code Container */
         #qrcode-container {
             display: flex;
             flex-direction: column;
@@ -669,7 +686,6 @@
             border: 2px dashed var(--primary);
         }
 
-        /* Animation Container */
         #tao-animation-container {
             position: fixed;
             top: 0;
@@ -709,7 +725,6 @@
             50% { text-shadow: 0 0 40px #fff, 0 0 60px #f39c12; }
         }
 
-        /* Confetti */
         .confetti {
             position: fixed;
             width: 10px;
@@ -728,7 +743,6 @@
             }
         }
 
-        /* Status Summary */
         .status-summary {
             display: flex;
             justify-content: space-around;
@@ -760,7 +774,6 @@
             margin-top: 10px;
         }
 
-        /* Utilities */
         .hidden { display: none !important; }
         .text-center { text-align: center; }
 
@@ -773,10 +786,19 @@
             border-top: 2px dashed #e0e0e0;
         }
 
-        /* Responsive - ปรับปรุงสำหรับมือถือ */
+        .bulk-actions {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .bulk-actions button {
+            flex: 1;
+        }
+
         @media (max-width: 600px) {
             body {
-                padding-bottom: 100px; /* เพิ่ม padding ในมือถือ */
+                padding-bottom: 100px;
             }
             
             .container { 
@@ -796,7 +818,6 @@
                 font-size: 1.5rem !important;
             }
 
-            /* ปรับ FAB ในมือถือ */
             .fab-container {
                 bottom: 15px;
                 right: 15px;
@@ -809,7 +830,6 @@
                 font-size: 1.2rem;
             }
 
-            /* ปรับ Modal ในมือถือ */
             .modal-content {
                 width: 95%;
                 padding: 20px;
@@ -824,11 +844,15 @@
                 padding: 10px;
                 font-size: 0.85rem;
             }
+
+            .btn-icon {
+                padding: 6px 10px !important;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Audio Elements สำหรับมือถือ -->
     <audio id="sound-click" preload="auto">
         <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
     </audio>
@@ -842,7 +866,6 @@
         <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Floating Particles Background -->
     <div class="particles" id="particles-container"></div>
 
     <div class="container">
@@ -889,6 +912,13 @@
                 <button onclick="addNames()" class="gold">
                     <i class="fas fa-plus-circle"></i> เพิ่มรายชื่อ
                 </button>
+                
+                <div class="bulk-actions">
+                    <button onclick="clearAllNames()" class="danger">
+                        <i class="fas fa-trash-alt"></i> ลบทั้งหมด
+                    </button>
+                </div>
+                
                 <div class="list-container" id="preview-names-list"></div>
             </div>
 
@@ -897,6 +927,13 @@
                 <button onclick="addMission()" class="gold">
                     <i class="fas fa-plus"></i> เพิ่มภารกิจ
                 </button>
+                
+                <div class="bulk-actions">
+                    <button onclick="clearAllMissions()" class="danger">
+                        <i class="fas fa-trash-alt"></i> ลบภารกิจทั้งหมด
+                    </button>
+                </div>
+                
                 <div class="list-container" id="mission-list-display"></div>
             </div>
 
@@ -968,20 +1005,16 @@
                         🎉 ผลการสุ่มพร้อมแล้ว! 🎉
                     </p>
                     
-                    <!-- Mission Display (แสดงก่อน) -->
                     <div class="mission-box" id="result-mission-box">
                         <small>🎯 ภารกิจพิเศษ</small>
                         <span class="mission-text" id="result-mission-text"></span>
                     </div>
 
-                    <!-- Hint Display (เผยพยัญชนะ) -->
                     <div class="hint-text hidden" id="hint-display">
-                        ชื่อมี
+                        พยัญชนะในชื่อมี
                         <span class="consonants" id="consonants-display"></span>
-                        ในชื่อ
                     </div>
                     
-                    <!-- Name Result Display -->
                     <div class="result-box hidden" id="result-name-placeholder"></div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px;">
@@ -1013,7 +1046,6 @@
         </footer>
     </div>
 
-    <!-- FAB Buttons Container -->
     <div class="fab-container">
         <div class="fab fab-qr" onclick="toggleQRModal()" title="QR Code">
             <i class="fas fa-qrcode"></i>
@@ -1040,7 +1072,6 @@
                 </div>
             </div>
 
-            <!-- Modal Tabs -->
             <div class="modal-tabs">
                 <button onclick="switchModalTab('drawn-tab')" class="active" id="tab-btn-drawn">
                     <i class="fas fa-check-circle"></i> จับแล้ว
@@ -1050,12 +1081,10 @@
                 </button>
             </div>
 
-            <!-- Tab Content: คนที่จับแล้ว -->
             <div id="drawn-tab" class="modal-tab-content active">
                 <div class="list-container" id="drawn-history-list"></div>
             </div>
 
-            <!-- Tab Content: คนที่ยังไม่จับ -->
             <div id="remaining-tab" class="modal-tab-content">
                 <div class="list-container" id="remaining-list"></div>
             </div>
@@ -1083,7 +1112,34 @@
         </div>
     </div>
 
-    <!-- Animation Container -->
+    <!-- Edit Name Modal -->
+    <div id="edit-name-modal" class="overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeEditNameModal()">&times;</span>
+            <h3 style="margin-bottom: 20px;">
+                <i class="fas fa-edit"></i> แก้ไขชื่อ
+            </h3>
+            <input type="text" id="edit-name-input" placeholder="ชื่อใหม่">
+            <button onclick="saveEditedName()" class="primary">
+                <i class="fas fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+
+    <!-- Edit Mission Modal -->
+    <div id="edit-mission-modal" class="overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeEditMissionModal()">&times;</span>
+            <h3 style="margin-bottom: 20px;">
+                <i class="fas fa-edit"></i> แก้ไขภารกิจ
+            </h3>
+            <input type="text" id="edit-mission-input" placeholder="ภารกิจใหม่">
+            <button onclick="saveEditedMission()" class="primary">
+                <i class="fas fa-save"></i> บันทึก
+            </button>
+        </div>
+    </div>
+
     <div id="tao-animation-container">
         <img id="tao-image" src="" alt="Animation">
         <div class="animation-text">🎊 กำลังจับสลาก... 🎊</div>
@@ -1109,17 +1165,16 @@
         const db = getDatabase(app);
         const auth = getAuth(app);
 
-        // State Variables
         let currentProfileId = localStorage.getItem('ny_profile_id') || "";
         let profileData = {};
         let currentDrawResult = null;
         let isUserLoggedIn = false;
         let audioInitialized = false;
+        let currentEditingKey = null;
+        let currentEditingMissionIndex = null;
 
-        // DOM Elements
         const el = id => document.getElementById(id);
 
-        // Sound System - ใช้ HTML5 Audio สำหรับมือถือ
         const sounds = {
             click: el('sound-click'),
             drumroll: el('sound-drumroll'),
@@ -1127,22 +1182,17 @@
             reveal: el('sound-reveal')
         };
 
-        // Initialize audio on first user interaction
         function initAudio() {
             if (audioInitialized) return;
-            
             Object.values(sounds).forEach(audio => {
                 audio.volume = 0.3;
                 audio.load();
             });
-            
             audioInitialized = true;
-            console.log('Audio initialized');
         }
 
         function playSound(soundName) {
             if (!audioInitialized) initAudio();
-            
             const audio = sounds[soundName];
             if (audio) {
                 audio.currentTime = 0;
@@ -1150,21 +1200,17 @@
             }
         }
 
-        // Initialize audio on first click
         document.addEventListener('click', initAudio, { once: true });
         document.addEventListener('touchstart', initAudio, { once: true });
 
-        // Add click sound to all buttons
         document.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 playSound('click');
             }
         });
 
-        // Confetti Effect
         function createConfetti() {
             const colors = ['#f39c12', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c'];
-            
             for (let i = 0; i < 100; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
@@ -1174,13 +1220,11 @@
                     confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
                     confetti.style.animationDelay = Math.random() * 0.5 + 's';
                     document.body.appendChild(confetti);
-                    
                     setTimeout(() => confetti.remove(), 3500);
                 }, i * 20);
             }
         }
 
-        // Create Floating Particles
         function createParticles() {
             const container = el('particles-container');
             for (let i = 0; i < 20; i++) {
@@ -1198,19 +1242,14 @@
 
         createParticles();
 
-        // --- Modal Tab Functions ---
         window.switchModalTab = function(tabName) {
-            // Hide all tabs
             document.querySelectorAll('.modal-tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
             document.querySelectorAll('.modal-tabs button').forEach(btn => {
                 btn.classList.remove('active');
             });
-
-            // Show selected tab
             el(tabName).classList.add('active');
-            
             if (tabName === 'drawn-tab') {
                 el('tab-btn-drawn').classList.add('active');
             } else {
@@ -1218,7 +1257,6 @@
             }
         }
 
-        // --- QR Code Functions ---
         window.toggleQRModal = function() {
             const modal = el('qr-modal');
             if (modal.style.display === 'flex') {
@@ -1232,14 +1270,10 @@
         function generateQRCode() {
             const qrcodeContainer = el('qrcode');
             const shareUrlDiv = el('share-url');
-            
             qrcodeContainer.innerHTML = '';
-            
             const currentURL = window.location.href.split('?')[0];
             const shareURL = currentURL + '?profile=' + encodeURIComponent(currentProfileId);
-            
             shareUrlDiv.textContent = shareURL;
-            
             new QRCode(qrcodeContainer, {
                 text: shareURL,
                 width: 256,
@@ -1253,7 +1287,6 @@
         window.copyURL = function() {
             const shareUrlDiv = el('share-url');
             const url = shareUrlDiv.textContent;
-            
             navigator.clipboard.writeText(url).then(() => {
                 alert('📋 คัดลอกลิงก์แล้ว!');
             }).catch(() => {
@@ -1270,7 +1303,6 @@
         function checkURLParams() {
             const urlParams = new URLSearchParams(window.location.search);
             const profileParam = urlParams.get('profile');
-            
             if (profileParam) {
                 el('profile-input').value = profileParam;
                 if (!currentProfileId && isUserLoggedIn) {
@@ -1281,7 +1313,6 @@
             }
         }
 
-        // --- Auth & Init System ---
         signInAnonymously(auth).catch((error) => {
             console.error("Auth Error:", error);
             alert("⚠️ ไม่สามารถเชื่อมต่อระบบความปลอดภัยได้ กรุณารีเฟรช");
@@ -1291,9 +1322,7 @@
             if (user) {
                 console.log("🔒 Secure Connection Established");
                 isUserLoggedIn = true;
-                
                 checkURLParams();
-                
                 if (currentProfileId) {
                     const urlParams = new URLSearchParams(window.location.search);
                     if (!urlParams.get('profile')) {
@@ -1304,22 +1333,17 @@
             }
         });
 
-        // --- Core Functions ---
         window.loginProfile = function() {
             if (!isUserLoggedIn) {
                 alert("⏳ กำลังเชื่อมต่อระบบฐานข้อมูล... กรุณารอสักครู่");
                 return;
             }
-
             const input = el('profile-input').value.trim();
             if (!input) return alert("⚠️ กรุณากรอกชื่อโปรไฟล์");
-            
             const safeId = input.replace(/[^a-zA-Z0-9ก-๙]/g, "_");
             currentProfileId = safeId;
             localStorage.setItem('ny_profile_id', safeId);
-            
             const profileRef = ref(db, 'profiles/' + currentProfileId);
-            
             onValue(profileRef, (snapshot) => {
                 const data = snapshot.val();
                 if (!data) {
@@ -1337,7 +1361,6 @@
                     renderApp();
                 }
             });
-
             goToPage('page-setup');
         }
 
@@ -1349,28 +1372,22 @@
 
         function renderApp() {
             if (!profileData.settings) return;
-
             el('app-title').innerText = profileData.settings.title;
             el('app-logo').src = profileData.settings.logo;
             el('current-profile-name').innerText = "📁 Profile: " + currentProfileId;
-            
             el('setting-title-input').value = profileData.settings.title;
             el('setting-logo-input').value = profileData.settings.logo;
-
             renderParticipants();
             renderMissions();
             renderHistory();
             renderRemaining();
         }
 
-        // --- Data Management ---
         window.addNames = function() {
             const text = el('bulk-names').value;
             if (!text) return;
-            
             const lines = text.split('\n');
             const updates = {};
-            
             lines.forEach(line => {
                 const name = line.trim();
                 if (name) {
@@ -1382,21 +1399,92 @@
                     };
                 }
             });
-            
             update(ref(db), updates);
             el('bulk-names').value = "";
             alert("✅ เพิ่มรายชื่อเรียบร้อย");
         }
 
+        window.clearAllNames = function() {
+            if (!confirm("⚠️ ต้องการลบรายชื่อทั้งหมดจริงหรือไม่?")) return;
+            update(ref(db, 'profiles/' + currentProfileId), { participants: {} });
+            alert("✅ ลบรายชื่อทั้งหมดแล้ว");
+        }
+
+        window.editName = function(key, currentName) {
+            currentEditingKey = key;
+            el('edit-name-input').value = currentName;
+            el('edit-name-modal').style.display = 'flex';
+        }
+
+        window.closeEditNameModal = function() {
+            el('edit-name-modal').style.display = 'none';
+            currentEditingKey = null;
+        }
+
+        window.saveEditedName = function() {
+            const newName = el('edit-name-input').value.trim();
+            if (!newName) {
+                alert("⚠️ กรุณากรอกชื่อ");
+                return;
+            }
+            update(ref(db, 'profiles/' + currentProfileId + '/participants/' + currentEditingKey), {
+                name: newName
+            });
+            closeEditNameModal();
+            alert("✅ แก้ไขชื่อเรียบร้อย");
+        }
+
+        window.deleteName = function(key, name) {
+            if (!confirm(`ต้องการลบ "${name}" หรือไม่?`)) return;
+            remove(ref(db, 'profiles/' + currentProfileId + '/participants/' + key));
+            alert("✅ ลบรายชื่อแล้ว");
+        }
+
         window.addMission = function() {
             const m = el('mission-input').value.trim();
             if (!m) return;
-            
             const currentMissions = profileData.missions || [];
             currentMissions.push(m);
-            
             update(ref(db, 'profiles/' + currentProfileId), { missions: currentMissions });
             el('mission-input').value = "";
+        }
+
+        window.clearAllMissions = function() {
+            if (!confirm("⚠️ ต้องการลบภารกิจทั้งหมดจริงหรือไม่?")) return;
+            update(ref(db, 'profiles/' + currentProfileId), { missions: [] });
+            alert("✅ ลบภารกิจทั้งหมดแล้ว");
+        }
+
+        window.editMission = function(index, currentMission) {
+            currentEditingMissionIndex = index;
+            el('edit-mission-input').value = currentMission;
+            el('edit-mission-modal').style.display = 'flex';
+        }
+
+        window.closeEditMissionModal = function() {
+            el('edit-mission-modal').style.display = 'none';
+            currentEditingMissionIndex = null;
+        }
+
+        window.saveEditedMission = function() {
+            const newMission = el('edit-mission-input').value.trim();
+            if (!newMission) {
+                alert("⚠️ กรุณากรอกภารกิจ");
+                return;
+            }
+            const currentMissions = profileData.missions || [];
+            currentMissions[currentEditingMissionIndex] = newMission;
+            update(ref(db, 'profiles/' + currentProfileId), { missions: currentMissions });
+            closeEditMissionModal();
+            alert("✅ แก้ไขภารกิจเรียบร้อย");
+        }
+
+        window.deleteMission = function(index, mission) {
+            if (!confirm(`ต้องการลบภารกิจ "${mission}" หรือไม่?`)) return;
+            const currentMissions = profileData.missions || [];
+            currentMissions.splice(index, 1);
+            update(ref(db, 'profiles/' + currentProfileId), { missions: currentMissions });
+            alert("✅ ลบภารกิจแล้ว");
         }
 
         window.saveSettings = function() {
@@ -1407,23 +1495,30 @@
             alert("💾 บันทึกตั้งค่าแล้ว");
         }
 
-        // --- Rendering Lists ---
         function renderParticipants() {
             const pList = profileData.participants || {};
             const previewContainer = el('preview-names-list');
             const checkContainer = el('check-list-container');
-            
             previewContainer.innerHTML = "";
             checkContainer.innerHTML = "";
-            
             let countDrawn = 0;
             let countLeft = 0;
 
             Object.entries(pList).forEach(([key, p]) => {
                 previewContainer.innerHTML += `
                     <div class="list-item">
-                        <i class="fas fa-user" style="margin-right: 10px; color: var(--primary);"></i>
-                        ${p.name}
+                        <div class="list-item-content">
+                            <i class="fas fa-user" style="color: var(--primary);"></i>
+                            ${p.name}
+                        </div>
+                        <div class="list-item-actions">
+                            <button class="btn-icon btn-edit" onclick="editName('${key}', '${p.name.replace(/'/g, "\\'")}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-icon btn-delete" onclick="deleteName('${key}', '${p.name.replace(/'/g, "\\'")}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>`;
                 
                 if (!p.drawn) {
@@ -1450,8 +1545,18 @@
             mList.forEach((m, index) => {
                 container.innerHTML += `
                     <div class="list-item">
-                        <i class="fas fa-bullseye" style="margin-right: 10px; color: var(--secondary);"></i>
-                        ${m}
+                        <div class="list-item-content">
+                            <i class="fas fa-bullseye" style="color: var(--secondary);"></i>
+                            ${m}
+                        </div>
+                        <div class="list-item-actions">
+                            <button class="btn-icon btn-edit" onclick="editMission(${index}, '${m.replace(/'/g, "\\'")}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn-icon btn-delete" onclick="deleteMission(${index}, '${m.replace(/'/g, "\\'")}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </div>`;
             });
         }
@@ -1461,12 +1566,10 @@
             const container = el('drawn-history-list');
             container.innerHTML = "";
             const arr = Object.values(hList).reverse();
-            
             if (arr.length === 0) {
                 container.innerHTML = '<p style="text-align:center; color:#95a5a6; padding:20px;">ยังไม่มีประวัติการจับสลาก</p>';
                 return;
             }
-            
             arr.forEach(h => {
                 container.innerHTML += `
                     <div class="list-item" style="flex-direction:column; align-items:flex-start;">
@@ -1482,14 +1585,11 @@
             const pList = profileData.participants || {};
             const container = el('remaining-list');
             container.innerHTML = "";
-            
             const remaining = Object.entries(pList).filter(([key, p]) => !p.drawn && p.active);
-            
             if (remaining.length === 0) {
                 container.innerHTML = '<p style="text-align:center; color:#95a5a6; padding:20px;">ไม่มีคนที่ยังไม่ได้จับสลาก</p>';
                 return;
             }
-            
             remaining.forEach(([key, p]) => {
                 container.innerHTML += `
                     <div class="list-item">
@@ -1510,19 +1610,15 @@
             el(tabId).classList.remove('hidden');
         }
 
-        // --- Draw Logic & Animation ---
         window.startDraw = function() {
             const pList = profileData.participants || {};
             const candidates = Object.entries(pList).filter(([key, val]) => val.active && !val.drawn);
-            
             if (candidates.length === 0) {
                 alert("⚠️ ไม่เหลือรายชื่อให้จับแล้ว!");
                 return;
             }
-
             const randomIndex = Math.floor(Math.random() * candidates.length);
             const winnerEntry = candidates[randomIndex];
-            
             let mission = null;
             if (el('opt-enable-missions').checked) {
                 const missions = profileData.missions || [];
@@ -1530,13 +1626,11 @@
                     mission = missions[Math.floor(Math.random() * missions.length)];
                 }
             }
-
             currentDrawResult = {
                 key: winnerEntry[0],
                 name: winnerEntry[1].name,
                 mission: mission
             };
-
             playSound('drumroll');
             playTaoAnimation();
         }
@@ -1544,8 +1638,23 @@
         function playTaoAnimation() {
             const container = el('tao-animation-container');
             const img = el('tao-image');
-            const img1 = "https://nonthaphathr.github.io/uploadimg/tao1.png";
-            const img2 = "https://nonthaphathr.github.io/uploadimg/tao2.png";
+            
+            // สุ่มเลือกชุด animation (ชุดที่ 1 หรือชุดที่ 2)
+            const animationSets = [
+                {
+                    img1: "https://nonthaphathr.github.io/uploadimg/tao1.png",
+                    img2: "https://nonthaphathr.github.io/uploadimg/tao2.png"
+                },
+                {
+                    img1: "https://nonthaphathr.github.io/uploadimg/tao3.png",
+                    img2: "https://nonthaphathr.github.io/uploadimg/tao4.png"
+                }
+            ];
+            
+            // สุ่มเลือกชุด
+            const selectedSet = animationSets[Math.floor(Math.random() * animationSets.length)];
+            const img1 = selectedSet.img1;
+            const img2 = selectedSet.img2;
             
             container.style.display = 'flex';
             let toggle = false;
@@ -1553,7 +1662,6 @@
                 img.src = toggle ? img1 : img2;
                 toggle = !toggle;
             }, 100);
-
             setTimeout(() => {
                 clearInterval(interval);
                 container.style.display = 'none';
@@ -1565,7 +1673,6 @@
             el('reveal-controls').classList.remove('hidden');
             el('hint-display').classList.add('hidden');
             el('result-name-placeholder').classList.add('hidden');
-            
             if (currentDrawResult.mission) {
                 el('result-mission-text').innerText = currentDrawResult.mission;
                 el('result-mission-box').style.display = 'block';
@@ -1575,15 +1682,21 @@
         }
 
         function extractConsonants(name) {
-            const consonants = [];
+            const thaiConsonants = /[ก-ฮ]/g;
+            const matches = name.match(thaiConsonants);
             
-            consonants.push(name[0]);
-            if (name.length > 1) {
-                consonants.push(name[name.length - 1]);
+            if (!matches || matches.length === 0) {
+                return name[0] + (name.length > 1 ? ' ' + name[name.length - 1] : '');
             }
             
-            for (let i = 3; i < name.length - 1; i += 3) {
-                consonants.push(name[i]);
+            const consonants = [];
+            consonants.push(matches[0]);
+            if (matches.length > 1) {
+                consonants.push(matches[matches.length - 1]);
+            }
+            
+            for (let i = 3; i < matches.length - 1; i += 3) {
+                consonants.push(matches[i]);
             }
             
             return [...new Set(consonants)].join(' ');
@@ -1591,9 +1704,7 @@
 
         window.revealInitial = function() {
             if (!currentDrawResult) return;
-            
             playSound('reveal');
-            
             const consonants = extractConsonants(currentDrawResult.name);
             el('consonants-display').innerText = consonants;
             el('hint-display').classList.remove('hidden');
@@ -1605,17 +1716,13 @@
 
         window.revealFull = function() {
             if (!currentDrawResult) return;
-            
             playSound('fanfare');
             createConfetti();
-            
             const name = currentDrawResult.name;
             const resultBox = el('result-name-placeholder');
             resultBox.innerHTML = '';
             resultBox.classList.remove('hidden');
-            
             el('hint-display').classList.add('hidden');
-            
             for (let i = 0; i < name.length; i++) {
                 setTimeout(() => {
                     const span = document.createElement('span');
@@ -1624,7 +1731,6 @@
                     resultBox.appendChild(span);
                 }, i * 100);
             }
-            
             setTimeout(() => {
                 saveDrawResult();
             }, name.length * 100 + 500);
