@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจับสลากงานเลี้ยงปีใหม่</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #c0392b; /* Festive Red */
+            --secondary: #f1c40f; /* Gold */
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --success: #27ae60;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #8e44ad, #c0392b);
+            color: var-dark;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 95%;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 20px;
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Headers */
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+
+        #app-logo {
+            max-height: 100px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            border: 3px solid var(--secondary);
+            object-fit: cover;
+        }
+
+        h1, h2 { margin: 5px 0; color: var(--primary); }
+        h1 { font-size: 1.5rem; }
+        h2 { font-size: 1.2rem; font-weight: 400; }
+
+        /* Pages logic */
+        .page { display: none; animation: fadeIn 0.5s; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Forms & Inputs */
+        input, textarea, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: 'Prompt', sans-serif;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        button:hover { filter: brightness(1.1); transform: scale(1.02); }
+        button.secondary { background-color: var(--dark); }
+        button.gold { background-color: var(--secondary); color: var(--dark); }
+        button.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+
+        /* Lists */
+        .list-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .list-item input[type="checkbox"] { width: auto; margin-right: 10px; }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 100;
+            font-size: 1.5rem;
+        }
+
+        /* Modal / Overlay */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 1.5rem; cursor: pointer;
+        }
+
+        /* Animation Specifics */
+        #tao-animation-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #tao-image {
+            max-width: 90%;
+            max-height: 80vh;
+        }
+
+        /* Result Display */
+        .result-box {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        .mission-box {
+            font-size: 1.2rem;
+            color: var(--dark);
+            background: var(--secondary);
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Utilities */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        
+        footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #777;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <img id="app-logo" src="https://cdn-icons-png.flaticon.com/512/3132/3132714.png" alt="Logo">
+            <h1 id="app-title">ระบบจับสลากปีใหม่</h1>
+            <h2 id="current-profile-name" style="font-size: 0.9rem; color: #7f8c8d;">-</h2>
+        </header>
+
+        <div id="page-login" class="page active">
+            <h3><i class="fas fa-users-cog"></i> เข้าสู่ระบบ / สร้างโปรไฟล์</h3>
+            <p>ระบุชื่อกลุ่ม/ห้องเพื่อสร้างหรือเข้าใช้งานห้องเดิม</p>
+            <input type="text" id="profile-input" placeholder="เช่น M.Ed 68 Room 1">
+            <button onclick="loginProfile()">เข้าใช้งาน <i class="fas fa-sign-in-alt"></i></button>
+            
+            <div style="margin-top: 20px; border-top: 1px dashed #ccc; padding-top:10px;">
+                <small>พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</small>
+            </div>
+        </div>
+
+        <div id="page-setup" class="page">
+            <h3><i class="fas fa-list"></i> จัดการรายชื่อ & ภารกิจ</h3>
+            
+            <div style="display:flex; gap:10px; margin-bottom:10px;">
+                <button onclick="switchTab('tab-names')" class="secondary">รายชื่อ</button>
+                <button onclick="switchTab('tab-missions')" class="secondary">ภารกิจพิเศษ</button>
+                <button onclick="switchTab('tab-settings')" class="secondary">ตั้งค่าเว็บ</button>
+            </div>
+
+            <div id="tab-names">
+                <textarea id="bulk-names" rows="5" placeholder="วางรายชื่อที่นี่ (1 บรรทัดต่อ 1 ชื่อ) หรือ Copy จาก Excel มาวาง"></textarea>
+                <button onclick="addNames()" class="gold"><i class="fas fa-plus-circle"></i> เพิ่มรายชื่อ</button>
+                <div class="list-container" id="preview-names-list">
+                    </div>
+            </div>
+
+            <div id="tab-missions" class="hidden">
+                <input type="text" id="mission-input" placeholder="ระบุภารกิจ เช่น ร้องเพลง 1 เพลง">
+                <button onclick="addMission()" class="gold">เพิ่มภารกิจ</button>
+                <div class="list-container" id="mission-list-display"></div>
+            </div>
+
+            <div id="tab-settings" class="hidden">
+                <label>ชื่อระบบ:</label>
+                <input type="text" id="setting-title-input">
+                <label>ลิงก์โลโก้ (URL):</label>
+                <input type="text" id="setting-logo-input">
+                <button onclick="saveSettings()">บันทึกการตั้งค่า</button>
+            </div>
+
+            <button onclick="goToPage('page-check')" class="primary" style="margin-top:20px;">ถัดไป: ตรวจสอบรายชื่อ <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div id="page-check" class="page">
+            <h3><i class="fas fa-user-check"></i> ตรวจสอบผู้มีสิทธิ์จับสลาก</h3>
+            <p style="font-size:0.9rem;">ติ๊กออกสำหรับผู้ที่ไม่มา หรือสละสิทธิ์</p>
+            
+            <div class="list-container" id="check-list-container">
+                </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button onclick="goToPage('page-setup')" class="secondary">ย้อนกลับ</button>
+                <button onclick="goToPage('page-draw')" class="primary">พร้อมจับสลาก! <i class="fas fa-gift"></i></button>
+            </div>
+        </div>
+
+        <div id="page-draw" class="page">
+            <div class="text-center">
+                <h3><i class="fas fa-random"></i> จับสลาก</h3>
+                
+                <div style="background: #f9f9f9; padding:10px; border-radius:10px; margin-bottom:15px; text-align:left;">
+                    <label style="display:block; margin-bottom:5px;">
+                        <input type="checkbox" id="opt-remove-drawn" checked> ตัดชื่อที่จับแล้วออก
+                    </label>
+                    <label style="display:block;">
+                        <input type="checkbox" id="opt-enable-missions"> เปิดใช้งานภารกิจรอบพิเศษ
+                    </label>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <button onclick="startDraw()" style="padding: 30px; font-size: 1.5rem; border-radius: 50%; width: 150px; height: 150px; box-shadow: 0 0 20px var(--secondary);">
+                        กดสุ่ม!
+                    </button>
+                </div>
+
+                <div id="reveal-controls" class="hidden">
+                    <p class="text-center">ผลการสุ่มพร้อมแล้ว!</p>
+                    <div class="result-box" id="result-name-placeholder">???</div>
+                    
+                    <div class="mission-box" id="result-mission-box">
+                        <small>ภารกิจของคุณคือ:</small><br>
+                        <span id="result-mission-text"></span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
+                        <button onclick="revealInitial()" class="outline">เผยพยัญชนะ</button>
+                        <button onclick="revealFull()" class="gold">เปิดชื่อจริง!</button>
+                    </div>
+                    <button onclick="resetDrawUI()" class="secondary" style="margin-top:10px;">ปิด / สุ่มใหม่</button>
+                </div>
+
+            </div>
+            <button onclick="goToPage('page-check')" class="secondary" style="margin-top:auto;">กลับไปแก้ไขรายชื่อ</button>
+        </div>
+
+        <footer>
+            <p>พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</p>
+        </footer>
+    </div>
+
+    <div class="fab" onclick="toggleStatusModal()">
+        <i class="fas fa-clipboard-list"></i>
+    </div>
+
+    <div id="status-modal" class="overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleStatusModal()">&times;</span>
+            <h3>สรุปสถานะ</h3>
+            <div style="display:flex; justify-content:space-around; margin-bottom:10px;">
+                <span style="color:green;">จับแล้ว: <b id="count-drawn">0</b></span>
+                <span style="color:red;">เหลือ: <b id="count-left">0</b></span>
+            </div>
+            <div class="list-container" id="drawn-history-list">
+                </div>
+        </div>
+    </div>
+
+    <div id="tao-animation-container">
+        <img id="tao-image" src="" alt="Animation">
+    </div>
+
+   <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue, update, push, child, remove } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        // เพิ่มบรรทัดนี้: Import Authentication
+        import { getAuth, signInAnonymously, onAuthStateChanged } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA45AAd4b2GG0ks-03i7K5iFS8GHc94msY",
+            authDomain: "newyearsystem-f160b.firebaseapp.com",
+            projectId: "newyearsystem-f160b",
+            storageBucket: "newyearsystem-f160b.firebasestorage.app",
+            messagingSenderId: "339812474092",
+            appId: "1:339812474092:web:00ba62bd2f6bbf546a99c9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const auth = getAuth(app); // สร้างตัวแปร Auth
+
+        // State Variables
+        let currentProfileId = localStorage.getItem('ny_profile_id') || "";
+        let profileData = {};
+        let currentDrawResult = null;
+        let isUserLoggedIn = false; // ตรวจสถานะ
+
+        // DOM Elements
+        const el = id => document.getElementById(id);
+
+        // --- Auth & Init System ---
+        
+        // สั่งให้ Login แบบไม่ระบุตัวตนทันทีเมื่อเข้าเว็บ
+        signInAnonymously(auth).catch((error) => {
+            console.error("Auth Error:", error);
+            alert("ไม่สามารถเชื่อมต่อระบบความปลอดภัยได้ กรุณารีเฟรช");
+        });
+
+        // รอจนกว่าจะ Login สำเร็จแล้วค่อยทำงานต่อ
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Secure Connection Established (UID):", user.uid);
+                isUserLoggedIn = true;
+                
+                // Check local storage for auto-login on refresh
+                if (currentProfileId) {
+                    el('profile-input').value = currentProfileId.replace(/_/g, " ");
+                    loginProfile();
+                }
+            }
+        });
+
+        // --- Core Functions ---
+
+        window.loginProfile = function() {
+            if (!isUserLoggedIn) {
+                alert("กำลังเชื่อมต่อระบบฐานข้อมูล... กรุณารอสักครู่");
+                return;
+            }
+
+            const input = el('profile-input').value.trim();
+            if (!input) return alert("กรุณากรอกชื่อโปรไฟล์");
+            
+            // Create a safe ID
+            const safeId = input.replace(/[^a-zA-Z0-9ก-๙]/g, "_");
+            currentProfileId = safeId;
+            localStorage.setItem('ny_profile_id', safeId);
+            
+            // Initial Data Structure check
+            const profileRef = ref(db, 'profiles/' + currentProfileId);
+            
+            // Listen to data changes realtime
+            onValue(profileRef, (snapshot) => {
+                const data = snapshot.val();
+                if (!data) {
+                    // Initialize default structure
+                    set(profileRef, {
+                        settings: { 
+                            title: "ระบบจับสลากงานเลี้ยงปีใหม่ ป.โท รหัส 68 ห้อง 1",
+                            logo: "https://cdn-icons-png.flaticon.com/512/3132/3132714.png"
+                        },
+                        participants: {},
+                        missions: [],
+                        history: {}
+                    });
+                } else {
+                    profileData = data;
+                    renderApp();
+                }
+            });
+
+            goToPage('page-setup');
+        }
+
+        window.goToPage = function(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            el(pageId).classList.add('active');
+            if(pageId === 'page-check' || pageId === 'page-setup') renderApp();
+        }
+
+        function renderApp() {
+            if (!profileData.settings) return;
+
+            // Update Header
+            el('app-title').innerText = profileData.settings.title;
+            el('app-logo').src = profileData.settings.logo;
+            el('current-profile-name').innerText = "Profile: " + currentProfileId;
+            
+            // Update Settings inputs
+            el('setting-title-input').value = profileData.settings.title;
+            el('setting-logo-input').value = profileData.settings.logo;
+
+            // Render Lists
+            renderParticipants();
+            renderMissions();
+            renderHistory();
+        }
+
+        // --- Data Management ---
+
+        window.addNames = function() {
+            const text = el('bulk-names').value;
+            if (!text) return;
+            
+            const lines = text.split('\n');
+            const updates = {};
+            
+            lines.forEach(line => {
+                const name = line.trim();
+                if (name) {
+                    const newKey = push(child(ref(db), 'profiles/' + currentProfileId + '/participants')).key;
+                    updates['profiles/' + currentProfileId + '/participants/' + newKey] = {
+                        name: name,
+                        active: true, 
+                        drawn: false
+                    };
+                }
+            });
+            
+            update(ref(db), updates);
+            el('bulk-names').value = "";
+            alert("เพิ่มรายชื่อเรียบร้อย");
+        }
+
+        window.addMission = function() {
+            const m = el('mission-input').value.trim();
+            if (!m) return;
+            
+            const currentMissions = profileData.missions || [];
+            currentMissions.push(m);
+            
+            update(ref(db, 'profiles/' + currentProfileId), { missions: currentMissions });
+            el('mission-input').value = "";
+        }
+
+        window.saveSettings = function() {
+            update(ref(db, 'profiles/' + currentProfileId + '/settings'), {
+                title: el('setting-title-input').value,
+                logo: el('setting-logo-input').value
+            });
+            alert("บันทึกตั้งค่าแล้ว");
+        }
+
+        // --- Rendering Lists ---
+
+        function renderParticipants() {
+            const pList = profileData.participants || {};
+            const previewContainer = el('preview-names-list');
+            const checkContainer = el('check-list-container');
+            
+            previewContainer.innerHTML = "";
+            checkContainer.innerHTML = "";
+            
+            let countDrawn = 0;
+            let countLeft = 0;
+
+            Object.entries(pList).forEach(([key, p]) => {
+                previewContainer.innerHTML += `<div class="list-item">${p.name}</div>`;
+                
+                if (!p.drawn) {
+                    const checked = p.active ? 'checked' : '';
+                    checkContainer.innerHTML += `
+                        <div class="list-item">
+                            <input type="checkbox" ${checked} onchange="toggleActive('${key}', this.checked)">
+                            ${p.name}
+                        </div>`;
+                    if (p.active) countLeft++;
+                } else {
+                    countDrawn++;
+                }
+            });
+
+            el('count-drawn').innerText = countDrawn;
+            el('count-left').innerText = countLeft;
+        }
+
+        function renderMissions() {
+            const mList = profileData.missions || [];
+            const container = el('mission-list-display');
+            container.innerHTML = "";
+            mList.forEach((m) => {
+                container.innerHTML += `<div class="list-item">- ${m}</div>`;
+            });
+        }
+        
+        function renderHistory() {
+            const hList = profileData.history || {};
+            const container = el('drawn-history-list');
+            container.innerHTML = "";
+            const arr = Object.values(hList).reverse();
+            arr.forEach(h => {
+                container.innerHTML += `
+                    <div class="list-item" style="flex-direction:column; align-items:flex-start;">
+                        <strong>${h.name}</strong>
+                        ${h.mission ? `<small style="color:red">ภารกิจ: ${h.mission}</small>` : ''}
+                    </div>`;
+            });
+        }
+
+        window.toggleActive = function(key, isActive) {
+            update(ref(db, 'profiles/' + currentProfileId + '/participants/' + key), { active: isActive });
+        }
+
+        window.switchTab = function(tabId) {
+            el('tab-names').classList.add('hidden');
+            el('tab-missions').classList.add('hidden');
+            el('tab-settings').classList.add('hidden');
+            el(tabId).classList.remove('hidden');
+        }
+
+        // --- Draw Logic & Animation ---
+
+        window.startDraw = function() {
+            const pList = profileData.participants || {};
+            const candidates = Object.entries(pList).filter(([key, val]) => val.active && !val.drawn);
+            
+            if (candidates.length === 0) {
+                alert("ไม่เหลือรายชื่อให้จับแล้ว!");
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * candidates.length);
+            const winnerEntry = candidates[randomIndex];
+            
+            let mission = null;
+            if (el('opt-enable-missions').checked) {
+                const missions = profileData.missions || [];
+                if (missions.length > 0) {
+                    mission = missions[Math.floor(Math.random() * missions.length)];
+                }
+            }
+
+            currentDrawResult = {
+                key: winnerEntry[0],
+                name: winnerEntry[1].name,
+                mission: mission
+            };
+
+            playTaoAnimation();
+        }
+
+        function playTaoAnimation() {
+            const container = el('tao-animation-container');
+            const img = el('tao-image');
+            const img1 = "https://nonthaphathr.github.io/uploadimg/tao1.png";
+            const img2 = "https://nonthaphathr.github.io/uploadimg/tao2.png";
+            
+            container.style.display = 'flex';
+            let toggle = false;
+            const interval = setInterval(() => {
+                img.src = toggle ? img1 : img2;
+                toggle = !toggle;
+            }, 100);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                container.style.display = 'none';
+                showRevealUI();
+            }, 3000);
+        }
+
+        function showRevealUI() {
+            el('reveal-controls').classList.remove('hidden');
+            el('result-name-placeholder').innerText = "???";
+            el('result-mission-box').style.display = 'none';
+        }
+
+        window.revealInitial = function() {
+            if (!currentDrawResult) return;
+            const name = currentDrawResult.name;
+            el('result-name-placeholder').innerText = name.charAt(0) + "..." + name.charAt(name.length-1);
+        }
+
+        window.revealFull = function() {
+            if (!currentDrawResult) return;
+            el('result-name-placeholder').innerText = currentDrawResult.name;
+            if (currentDrawResult.mission) {
+                el('result-mission-text').innerText = currentDrawResult.mission;
+                el('result-mission-box').style.display = 'block';
+            }
+            saveDrawResult();
+        }
+
+        function saveDrawResult() {
+            const updates = {};
+            if (el('opt-remove-drawn').checked) {
+                updates['profiles/' + currentProfileId + '/participants/' + currentDrawResult.key + '/drawn'] = true;
+            }
+            const historyKey = push(child(ref(db), 'profiles/' + currentProfileId + '/history')).key;
+            updates['profiles/' + currentProfileId + '/history/' + historyKey] = {
+                name: currentDrawResult.name,
+                mission: currentDrawResult.mission || null,
+                timestamp: Date.now()
+            };
+            update(ref(db), updates);
+        }
+
+        window.resetDrawUI = function() {
+            el('reveal-controls').classList.add('hidden');
+            currentDrawResult = null;
+        }
+
+        window.toggleStatusModal = function() {
+            const m = el('status-modal');
+            m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+    </script>
+</body>
+</html>
