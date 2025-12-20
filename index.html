@@ -561,7 +561,7 @@
             right: 20px;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             z-index: 100;
         }
 
@@ -821,13 +821,13 @@
             .fab-container {
                 bottom: 15px;
                 right: 15px;
-                gap: 10px;
+                gap: 8px;
             }
 
             .fab, .fab-qr {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
+                width: 48px;
+                height: 48px;
+                font-size: 1.1rem;
             }
 
             .modal-content {
@@ -1052,6 +1052,12 @@
         </div>
         <div class="fab" onclick="toggleStatusModal()" title="สถานะ">
             <i class="fas fa-clipboard-list"></i>
+        </div>
+        <div class="fab" onclick="resetAllData()" title="เริ่มจับสลากใหม่" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+            <i class="fas fa-redo-alt"></i>
+        </div>
+        <div class="fab" onclick="logout()" title="ออกจากระบบ" style="background: linear-gradient(135deg, #ee0979, #ff6a00);">
+            <i class="fas fa-sign-out-alt"></i>
         </div>
     </div>
 
@@ -1455,7 +1461,9 @@
             alert("✅ ลบภารกิจทั้งหมดแล้ว");
         }
 
-        window.editMission = function(index, currentMission) {
+        window.editMission = function(index) {
+            const currentMissions = profileData.missions || [];
+            const currentMission = currentMissions[index];
             currentEditingMissionIndex = index;
             el('edit-mission-input').value = currentMission;
             el('edit-mission-modal').style.display = 'flex';
@@ -1479,9 +1487,10 @@
             alert("✅ แก้ไขภารกิจเรียบร้อย");
         }
 
-        window.deleteMission = function(index, mission) {
-            if (!confirm(`ต้องการลบภารกิจ "${mission}" หรือไม่?`)) return;
+        window.deleteMission = function(index) {
             const currentMissions = profileData.missions || [];
+            const mission = currentMissions[index];
+            if (!confirm(`ต้องการลบภารกิจ "${mission}" หรือไม่?`)) return;
             currentMissions.splice(index, 1);
             update(ref(db, 'profiles/' + currentProfileId), { missions: currentMissions });
             alert("✅ ลบภารกิจแล้ว");
@@ -1550,10 +1559,10 @@
                             ${m}
                         </div>
                         <div class="list-item-actions">
-                            <button class="btn-icon btn-edit" onclick="editMission(${index}, '${m.replace(/'/g, "\\'")}')">
+                            <button class="btn-icon btn-edit" onclick="editMission(${index})">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn-icon btn-delete" onclick="deleteMission(${index}, '${m.replace(/'/g, "\\'")}')">
+                            <button class="btn-icon btn-delete" onclick="deleteMission(${index})">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -1661,7 +1670,7 @@
             const interval = setInterval(() => {
                 img.src = toggle ? img1 : img2;
                 toggle = !toggle;
-            }, 100);
+            }, 150); // ลดความเร็วจาก 100ms เป็น 150ms
             setTimeout(() => {
                 clearInterval(interval);
                 container.style.display = 'none';
@@ -1766,6 +1775,51 @@
                 renderRemaining();
                 m.style.display = 'flex';
             }
+        }
+
+        window.resetAllData = function() {
+            if (!confirm("⚠️ ต้องการเริ่มจับสลากใหม่หรือไม่?\n\n• ประวัติการจับสลากจะถูกลบทั้งหมด\n• รายชื่อทุกคนจะกลับมาให้จับได้อีกครั้ง\n• รายชื่อและภารกิจจะยังอยู่")) {
+                return;
+            }
+
+            const pList = profileData.participants || {};
+            const updates = {};
+
+            // Reset ทุกคนให้ drawn = false
+            Object.keys(pList).forEach(key => {
+                updates['profiles/' + currentProfileId + '/participants/' + key + '/drawn'] = false;
+            });
+
+            // ล้าง history
+            updates['profiles/' + currentProfileId + '/history'] = {};
+
+            update(ref(db), updates);
+            
+            // Reset UI
+            resetDrawUI();
+            
+            alert("✅ เริ่มจับสลากใหม่แล้ว! พร้อมจับสลากอีกครั้ง 🎉");
+            
+            // กลับไปหน้า setup
+            goToPage('page-setup');
+        }
+
+        window.logout = function() {
+            if (!confirm("ต้องการออกจากระบบและกลับไปหน้าเข้าสู่ระบบหรือไม่?")) {
+                return;
+            }
+
+            // ล้าง localStorage
+            localStorage.removeItem('ny_profile_id');
+            currentProfileId = "";
+            profileData = {};
+            
+            // กลับไปหน้า login
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            el('page-login').classList.add('active');
+            el('profile-input').value = "";
+            
+            alert("👋 ออกจากระบบเรียบร้อย");
         }
 
     </script>
