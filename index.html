@@ -3,349 +3,885 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจับสลากงานเลี้ยงปีใหม่</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <title>ระบบจับสลากงานเลี้ยงปีใหม่ 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #c0392b; /* Festive Red */
-            --secondary: #f1c40f; /* Gold */
+            --primary: #e74c3c;
+            --primary-dark: #c0392b;
+            --secondary: #f39c12;
+            --secondary-light: #f1c40f;
+            --success: #27ae60;
             --dark: #2c3e50;
             --light: #ecf0f1;
-            --success: #27ae60;
+            --purple: #9b59b6;
+            --blue: #3498db;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             font-family: 'Prompt', sans-serif;
-            background: linear-gradient(135deg, #8e44ad, #c0392b);
-            color: var-dark;
-            margin: 0;
-            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #feca57 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--dark);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 10s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
             width: 95%;
-            max-width: 600px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            padding: 20px;
+            max-width: 650px;
+            border-radius: 30px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.3),
+                0 0 0 1px rgba(255,255,255,0.5) inset;
+            padding: 30px;
             position: relative;
-            min-height: 80vh;
+            min-height: 85vh;
             display: flex;
             flex-direction: column;
+            z-index: 10;
+            animation: slideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        /* Headers */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Header Styles */
         header {
             text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--secondary);
-            padding-bottom: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, var(--primary), var(--secondary)) 1;
+            position: relative;
         }
 
         #app-logo {
-            max-height: 100px;
-            margin-bottom: 10px;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
             border-radius: 50%;
-            border: 3px solid var(--secondary);
+            border: 4px solid var(--secondary);
             object-fit: cover;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: logoFloat 3s ease-in-out infinite;
+            transition: transform 0.3s;
         }
 
-        h1, h2 { margin: 5px 0; color: var(--primary); }
-        h1 { font-size: 1.5rem; }
-        h2 { font-size: 1.2rem; font-weight: 400; }
+        #app-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
 
-        /* Pages logic */
-        .page { display: none; animation: fadeIn 0.5s; }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: 1rem;
+            color: #7f8c8d;
+            font-weight: 400;
+        }
+
+        h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 i {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Page Transitions */
+        .page {
+            display: none;
+            animation: fadeInUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
         .page.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Forms & Inputs */
-        input, textarea, select, button {
+        input, textarea, select {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
             font-family: 'Prompt', sans-serif;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
             font-size: 1rem;
-            transition: 0.3s;
+            transition: all 0.3s;
+            background: white;
         }
 
-        button:hover { filter: brightness(1.1); transform: scale(1.02); }
-        button.secondary { background-color: var(--dark); }
-        button.gold { background-color: var(--secondary); color: var(--dark); }
-        button.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);
+            transform: translateY(-2px);
+        }
 
-        /* Lists */
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 15px 25px;
+            margin: 8px 0;
+            border-radius: 15px;
+            border: none;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .secondary {
+            background: linear-gradient(135deg, var(--dark), #34495e);
+            color: white;
+        }
+
+        .gold {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            color: white;
+        }
+
+        .outline {
+            background: transparent;
+            border: 3px solid var(--primary);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Cards & Lists */
         .list-container {
-            max-height: 300px;
+            max-height: 320px;
             overflow-y: auto;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 10px;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            background: #fafafa;
+        }
+
+        .list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .list-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .list-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
         }
 
         .list-item {
             display: flex;
             align-items: center;
-            padding: 8px;
-            border-bottom: 1px solid #eee;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
         }
 
-        .list-item input[type="checkbox"] { width: auto; margin-right: 10px; }
+        .list-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
 
-        /* Floating Action Button */
+        .list-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 12px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Tab System */
+        .tab-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-buttons button {
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+
+        /* Draw Page Special Styles */
+        .draw-button {
+            width: 200px !important;
+            height: 200px !important;
+            border-radius: 50% !important;
+            font-size: 1.8rem !important;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            box-shadow: 
+                0 0 30px rgba(245, 87, 108, 0.5),
+                0 10px 40px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+            position: relative;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 30px rgba(245, 87, 108, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 50px rgba(245, 87, 108, 0.8);
+            }
+        }
+
+        .draw-button:hover {
+            transform: scale(1.1) !important;
+            animation: none;
+        }
+
+        /* Result Display */
+        .result-box {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 30px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: bounceIn 0.6s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .name-letter {
+            display: inline-block;
+            margin: 0 2px;
+            transition: all 0.3s;
+        }
+
+        .name-letter.blur {
+            filter: blur(8px);
+            opacity: 0.5;
+        }
+
+        .name-letter.reveal {
+            animation: letterReveal 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes letterReveal {
+            0% { transform: scale(0) rotate(-180deg); filter: blur(10px); }
+            100% { transform: scale(1) rotate(0deg); filter: blur(0); }
+        }
+
+        .mission-box {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(253, 203, 110, 0.4);
+            display: none;
+            animation: slideInUp 0.5s;
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .mission-box small {
+            display: block;
+            color: #e17055;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .mission-box span {
+            font-size: 1.3rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* Options Container */
+        .options-container {
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .options-container label {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+
+        .options-container label:hover {
+            transform: translateX(5px);
+        }
+
+        .options-container input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* FAB */
         .fab {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: var(--secondary);
-            color: var(--dark);
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            color: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             cursor: pointer;
             z-index: 100;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            transition: all 0.3s;
         }
 
-        /* Modal / Overlay */
+        .fab:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        /* Modal */
         .overlay {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.8);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: modalSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.7) translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #95a5a6;
+            transition: all 0.3s;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            color: var(--primary);
+            background: rgba(231, 76, 60, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Animation Container */
+        #tao-animation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
             display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
 
-        .modal-content {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-        }
-
-        .close-btn {
-            position: absolute; top: 10px; right: 15px;
-            font-size: 1.5rem; cursor: pointer;
-        }
-
-        /* Animation Specifics */
-        #tao-animation-container {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: black;
-            z-index: 2000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
         #tao-image {
             max-width: 90%;
-            max-height: 80vh;
+            max-height: 60vh;
+            animation: shake 0.1s infinite;
         }
 
-        /* Result Display */
-        .result-box {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin: 20px 0;
-            min-height: 60px;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
 
-        .mission-box {
-            font-size: 1.2rem;
-            color: var(--dark);
+        .animation-text {
+            color: white;
+            font-size: 2rem;
+            margin-top: 30px;
+            font-weight: 700;
+            animation: glow 1s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px #fff, 0 0 30px #f39c12; }
+            50% { text-shadow: 0 0 40px #fff, 0 0 60px #f39c12; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
             background: var(--secondary);
-            padding: 10px;
-            border-radius: 10px;
+            position: fixed;
+            top: -10px;
+            z-index: 9999;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Status Summary */
+        .status-summary {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            gap: 15px;
+        }
+
+        .status-card {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .status-card.success {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .status-card.danger {
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+        }
+
+        .status-card b {
+            font-size: 2rem;
+            display: block;
             margin-top: 10px;
-            display: none;
         }
 
         /* Utilities */
         .hidden { display: none !important; }
         .text-center { text-align: center; }
-        
+
         footer {
             margin-top: auto;
             text-align: center;
-            font-size: 0.8rem;
-            color: #777;
-            padding-top: 20px;
+            font-size: 0.85rem;
+            color: #95a5a6;
+            padding-top: 25px;
+            border-top: 2px dashed #e0e0e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+            .result-box { font-size: 2.5rem; }
+            .draw-button {
+                width: 170px !important;
+                height: 170px !important;
+                font-size: 1.5rem !important;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Particles Background -->
+    <div class="particles" id="particles-container"></div>
 
     <div class="container">
         <header>
             <img id="app-logo" src="https://cdn-icons-png.flaticon.com/512/3132/3132714.png" alt="Logo">
-            <h1 id="app-title">ระบบจับสลากปีใหม่</h1>
-            <h2 id="current-profile-name" style="font-size: 0.9rem; color: #7f8c8d;">-</h2>
+            <h1 id="app-title">🎊 ระบบจับสลากปีใหม่ 🎊</h1>
+            <h2 id="current-profile-name">-</h2>
         </header>
 
+        <!-- Login Page -->
         <div id="page-login" class="page active">
             <h3><i class="fas fa-users-cog"></i> เข้าสู่ระบบ / สร้างโปรไฟล์</h3>
-            <p>ระบุชื่อกลุ่ม/ห้องเพื่อสร้างหรือเข้าใช้งานห้องเดิม</p>
-            <input type="text" id="profile-input" placeholder="เช่น M.Ed 68 Room 1">
-            <button onclick="loginProfile()">เข้าใช้งาน <i class="fas fa-sign-in-alt"></i></button>
+            <p style="margin-bottom: 20px; color: #7f8c8d;">ระบุชื่อกลุ่ม/ห้องเพื่อสร้างหรือเข้าใช้งานห้องเดิม</p>
+            <input type="text" id="profile-input" placeholder="🏷️ เช่น M.Ed 68 Room 1">
+            <button class="primary" onclick="loginProfile()">
+                <i class="fas fa-sign-in-alt"></i> เข้าใช้งาน
+            </button>
             
-            <div style="margin-top: 20px; border-top: 1px dashed #ccc; padding-top:10px;">
-                <small>พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</small>
+            <div style="margin-top: 30px; border-top: 2px dashed #e0e0e0; padding-top: 20px; text-align: center;">
+                <small style="color: #95a5a6;">
+                    <i class="fas fa-code"></i> พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง
+                </small>
             </div>
         </div>
 
+        <!-- Setup Page -->
         <div id="page-setup" class="page">
             <h3><i class="fas fa-list"></i> จัดการรายชื่อ & ภารกิจ</h3>
             
-            <div style="display:flex; gap:10px; margin-bottom:10px;">
-                <button onclick="switchTab('tab-names')" class="secondary">รายชื่อ</button>
-                <button onclick="switchTab('tab-missions')" class="secondary">ภารกิจพิเศษ</button>
-                <button onclick="switchTab('tab-settings')" class="secondary">ตั้งค่าเว็บ</button>
+            <div class="tab-buttons">
+                <button onclick="switchTab('tab-names')" class="secondary">
+                    <i class="fas fa-user-friends"></i> รายชื่อ
+                </button>
+                <button onclick="switchTab('tab-missions')" class="secondary">
+                    <i class="fas fa-tasks"></i> ภารกิจ
+                </button>
+                <button onclick="switchTab('tab-settings')" class="secondary">
+                    <i class="fas fa-cog"></i> ตั้งค่า
+                </button>
             </div>
 
             <div id="tab-names">
-                <textarea id="bulk-names" rows="5" placeholder="วางรายชื่อที่นี่ (1 บรรทัดต่อ 1 ชื่อ) หรือ Copy จาก Excel มาวาง"></textarea>
-                <button onclick="addNames()" class="gold"><i class="fas fa-plus-circle"></i> เพิ่มรายชื่อ</button>
-                <div class="list-container" id="preview-names-list">
-                    </div>
+                <textarea id="bulk-names" rows="5" placeholder="📝 วางรายชื่อที่นี่ (1 บรรทัดต่อ 1 ชื่อ) หรือ Copy จาก Excel มาวาง"></textarea>
+                <button onclick="addNames()" class="gold">
+                    <i class="fas fa-plus-circle"></i> เพิ่มรายชื่อ
+                </button>
+                <div class="list-container" id="preview-names-list"></div>
             </div>
 
             <div id="tab-missions" class="hidden">
-                <input type="text" id="mission-input" placeholder="ระบุภารกิจ เช่น ร้องเพลง 1 เพลง">
-                <button onclick="addMission()" class="gold">เพิ่มภารกิจ</button>
+                <input type="text" id="mission-input" placeholder="🎯 ระบุภารกิจ เช่น ร้องเพลง 1 เพลง">
+                <button onclick="addMission()" class="gold">
+                    <i class="fas fa-plus"></i> เพิ่มภารกิจ
+                </button>
                 <div class="list-container" id="mission-list-display"></div>
             </div>
 
             <div id="tab-settings" class="hidden">
-                <label>ชื่อระบบ:</label>
+                <label style="font-weight: 600; display: block; margin-top: 10px;">
+                    <i class="fas fa-heading"></i> ชื่อระบบ:
+                </label>
                 <input type="text" id="setting-title-input">
-                <label>ลิงก์โลโก้ (URL):</label>
+                
+                <label style="font-weight: 600; display: block; margin-top: 15px;">
+                    <i class="fas fa-image"></i> ลิงก์โลโก้ (URL):
+                </label>
                 <input type="text" id="setting-logo-input">
-                <button onclick="saveSettings()">บันทึกการตั้งค่า</button>
+                
+                <button onclick="saveSettings()" class="primary">
+                    <i class="fas fa-save"></i> บันทึกการตั้งค่า
+                </button>
             </div>
 
-            <button onclick="goToPage('page-check')" class="primary" style="margin-top:20px;">ถัดไป: ตรวจสอบรายชื่อ <i class="fas fa-arrow-right"></i></button>
+            <button onclick="goToPage('page-check')" class="primary" style="margin-top: 20px;">
+                ถัดไป: ตรวจสอบรายชื่อ <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
 
+        <!-- Check Page -->
         <div id="page-check" class="page">
             <h3><i class="fas fa-user-check"></i> ตรวจสอบผู้มีสิทธิ์จับสลาก</h3>
-            <p style="font-size:0.9rem;">ติ๊กออกสำหรับผู้ที่ไม่มา หรือสละสิทธิ์</p>
+            <p style="margin-bottom: 15px; color: #7f8c8d;">
+                ✓ ติ๊กออกสำหรับผู้ที่ไม่มา หรือสละสิทธิ์
+            </p>
             
-            <div class="list-container" id="check-list-container">
-                </div>
+            <div class="list-container" id="check-list-container"></div>
 
-            <div style="display: flex; gap: 10px;">
-                <button onclick="goToPage('page-setup')" class="secondary">ย้อนกลับ</button>
-                <button onclick="goToPage('page-draw')" class="primary">พร้อมจับสลาก! <i class="fas fa-gift"></i></button>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button onclick="goToPage('page-setup')" class="secondary">
+                    <i class="fas fa-arrow-left"></i> ย้อนกลับ
+                </button>
+                <button onclick="goToPage('page-draw')" class="primary">
+                    พร้อมจับสลาก! <i class="fas fa-gift"></i>
+                </button>
             </div>
         </div>
 
+        <!-- Draw Page -->
         <div id="page-draw" class="page">
             <div class="text-center">
                 <h3><i class="fas fa-random"></i> จับสลาก</h3>
                 
-                <div style="background: #f9f9f9; padding:10px; border-radius:10px; margin-bottom:15px; text-align:left;">
-                    <label style="display:block; margin-bottom:5px;">
-                        <input type="checkbox" id="opt-remove-drawn" checked> ตัดชื่อที่จับแล้วออก
+                <div class="options-container">
+                    <label>
+                        <input type="checkbox" id="opt-remove-drawn" checked>
+                        <span>🗑️ ตัดชื่อที่จับแล้วออก</span>
                     </label>
-                    <label style="display:block;">
-                        <input type="checkbox" id="opt-enable-missions"> เปิดใช้งานภารกิจรอบพิเศษ
+                    <label>
+                        <input type="checkbox" id="opt-enable-missions">
+                        <span>🎯 เปิดใช้งานภารกิจรอบพิเศษ</span>
                     </label>
                 </div>
 
-                <div style="margin: 30px 0;">
-                    <button onclick="startDraw()" style="padding: 30px; font-size: 1.5rem; border-radius: 50%; width: 150px; height: 150px; box-shadow: 0 0 20px var(--secondary);">
-                        กดสุ่ม!
-                    </button>
-                </div>
+                <button class="draw-button" onclick="startDraw()">
+                    <div style="text-align: center;">
+                        <i class="fas fa-dice" style="display: block; font-size: 2.5rem; margin-bottom: 10px;"></i>
+                        <span>กดสุ่ม!</span>
+                    </div>
+                </button>
 
                 <div id="reveal-controls" class="hidden">
-                    <p class="text-center">ผลการสุ่มพร้อมแล้ว!</p>
+                    <p style="font-size: 1.2rem; color: var(--success); font-weight: 600; margin-bottom: 20px;">
+                        🎉 ผลการสุ่มพร้อมแล้ว! 🎉
+                    </p>
+                    
                     <div class="result-box" id="result-name-placeholder">???</div>
                     
                     <div class="mission-box" id="result-mission-box">
-                        <small>ภารกิจของคุณคือ:</small><br>
+                        <small>🎯 ภารกิจของคุณคือ:</small>
                         <span id="result-mission-text"></span>
                     </div>
 
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
-                        <button onclick="revealInitial()" class="outline">เผยพยัญชนะ</button>
-                        <button onclick="revealFull()" class="gold">เปิดชื่อจริง!</button>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px;">
+                        <button onclick="revealInitial()" class="outline">
+                            <i class="fas fa-eye"></i> เผยพยัญชนะ
+                        </button>
+                        <button onclick="revealFull()" class="gold">
+                            <i class="fas fa-star"></i> เปิดชื่อจริง!
+                        </button>
                     </div>
-                    <button onclick="resetDrawUI()" class="secondary" style="margin-top:10px;">ปิด / สุ่มใหม่</button>
+                    
+                    <button onclick="resetDrawUI()" class="secondary" style="margin-top: 15px;">
+                        <i class="fas fa-redo"></i> ปิด / สุ่มใหม่
+                    </button>
                 </div>
-
             </div>
-            <button onclick="goToPage('page-check')" class="secondary" style="margin-top:auto;">กลับไปแก้ไขรายชื่อ</button>
+            
+            <button onclick="goToPage('page-check')" class="secondary" style="margin-top: auto;">
+                <i class="fas fa-edit"></i> กลับไปแก้ไขรายชื่อ
+            </button>
         </div>
 
         <footer>
-            <p>พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</p>
+            <p>
+                <i class="fas fa-heart" style="color: #e74c3c;"></i>
+                พัฒนาด้วยความตั้งใจโดย ครูนนทพัทธ์ หิรัญเรือง
+                <i class="fas fa-heart" style="color: #e74c3c;"></i>
+            </p>
         </footer>
     </div>
 
+    <!-- FAB Status Button -->
     <div class="fab" onclick="toggleStatusModal()">
         <i class="fas fa-clipboard-list"></i>
     </div>
 
+    <!-- Status Modal -->
     <div id="status-modal" class="overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="toggleStatusModal()">&times;</span>
-            <h3>สรุปสถานะ</h3>
-            <div style="display:flex; justify-content:space-around; margin-bottom:10px;">
-                <span style="color:green;">จับแล้ว: <b id="count-drawn">0</b></span>
-                <span style="color:red;">เหลือ: <b id="count-left">0</b></span>
-            </div>
-            <div class="list-container" id="drawn-history-list">
+            <h3 style="margin-bottom: 20px;">📊 สรุปสถานะ</h3>
+            
+            <div class="status-summary">
+                <div class="status-card success">
+                    <span>จับแล้ว</span>
+                    <b id="count-drawn">0</b>
                 </div>
+                <div class="status-card danger">
+                    <span>เหลือ</span>
+                    <b id="count-left">0</b>
+                </div>
+            </div>
+            
+            <div class="list-container" id="drawn-history-list"></div>
         </div>
     </div>
 
+    <!-- Animation Container -->
     <div id="tao-animation-container">
         <img id="tao-image" src="" alt="Animation">
+        <div class="animation-text">🎊 กำลังจับสลาก... 🎊</div>
     </div>
 
-   <script type="module">
+    <!-- Audio Elements -->
+    <audio id="sound-click" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+    <audio id="sound-drumroll" preload="auto">
+        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
+    </audio>
+
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, update, push, child, remove } 
         from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-        // เพิ่มบรรทัดนี้: Import Authentication
         import { getAuth, signInAnonymously, onAuthStateChanged } 
         from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -360,32 +896,158 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const auth = getAuth(app); // สร้างตัวแปร Auth
+        const auth = getAuth(app);
 
         // State Variables
         let currentProfileId = localStorage.getItem('ny_profile_id') || "";
         let profileData = {};
         let currentDrawResult = null;
-        let isUserLoggedIn = false; // ตรวจสถานะ
+        let isUserLoggedIn = false;
 
         // DOM Elements
         const el = id => document.getElementById(id);
 
-        // --- Auth & Init System ---
+        // Sound Effects (Using Web Audio API for better control)
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         
-        // สั่งให้ Login แบบไม่ระบุตัวตนทันทีเมื่อเข้าเว็บ
-        signInAnonymously(auth).catch((error) => {
-            console.error("Auth Error:", error);
-            alert("ไม่สามารถเชื่อมต่อระบบความปลอดภัยได้ กรุณารีเฟรช");
+        function playClickSound() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        function playDrumRoll() {
+            const duration = 2.5;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            const filter = audioContext.createBiquadFilter();
+            
+            oscillator.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + duration);
+            
+            filter.type = 'lowpass';
+            filter.frequency.value = 1000;
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + duration/2);
+            gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        function playFanfare() {
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C, E, G, C
+            notes.forEach((freq, index) => {
+                setTimeout(() => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.value = freq;
+                    oscillator.type = 'triangle';
+                    
+                    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.5);
+                }, index * 150);
+            });
+        }
+
+        function playRevealSound() {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
+        }
+
+        // Confetti Effect
+        function createConfetti() {
+            const colors = ['#f39c12', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6', '#1abc9c'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3500);
+                }, i * 20);
+            }
+        }
+
+        // Create Floating Particles
+        function createParticles() {
+            const container = el('particles-container');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 10 + 5 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Initialize particles on load
+        createParticles();
+
+        // Add click sound to all buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                playClickSound();
+            }
         });
 
-        // รอจนกว่าจะ Login สำเร็จแล้วค่อยทำงานต่อ
+        // --- Auth & Init System ---
+        signInAnonymously(auth).catch((error) => {
+            console.error("Auth Error:", error);
+            alert("⚠️ ไม่สามารถเชื่อมต่อระบบความปลอดภัยได้ กรุณารีเฟรช");
+        });
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log("Secure Connection Established (UID):", user.uid);
+                console.log("🔒 Secure Connection Established");
                 isUserLoggedIn = true;
                 
-                // Check local storage for auto-login on refresh
                 if (currentProfileId) {
                     el('profile-input').value = currentProfileId.replace(/_/g, " ");
                     loginProfile();
@@ -394,32 +1056,27 @@
         });
 
         // --- Core Functions ---
-
         window.loginProfile = function() {
             if (!isUserLoggedIn) {
-                alert("กำลังเชื่อมต่อระบบฐานข้อมูล... กรุณารอสักครู่");
+                alert("⏳ กำลังเชื่อมต่อระบบฐานข้อมูล... กรุณารอสักครู่");
                 return;
             }
 
             const input = el('profile-input').value.trim();
-            if (!input) return alert("กรุณากรอกชื่อโปรไฟล์");
+            if (!input) return alert("⚠️ กรุณากรอกชื่อโปรไฟล์");
             
-            // Create a safe ID
             const safeId = input.replace(/[^a-zA-Z0-9ก-๙]/g, "_");
             currentProfileId = safeId;
             localStorage.setItem('ny_profile_id', safeId);
             
-            // Initial Data Structure check
             const profileRef = ref(db, 'profiles/' + currentProfileId);
             
-            // Listen to data changes realtime
             onValue(profileRef, (snapshot) => {
                 const data = snapshot.val();
                 if (!data) {
-                    // Initialize default structure
                     set(profileRef, {
                         settings: { 
-                            title: "ระบบจับสลากงานเลี้ยงปีใหม่ ป.โท รหัส 68 ห้อง 1",
+                            title: "🎊 ระบบจับสลากงานเลี้ยงปีใหม่ 🎊",
                             logo: "https://cdn-icons-png.flaticon.com/512/3132/3132714.png"
                         },
                         participants: {},
@@ -444,23 +1101,19 @@
         function renderApp() {
             if (!profileData.settings) return;
 
-            // Update Header
             el('app-title').innerText = profileData.settings.title;
             el('app-logo').src = profileData.settings.logo;
-            el('current-profile-name').innerText = "Profile: " + currentProfileId;
+            el('current-profile-name').innerText = "📁 Profile: " + currentProfileId;
             
-            // Update Settings inputs
             el('setting-title-input').value = profileData.settings.title;
             el('setting-logo-input').value = profileData.settings.logo;
 
-            // Render Lists
             renderParticipants();
             renderMissions();
             renderHistory();
         }
 
         // --- Data Management ---
-
         window.addNames = function() {
             const text = el('bulk-names').value;
             if (!text) return;
@@ -482,7 +1135,7 @@
             
             update(ref(db), updates);
             el('bulk-names').value = "";
-            alert("เพิ่มรายชื่อเรียบร้อย");
+            alert("✅ เพิ่มรายชื่อเรียบร้อย");
         }
 
         window.addMission = function() {
@@ -501,11 +1154,10 @@
                 title: el('setting-title-input').value,
                 logo: el('setting-logo-input').value
             });
-            alert("บันทึกตั้งค่าแล้ว");
+            alert("💾 บันทึกตั้งค่าแล้ว");
         }
 
         // --- Rendering Lists ---
-
         function renderParticipants() {
             const pList = profileData.participants || {};
             const previewContainer = el('preview-names-list');
@@ -518,7 +1170,11 @@
             let countLeft = 0;
 
             Object.entries(pList).forEach(([key, p]) => {
-                previewContainer.innerHTML += `<div class="list-item">${p.name}</div>`;
+                previewContainer.innerHTML += `
+                    <div class="list-item">
+                        <i class="fas fa-user" style="margin-right: 10px; color: var(--primary);"></i>
+                        ${p.name}
+                    </div>`;
                 
                 if (!p.drawn) {
                     const checked = p.active ? 'checked' : '';
@@ -541,8 +1197,12 @@
             const mList = profileData.missions || [];
             const container = el('mission-list-display');
             container.innerHTML = "";
-            mList.forEach((m) => {
-                container.innerHTML += `<div class="list-item">- ${m}</div>`;
+            mList.forEach((m, index) => {
+                container.innerHTML += `
+                    <div class="list-item">
+                        <i class="fas fa-bullseye" style="margin-right: 10px; color: var(--secondary);"></i>
+                        ${m}
+                    </div>`;
             });
         }
         
@@ -551,11 +1211,19 @@
             const container = el('drawn-history-list');
             container.innerHTML = "";
             const arr = Object.values(hList).reverse();
+            
+            if (arr.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#95a5a6; padding:20px;">ยังไม่มีประวัติการจับสลาก</p>';
+                return;
+            }
+            
             arr.forEach(h => {
                 container.innerHTML += `
                     <div class="list-item" style="flex-direction:column; align-items:flex-start;">
-                        <strong>${h.name}</strong>
-                        ${h.mission ? `<small style="color:red">ภารกิจ: ${h.mission}</small>` : ''}
+                        <strong style="color: var(--primary);">
+                            <i class="fas fa-trophy"></i> ${h.name}
+                        </strong>
+                        ${h.mission ? `<small style="color: var(--secondary); margin-top: 5px;">🎯 ภารกิจ: ${h.mission}</small>` : ''}
                     </div>`;
             });
         }
@@ -572,13 +1240,12 @@
         }
 
         // --- Draw Logic & Animation ---
-
         window.startDraw = function() {
             const pList = profileData.participants || {};
             const candidates = Object.entries(pList).filter(([key, val]) => val.active && !val.drawn);
             
             if (candidates.length === 0) {
-                alert("ไม่เหลือรายชื่อให้จับแล้ว!");
+                alert("⚠️ ไม่เหลือรายชื่อให้จับแล้ว!");
                 return;
             }
 
@@ -599,6 +1266,7 @@
                 mission: mission
             };
 
+            playDrumRoll();
             playTaoAnimation();
         }
 
@@ -630,18 +1298,60 @@
 
         window.revealInitial = function() {
             if (!currentDrawResult) return;
+            
+            playRevealSound();
+            
             const name = currentDrawResult.name;
-            el('result-name-placeholder').innerText = name.charAt(0) + "..." + name.charAt(name.length-1);
+            const resultBox = el('result-name-placeholder');
+            resultBox.innerHTML = '';
+            
+            // แสดงตัวอักษร: ตัวแรก, ตัวท้าย, และตัวกลางบางตัว (สลับเบลอ)
+            for (let i = 0; i < name.length; i++) {
+                const span = document.createElement('span');
+                span.className = 'name-letter';
+                span.textContent = name[i];
+                
+                // แสดงชัดเจน: ตัวแรก, ตัวท้าย, และทุก ๆ 3 ตัว
+                if (i === 0 || i === name.length - 1 || i % 3 === 0) {
+                    span.classList.add('reveal');
+                } else {
+                    span.classList.add('blur');
+                }
+                
+                resultBox.appendChild(span);
+            }
         }
 
         window.revealFull = function() {
             if (!currentDrawResult) return;
-            el('result-name-placeholder').innerText = currentDrawResult.name;
-            if (currentDrawResult.mission) {
-                el('result-mission-text').innerText = currentDrawResult.mission;
-                el('result-mission-box').style.display = 'block';
+            
+            playFanfare();
+            createConfetti();
+            
+            const name = currentDrawResult.name;
+            const resultBox = el('result-name-placeholder');
+            resultBox.innerHTML = '';
+            
+            // แสดงทีละตัวอักษรด้วย animation
+            for (let i = 0; i < name.length; i++) {
+                setTimeout(() => {
+                    const span = document.createElement('span');
+                    span.className = 'name-letter reveal';
+                    span.textContent = name[i];
+                    resultBox.appendChild(span);
+                }, i * 100);
             }
-            saveDrawResult();
+            
+            if (currentDrawResult.mission) {
+                setTimeout(() => {
+                    el('result-mission-text').innerText = currentDrawResult.mission;
+                    el('result-mission-box').style.display = 'block';
+                }, name.length * 100 + 200);
+            }
+            
+            setTimeout(() => {
+                saveDrawResult();
+            }, name.length * 100 + 500);
         }
 
         function saveDrawResult() {
