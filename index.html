@@ -6,6 +6,8 @@
     <title>ระบบจับสลากงานเลี้ยงปีใหม่ 🎉</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
         :root {
@@ -369,9 +371,9 @@
             animation: none;
         }
 
-        /* Result Display */
+        /* Result Display - แก้ไขให้ไม่ล้นขอบ */
         .result-box {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
@@ -382,8 +384,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            animation: bounceIn 0.6s;
+            text-align: center;
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            max-width: 100%;
+            padding: 0 10px;
+            line-height: 1.3;
         }
 
         @keyframes bounceIn {
@@ -412,6 +419,7 @@
             100% { transform: scale(1) rotate(0deg); filter: blur(0); }
         }
 
+        /* Mission Box - ปรับให้แสดงได้ดีขึ้น */
         .mission-box {
             background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
             padding: 20px;
@@ -420,6 +428,7 @@
             box-shadow: 0 5px 20px rgba(253, 203, 110, 0.4);
             display: none;
             animation: slideInUp 0.5s;
+            text-align: center;
         }
 
         @keyframes slideInUp {
@@ -431,13 +440,41 @@
             display: block;
             color: #e17055;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
-        .mission-box span {
+        .mission-box .mission-text {
+            font-size: 1.5rem;
+            color: var(--dark);
+            font-weight: 700;
+            display: block;
+            margin-top: 10px;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        /* Hint Text Style */
+        .hint-text {
             font-size: 1.3rem;
             color: var(--dark);
-            font-weight: 600;
+            background: linear-gradient(135deg, #a8edea, #fed6e3);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            line-height: 1.6;
+            word-wrap: break-word;
+            animation: bounceIn 0.6s;
+        }
+
+        .hint-text .consonants {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: block;
+            margin: 10px 0;
+            letter-spacing: 3px;
         }
 
         /* Options Container */
@@ -493,6 +530,31 @@
             box-shadow: 0 12px 35px rgba(0,0,0,0.4);
         }
 
+        /* QR FAB */
+        .fab-qr {
+            position: fixed;
+            bottom: 120px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 100;
+            font-size: 1.8rem;
+            transition: all 0.3s;
+        }
+
+        .fab-qr:hover {
+            transform: scale(1.1) rotate(-15deg);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        }
+
         /* Modal */
         .overlay {
             position: fixed;
@@ -523,6 +585,8 @@
             position: relative;
             box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             animation: modalSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         @keyframes modalSlideIn {
@@ -550,12 +614,40 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
+            z-index: 10;
         }
 
         .close-btn:hover {
             color: var(--primary);
             background: rgba(231, 76, 60, 0.1);
             transform: rotate(90deg);
+        }
+
+        /* QR Code Container */
+        #qrcode-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #qrcode {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .share-url {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 15px 0;
+            border: 2px dashed var(--primary);
         }
 
         /* Animation Container */
@@ -666,7 +758,10 @@
         @media (max-width: 600px) {
             .container { padding: 20px; }
             h1 { font-size: 1.5rem; }
-            .result-box { font-size: 2.5rem; }
+            .result-box { font-size: 2rem; }
+            .hint-text { font-size: 1.1rem; }
+            .hint-text .consonants { font-size: 1.5rem; }
+            .mission-box .mission-text { font-size: 1.2rem; }
             .draw-button {
                 width: 170px !important;
                 height: 170px !important;
@@ -681,7 +776,7 @@
 
     <div class="container">
         <header>
-            <img id="app-logo" src="https://cdn-icons-png.flaticon.com/512/3132/3132714.png" alt="Logo">
+            <img id="app-logo" src="https://img5.pic.in.th/file/secure-sv1/-27d109079d78fadd36.png" alt="Logo">
             <h1 id="app-title">🎊 ระบบจับสลากปีใหม่ 🎊</h1>
             <h2 id="current-profile-name">-</h2>
         </header>
@@ -802,18 +897,27 @@
                         🎉 ผลการสุ่มพร้อมแล้ว! 🎉
                     </p>
                     
-                    <div class="result-box" id="result-name-placeholder">???</div>
-                    
+                    <!-- Mission Display (แสดงก่อน) -->
                     <div class="mission-box" id="result-mission-box">
-                        <small>🎯 ภารกิจของคุณคือ:</small>
-                        <span id="result-mission-text"></span>
+                        <small>🎯 ภารกิจพิเศษ</small>
+                        <span class="mission-text" id="result-mission-text"></span>
                     </div>
 
+                    <!-- Hint Display (เผยพยัญชนะ) -->
+                    <div class="hint-text hidden" id="hint-display">
+                        ชื่อมี
+                        <span class="consonants" id="consonants-display"></span>
+                        ในชื่อ
+                    </div>
+                    
+                    <!-- Name Result Display -->
+                    <div class="result-box hidden" id="result-name-placeholder"></div>
+
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px;">
-                        <button onclick="revealInitial()" class="outline">
+                        <button onclick="revealInitial()" class="outline" id="btn-reveal-consonants">
                             <i class="fas fa-eye"></i> เผยพยัญชนะ
                         </button>
-                        <button onclick="revealFull()" class="gold">
+                        <button onclick="revealFull()" class="gold" id="btn-reveal-full">
                             <i class="fas fa-star"></i> เปิดชื่อจริง!
                         </button>
                     </div>
@@ -843,6 +947,11 @@
         <i class="fas fa-clipboard-list"></i>
     </div>
 
+    <!-- FAB QR Code Button -->
+    <div class="fab-qr" onclick="toggleQRModal()">
+        <i class="fas fa-qrcode"></i>
+    </div>
+
     <!-- Status Modal -->
     <div id="status-modal" class="overlay">
         <div class="modal-content">
@@ -864,19 +973,32 @@
         </div>
     </div>
 
+    <!-- QR Code Modal -->
+    <div id="qr-modal" class="overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="toggleQRModal()">&times;</span>
+            <h3 style="margin-bottom: 20px; text-align: center;">
+                <i class="fas fa-qrcode"></i> แชร์ระบบ QR Code
+            </h3>
+            
+            <div id="qrcode-container">
+                <p style="color: #7f8c8d; margin-bottom: 15px; text-align: center;">
+                    สแกน QR Code เพื่อเข้าใช้งานระบบ
+                </p>
+                <div id="qrcode"></div>
+                <div class="share-url" id="share-url"></div>
+                <button onclick="copyURL()" class="gold" style="margin-top: 15px;">
+                    <i class="fas fa-copy"></i> คัดลอกลิงก์
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Animation Container -->
     <div id="tao-animation-container">
         <img id="tao-image" src="" alt="Animation">
         <div class="animation-text">🎊 กำลังจับสลาก... 🎊</div>
     </div>
-
-    <!-- Audio Elements -->
-    <audio id="sound-click" preload="auto">
-        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
-    </audio>
-    <audio id="sound-drumroll" preload="auto">
-        <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=" type="audio/wav">
-    </audio>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -907,7 +1029,7 @@
         // DOM Elements
         const el = id => document.getElementById(id);
 
-        // Sound Effects (Using Web Audio API for better control)
+        // Sound Effects (Using Web Audio API)
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         
         function playClickSound() {
@@ -1027,7 +1149,7 @@
             }
         }
 
-        // Initialize particles on load
+        // Initialize particles
         createParticles();
 
         // Add click sound to all buttons
@@ -1036,6 +1158,76 @@
                 playClickSound();
             }
         });
+
+        // --- QR Code Functions ---
+        window.toggleQRModal = function() {
+            const modal = el('qr-modal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                generateQRCode();
+                modal.style.display = 'flex';
+            }
+        }
+
+        function generateQRCode() {
+            const qrcodeContainer = el('qrcode');
+            const shareUrlDiv = el('share-url');
+            
+            // Clear previous QR code
+            qrcodeContainer.innerHTML = '';
+            
+            // Get current URL
+            const currentURL = window.location.href.split('?')[0];
+            const shareURL = currentURL + '?profile=' + encodeURIComponent(currentProfileId);
+            
+            // Display URL
+            shareUrlDiv.textContent = shareURL;
+            
+            // Generate QR Code
+            new QRCode(qrcodeContainer, {
+                text: shareURL,
+                width: 256,
+                height: 256,
+                colorDark: '#2c3e50',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        window.copyURL = function() {
+            const shareUrlDiv = el('share-url');
+            const url = shareUrlDiv.textContent;
+            
+            navigator.clipboard.writeText(url).then(() => {
+                alert('📋 คัดลอกลิงก์แล้ว!');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('📋 คัดลอกลิงก์แล้ว!');
+            });
+        }
+
+        // Check for profile parameter in URL
+        function checkURLParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const profileParam = urlParams.get('profile');
+            
+            if (profileParam) {
+                el('profile-input').value = profileParam;
+                // Auto login if not already logged in
+                if (!currentProfileId && isUserLoggedIn) {
+                    setTimeout(() => {
+                        loginProfile();
+                    }, 500);
+                }
+            }
+        }
 
         // --- Auth & Init System ---
         signInAnonymously(auth).catch((error) => {
@@ -1048,7 +1240,10 @@
                 console.log("🔒 Secure Connection Established");
                 isUserLoggedIn = true;
                 
-                if (currentProfileId) {
+                // Check URL params for shared link
+                checkURLParams();
+                
+                if (currentProfileId && !urlParams.get('profile')) {
                     el('profile-input').value = currentProfileId.replace(/_/g, " ");
                     loginProfile();
                 }
@@ -1077,7 +1272,7 @@
                     set(profileRef, {
                         settings: { 
                             title: "🎊 ระบบจับสลากงานเลี้ยงปีใหม่ 🎊",
-                            logo: "https://cdn-icons-png.flaticon.com/512/3132/3132714.png"
+                            logo: "https://img5.pic.in.th/file/secure-sv1/-27d109079d78fadd36.png"
                         },
                         participants: {},
                         missions: [],
@@ -1292,8 +1487,34 @@
 
         function showRevealUI() {
             el('reveal-controls').classList.remove('hidden');
-            el('result-name-placeholder').innerText = "???";
-            el('result-mission-box').style.display = 'none';
+            el('hint-display').classList.add('hidden');
+            el('result-name-placeholder').classList.add('hidden');
+            
+            // แสดงภารกิจก่อน (ถ้ามี)
+            if (currentDrawResult.mission) {
+                el('result-mission-text').innerText = currentDrawResult.mission;
+                el('result-mission-box').style.display = 'block';
+            } else {
+                el('result-mission-box').style.display = 'none';
+            }
+        }
+
+        // ฟังก์ชันดึงพยัญชนะ (ตัวอักษรตัวแรกของแต่ละคำ + บางตัวกลาง)
+        function extractConsonants(name) {
+            const consonants = [];
+            
+            // เพิ่มตัวแรกและตัวท้าย
+            consonants.push(name[0]);
+            if (name.length > 1) {
+                consonants.push(name[name.length - 1]);
+            }
+            
+            // เพิ่มทุก ๆ 3 ตัว
+            for (let i = 3; i < name.length - 1; i += 3) {
+                consonants.push(name[i]);
+            }
+            
+            return [...new Set(consonants)].join(' '); // ลบตัวซ้ำ
         }
 
         window.revealInitial = function() {
@@ -1301,25 +1522,13 @@
             
             playRevealSound();
             
-            const name = currentDrawResult.name;
-            const resultBox = el('result-name-placeholder');
-            resultBox.innerHTML = '';
-            
-            // แสดงตัวอักษร: ตัวแรก, ตัวท้าย, และตัวกลางบางตัว (สลับเบลอ)
-            for (let i = 0; i < name.length; i++) {
-                const span = document.createElement('span');
-                span.className = 'name-letter';
-                span.textContent = name[i];
-                
-                // แสดงชัดเจน: ตัวแรก, ตัวท้าย, และทุก ๆ 3 ตัว
-                if (i === 0 || i === name.length - 1 || i % 3 === 0) {
-                    span.classList.add('reveal');
-                } else {
-                    span.classList.add('blur');
-                }
-                
-                resultBox.appendChild(span);
-            }
+            const consonants = extractConsonants(currentDrawResult.name);
+            el('consonants-display').innerText = consonants;
+            el('hint-display').classList.remove('hidden');
+            el('hint-display').style.animation = 'none';
+            setTimeout(() => {
+                el('hint-display').style.animation = 'bounceIn 0.6s';
+            }, 10);
         }
 
         window.revealFull = function() {
@@ -1331,6 +1540,10 @@
             const name = currentDrawResult.name;
             const resultBox = el('result-name-placeholder');
             resultBox.innerHTML = '';
+            resultBox.classList.remove('hidden');
+            
+            // ซ่อน hint
+            el('hint-display').classList.add('hidden');
             
             // แสดงทีละตัวอักษรด้วย animation
             for (let i = 0; i < name.length; i++) {
@@ -1340,13 +1553,6 @@
                     span.textContent = name[i];
                     resultBox.appendChild(span);
                 }, i * 100);
-            }
-            
-            if (currentDrawResult.mission) {
-                setTimeout(() => {
-                    el('result-mission-text').innerText = currentDrawResult.mission;
-                    el('result-mission-box').style.display = 'block';
-                }, name.length * 100 + 200);
             }
             
             setTimeout(() => {
@@ -1370,6 +1576,8 @@
 
         window.resetDrawUI = function() {
             el('reveal-controls').classList.add('hidden');
+            el('hint-display').classList.add('hidden');
+            el('result-name-placeholder').classList.add('hidden');
             currentDrawResult = null;
         }
 
