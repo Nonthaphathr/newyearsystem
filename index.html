@@ -40,6 +40,7 @@
             align-items: center;
             overflow-x: hidden;
             position: relative;
+            padding-bottom: 80px; /* เพิ่ม padding ด้านล่างเพื่อไม่ให้ FAB บัง */
         }
 
         @keyframes gradientShift {
@@ -88,6 +89,7 @@
             flex-direction: column;
             z-index: 10;
             animation: slideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            margin-bottom: 20px;
         }
 
         @keyframes slideIn {
@@ -337,6 +339,34 @@
             font-size: 0.95rem;
         }
 
+        /* Modal Tab System */
+        .modal-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-tabs button {
+            padding: 12px;
+            font-size: 0.95rem;
+            background: #ecf0f1;
+            color: var(--dark);
+        }
+
+        .modal-tabs button.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .modal-tab-content {
+            display: none;
+        }
+
+        .modal-tab-content.active {
+            display: block;
+        }
+
         /* Draw Page Special Styles */
         .draw-button {
             width: 200px !important;
@@ -371,7 +401,7 @@
             animation: none;
         }
 
-        /* Result Display - แก้ไขให้ไม่ล้นขอบ */
+        /* Result Display */
         .result-box {
             font-size: 2.5rem;
             font-weight: 700;
@@ -419,7 +449,7 @@
             100% { transform: scale(1) rotate(0deg); filter: blur(0); }
         }
 
-        /* Mission Box - ปรับให้แสดงได้ดีขึ้น */
+        /* Mission Box */
         .mission-box {
             background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
             padding: 20px;
@@ -505,13 +535,20 @@
             cursor: pointer;
         }
 
-        /* FAB */
-        .fab {
+        /* FAB - ปรับปรุงสำหรับมือถือ */
+        .fab-container {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .fab {
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
             color: white;
             border-radius: 50%;
@@ -520,8 +557,7 @@
             align-items: center;
             box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             cursor: pointer;
-            z-index: 100;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             transition: all 0.3s;
         }
 
@@ -530,29 +566,12 @@
             box-shadow: 0 12px 35px rgba(0,0,0,0.4);
         }
 
-        /* QR FAB */
         .fab-qr {
-            position: fixed;
-            bottom: 120px;
-            right: 30px;
-            width: 70px;
-            height: 70px;
             background: linear-gradient(135deg, var(--blue), var(--purple));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            cursor: pointer;
-            z-index: 100;
-            font-size: 1.8rem;
-            transition: all 0.3s;
         }
 
         .fab-qr:hover {
             transform: scale(1.1) rotate(-15deg);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
         }
 
         /* Modal */
@@ -754,23 +773,75 @@
             border-top: 2px dashed #e0e0e0;
         }
 
-        /* Responsive */
+        /* Responsive - ปรับปรุงสำหรับมือถือ */
         @media (max-width: 600px) {
-            .container { padding: 20px; }
+            body {
+                padding-bottom: 100px; /* เพิ่ม padding ในมือถือ */
+            }
+            
+            .container { 
+                padding: 20px;
+                margin-bottom: 30px;
+            }
+            
             h1 { font-size: 1.5rem; }
             .result-box { font-size: 2rem; }
             .hint-text { font-size: 1.1rem; }
             .hint-text .consonants { font-size: 1.5rem; }
             .mission-box .mission-text { font-size: 1.2rem; }
+            
             .draw-button {
                 width: 170px !important;
                 height: 170px !important;
                 font-size: 1.5rem !important;
             }
+
+            /* ปรับ FAB ในมือถือ */
+            .fab-container {
+                bottom: 15px;
+                right: 15px;
+                gap: 10px;
+            }
+
+            .fab, .fab-qr {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            /* ปรับ Modal ในมือถือ */
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+                max-height: 90vh;
+            }
+
+            .modal-tabs {
+                gap: 8px;
+            }
+
+            .modal-tabs button {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Audio Elements สำหรับมือถือ -->
+    <audio id="sound-click" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound-drumroll" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound-fanfare" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound-reveal" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- Floating Particles Background -->
     <div class="particles" id="particles-container"></div>
 
@@ -942,14 +1013,14 @@
         </footer>
     </div>
 
-    <!-- FAB Status Button -->
-    <div class="fab" onclick="toggleStatusModal()">
-        <i class="fas fa-clipboard-list"></i>
-    </div>
-
-    <!-- FAB QR Code Button -->
-    <div class="fab-qr" onclick="toggleQRModal()">
-        <i class="fas fa-qrcode"></i>
+    <!-- FAB Buttons Container -->
+    <div class="fab-container">
+        <div class="fab fab-qr" onclick="toggleQRModal()" title="QR Code">
+            <i class="fas fa-qrcode"></i>
+        </div>
+        <div class="fab" onclick="toggleStatusModal()" title="สถานะ">
+            <i class="fas fa-clipboard-list"></i>
+        </div>
     </div>
 
     <!-- Status Modal -->
@@ -968,8 +1039,26 @@
                     <b id="count-left">0</b>
                 </div>
             </div>
-            
-            <div class="list-container" id="drawn-history-list"></div>
+
+            <!-- Modal Tabs -->
+            <div class="modal-tabs">
+                <button onclick="switchModalTab('drawn-tab')" class="active" id="tab-btn-drawn">
+                    <i class="fas fa-check-circle"></i> จับแล้ว
+                </button>
+                <button onclick="switchModalTab('remaining-tab')" id="tab-btn-remaining">
+                    <i class="fas fa-user-clock"></i> ยังไม่จับ
+                </button>
+            </div>
+
+            <!-- Tab Content: คนที่จับแล้ว -->
+            <div id="drawn-tab" class="modal-tab-content active">
+                <div class="list-container" id="drawn-history-list"></div>
+            </div>
+
+            <!-- Tab Content: คนที่ยังไม่จับ -->
+            <div id="remaining-tab" class="modal-tab-content">
+                <div class="list-container" id="remaining-list"></div>
+            </div>
         </div>
     </div>
 
@@ -1025,94 +1114,52 @@
         let profileData = {};
         let currentDrawResult = null;
         let isUserLoggedIn = false;
+        let audioInitialized = false;
 
         // DOM Elements
         const el = id => document.getElementById(id);
 
-        // Sound Effects (Using Web Audio API)
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        
-        function playClickSound() {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 800;
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
+        // Sound System - ใช้ HTML5 Audio สำหรับมือถือ
+        const sounds = {
+            click: el('sound-click'),
+            drumroll: el('sound-drumroll'),
+            fanfare: el('sound-fanfare'),
+            reveal: el('sound-reveal')
+        };
 
-        function playDrumRoll() {
-            const duration = 2.5;
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            const filter = audioContext.createBiquadFilter();
+        // Initialize audio on first user interaction
+        function initAudio() {
+            if (audioInitialized) return;
             
-            oscillator.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + duration);
-            
-            filter.type = 'lowpass';
-            filter.frequency.value = 1000;
-            
-            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + duration/2);
-            gainNode.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + duration);
-        }
-
-        function playFanfare() {
-            const notes = [523.25, 659.25, 783.99, 1046.50]; // C, E, G, C
-            notes.forEach((freq, index) => {
-                setTimeout(() => {
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    
-                    oscillator.frequency.value = freq;
-                    oscillator.type = 'triangle';
-                    
-                    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-                    
-                    oscillator.start(audioContext.currentTime);
-                    oscillator.stop(audioContext.currentTime + 0.5);
-                }, index * 150);
+            Object.values(sounds).forEach(audio => {
+                audio.volume = 0.3;
+                audio.load();
             });
+            
+            audioInitialized = true;
+            console.log('Audio initialized');
         }
 
-        function playRevealSound() {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
+        function playSound(soundName) {
+            if (!audioInitialized) initAudio();
             
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.3);
+            const audio = sounds[soundName];
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            }
         }
+
+        // Initialize audio on first click
+        document.addEventListener('click', initAudio, { once: true });
+        document.addEventListener('touchstart', initAudio, { once: true });
+
+        // Add click sound to all buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                playSound('click');
+            }
+        });
 
         // Confetti Effect
         function createConfetti() {
@@ -1149,15 +1196,27 @@
             }
         }
 
-        // Initialize particles
         createParticles();
 
-        // Add click sound to all buttons
-        document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
-                playClickSound();
+        // --- Modal Tab Functions ---
+        window.switchModalTab = function(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.modal-tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.modal-tabs button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            el(tabName).classList.add('active');
+            
+            if (tabName === 'drawn-tab') {
+                el('tab-btn-drawn').classList.add('active');
+            } else {
+                el('tab-btn-remaining').classList.add('active');
             }
-        });
+        }
 
         // --- QR Code Functions ---
         window.toggleQRModal = function() {
@@ -1174,17 +1233,13 @@
             const qrcodeContainer = el('qrcode');
             const shareUrlDiv = el('share-url');
             
-            // Clear previous QR code
             qrcodeContainer.innerHTML = '';
             
-            // Get current URL
             const currentURL = window.location.href.split('?')[0];
             const shareURL = currentURL + '?profile=' + encodeURIComponent(currentProfileId);
             
-            // Display URL
             shareUrlDiv.textContent = shareURL;
             
-            // Generate QR Code
             new QRCode(qrcodeContainer, {
                 text: shareURL,
                 width: 256,
@@ -1202,7 +1257,6 @@
             navigator.clipboard.writeText(url).then(() => {
                 alert('📋 คัดลอกลิงก์แล้ว!');
             }).catch(() => {
-                // Fallback for older browsers
                 const textArea = document.createElement('textarea');
                 textArea.value = url;
                 document.body.appendChild(textArea);
@@ -1213,14 +1267,12 @@
             });
         }
 
-        // Check for profile parameter in URL
         function checkURLParams() {
             const urlParams = new URLSearchParams(window.location.search);
             const profileParam = urlParams.get('profile');
             
             if (profileParam) {
                 el('profile-input').value = profileParam;
-                // Auto login if not already logged in
                 if (!currentProfileId && isUserLoggedIn) {
                     setTimeout(() => {
                         loginProfile();
@@ -1240,12 +1292,14 @@
                 console.log("🔒 Secure Connection Established");
                 isUserLoggedIn = true;
                 
-                // Check URL params for shared link
                 checkURLParams();
                 
-                if (currentProfileId && !urlParams.get('profile')) {
-                    el('profile-input').value = currentProfileId.replace(/_/g, " ");
-                    loginProfile();
+                if (currentProfileId) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (!urlParams.get('profile')) {
+                        el('profile-input').value = currentProfileId.replace(/_/g, " ");
+                        loginProfile();
+                    }
                 }
             }
         });
@@ -1306,6 +1360,7 @@
             renderParticipants();
             renderMissions();
             renderHistory();
+            renderRemaining();
         }
 
         // --- Data Management ---
@@ -1423,6 +1478,27 @@
             });
         }
 
+        function renderRemaining() {
+            const pList = profileData.participants || {};
+            const container = el('remaining-list');
+            container.innerHTML = "";
+            
+            const remaining = Object.entries(pList).filter(([key, p]) => !p.drawn && p.active);
+            
+            if (remaining.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#95a5a6; padding:20px;">ไม่มีคนที่ยังไม่ได้จับสลาก</p>';
+                return;
+            }
+            
+            remaining.forEach(([key, p]) => {
+                container.innerHTML += `
+                    <div class="list-item">
+                        <i class="fas fa-user-clock" style="margin-right: 10px; color: var(--blue);"></i>
+                        ${p.name}
+                    </div>`;
+            });
+        }
+
         window.toggleActive = function(key, isActive) {
             update(ref(db, 'profiles/' + currentProfileId + '/participants/' + key), { active: isActive });
         }
@@ -1461,7 +1537,7 @@
                 mission: mission
             };
 
-            playDrumRoll();
+            playSound('drumroll');
             playTaoAnimation();
         }
 
@@ -1490,7 +1566,6 @@
             el('hint-display').classList.add('hidden');
             el('result-name-placeholder').classList.add('hidden');
             
-            // แสดงภารกิจก่อน (ถ้ามี)
             if (currentDrawResult.mission) {
                 el('result-mission-text').innerText = currentDrawResult.mission;
                 el('result-mission-box').style.display = 'block';
@@ -1499,28 +1574,25 @@
             }
         }
 
-        // ฟังก์ชันดึงพยัญชนะ (ตัวอักษรตัวแรกของแต่ละคำ + บางตัวกลาง)
         function extractConsonants(name) {
             const consonants = [];
             
-            // เพิ่มตัวแรกและตัวท้าย
             consonants.push(name[0]);
             if (name.length > 1) {
                 consonants.push(name[name.length - 1]);
             }
             
-            // เพิ่มทุก ๆ 3 ตัว
             for (let i = 3; i < name.length - 1; i += 3) {
                 consonants.push(name[i]);
             }
             
-            return [...new Set(consonants)].join(' '); // ลบตัวซ้ำ
+            return [...new Set(consonants)].join(' ');
         }
 
         window.revealInitial = function() {
             if (!currentDrawResult) return;
             
-            playRevealSound();
+            playSound('reveal');
             
             const consonants = extractConsonants(currentDrawResult.name);
             el('consonants-display').innerText = consonants;
@@ -1534,7 +1606,7 @@
         window.revealFull = function() {
             if (!currentDrawResult) return;
             
-            playFanfare();
+            playSound('fanfare');
             createConfetti();
             
             const name = currentDrawResult.name;
@@ -1542,10 +1614,8 @@
             resultBox.innerHTML = '';
             resultBox.classList.remove('hidden');
             
-            // ซ่อน hint
             el('hint-display').classList.add('hidden');
             
-            // แสดงทีละตัวอักษรด้วย animation
             for (let i = 0; i < name.length; i++) {
                 setTimeout(() => {
                     const span = document.createElement('span');
@@ -1583,7 +1653,13 @@
 
         window.toggleStatusModal = function() {
             const m = el('status-modal');
-            m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+            if (m.style.display === 'flex') {
+                m.style.display = 'none';
+            } else {
+                renderHistory();
+                renderRemaining();
+                m.style.display = 'flex';
+            }
         }
 
     </script>
