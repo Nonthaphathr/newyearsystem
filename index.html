@@ -850,7 +850,7 @@
         <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
     </audio>
     <audio id="sound-drumroll" preload="auto">
-        <source src="https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3" type="audio/mpeg">
+        <source src="https://nonthaphathr.github.io/uploadimg/chingroi.mp3" type="audio/mpeg">
     </audio>
     <audio id="sound-fanfare" preload="auto">
         <source src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3" type="audio/mpeg">
@@ -1193,10 +1193,15 @@
             });
             
             // เพิ่มระดับเสียงพิเศษสำหรับเสียงสำคัญ
-            sounds.drumroll.volume = 0.8;
+            sounds.drumroll.volume = 0.85;
             sounds.winning.volume = 0.7;
             
+            // Force preload สำหรับเสียงที่สำคัญ
+            sounds.drumroll.load();
+            sounds.winning.load();
+            
             audioInitialized = true;
+            console.log('Audio system initialized - ready for all devices');
         }
 
         function playSound(soundName) {
@@ -1206,21 +1211,42 @@
             if (audio) {
                 // ตั้งค่า volume ตามประเภทเสียง
                 if (soundName === 'drumroll') {
-                    audio.volume = 0.8;
+                    audio.volume = 0.85; // เพิ่ม volume สำหรับเสียงใหม่
                 } else if (soundName === 'winning') {
                     audio.volume = 0.7;
                 } else {
                     audio.volume = 0.3;
                 }
                 
+                // Reset และเล่นเสียง
                 audio.currentTime = 0;
-                audio.play().catch(e => console.log('Audio play failed:', e));
+                
+                // สำหรับมือถือ - ใช้ promise chain เพื่อจัดการ autoplay policy
+                const playPromise = audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise
+                        .then(() => {
+                            console.log(`${soundName} playing successfully`);
+                        })
+                        .catch(error => {
+                            console.log(`Audio play failed for ${soundName}:`, error);
+                            // ลองเล่นอีกครั้งสำหรับบางอุปกรณ์
+                            setTimeout(() => {
+                                audio.play().catch(e => console.log('Retry failed:', e));
+                            }, 100);
+                        });
+                }
             }
         }
 
         document.addEventListener('click', initAudio, { once: true });
         document.addEventListener('touchstart', initAudio, { once: true });
+        
+        // สำหรับ iOS - ต้อง interact ก่อน
+        document.addEventListener('touchend', initAudio, { once: true });
 
+        // Add click sound to all buttons
         document.addEventListener('click', (e) => {
             if (e.target.tagName === 'BUTTON') {
                 playSound('click');
@@ -1682,12 +1708,12 @@
             const interval = setInterval(() => {
                 img.src = toggle ? img1 : img2;
                 toggle = !toggle;
-            }, 300); // ลดความเร็วเป็น 300ms
+            }, 300);
             setTimeout(() => {
                 clearInterval(interval);
                 container.style.display = 'none';
                 showRevealUI();
-            }, 3000);
+            }, 5000); // เพิ่มเวลาจาก 3000ms เป็น 5000ms (5 วินาที)
         }
 
         function showRevealUI() {
