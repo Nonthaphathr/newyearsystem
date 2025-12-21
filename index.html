@@ -1174,6 +1174,7 @@
         let audioInitialized = false;
         let currentEditingKey = null;
         let currentEditingMissionIndex = null;
+        let drumrollTimeout = null; // เก็บ timeout สำหรับการหยุดเสียง
 
         const el = id => document.getElementById(id);
 
@@ -1212,6 +1213,12 @@
                 // ตั้งค่า volume ตามประเภทเสียง
                 if (soundName === 'drumroll') {
                     audio.volume = 0.85; // เพิ่ม volume สำหรับเสียงใหม่
+                    
+                    // ล้าง timeout ก่อนหน้า (ถ้ามี)
+                    if (drumrollTimeout) {
+                        clearTimeout(drumrollTimeout);
+                        drumrollTimeout = null;
+                    }
                 } else if (soundName === 'winning') {
                     audio.volume = 0.7;
                 } else {
@@ -1228,6 +1235,16 @@
                     playPromise
                         .then(() => {
                             console.log(`${soundName} playing successfully`);
+                            
+                            // ตัดเสียง drumroll ที่ 4.3 วินาที
+                            if (soundName === 'drumroll') {
+                                drumrollTimeout = setTimeout(() => {
+                                    audio.pause();
+                                    audio.currentTime = 0;
+                                    console.log('Drumroll stopped at 4.3 seconds');
+                                    drumrollTimeout = null;
+                                }, 4300); // 4.3 วินาที
+                            }
                         })
                         .catch(error => {
                             console.log(`Audio play failed for ${soundName}:`, error);
@@ -1713,7 +1730,7 @@
                 clearInterval(interval);
                 container.style.display = 'none';
                 showRevealUI();
-            }, 5000); // เพิ่มเวลาจาก 3000ms เป็น 5000ms (5 วินาที)
+            }, 4300); // ปรับเวลาให้ตรงกับเสียงที่ 4.3 วินาที
         }
 
         function showRevealUI() {
