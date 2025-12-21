@@ -703,13 +703,6 @@
         #tao-image {
             max-width: 90%;
             max-height: 60vh;
-            animation: shake 0.1s infinite;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
         }
 
         .animation-text {
@@ -864,6 +857,9 @@
     </audio>
     <audio id="sound-reveal" preload="auto">
         <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sound-winning" preload="auto">
+        <source src="https://nonthaphathr.github.io/uploadimg/winning-218995.mp3" type="audio/mpeg">
     </audio>
 
     <div class="particles" id="particles-container"></div>
@@ -1185,7 +1181,8 @@
             click: el('sound-click'),
             drumroll: el('sound-drumroll'),
             fanfare: el('sound-fanfare'),
-            reveal: el('sound-reveal')
+            reveal: el('sound-reveal'),
+            winning: el('sound-winning')
         };
 
         function initAudio() {
@@ -1194,13 +1191,28 @@
                 audio.volume = 0.3;
                 audio.load();
             });
+            
+            // เพิ่มระดับเสียงพิเศษสำหรับเสียงสำคัญ
+            sounds.drumroll.volume = 0.8;
+            sounds.winning.volume = 0.7;
+            
             audioInitialized = true;
         }
 
         function playSound(soundName) {
             if (!audioInitialized) initAudio();
+            
             const audio = sounds[soundName];
             if (audio) {
+                // ตั้งค่า volume ตามประเภทเสียง
+                if (soundName === 'drumroll') {
+                    audio.volume = 0.8;
+                } else if (soundName === 'winning') {
+                    audio.volume = 0.7;
+                } else {
+                    audio.volume = 0.3;
+                }
+                
                 audio.currentTime = 0;
                 audio.play().catch(e => console.log('Audio play failed:', e));
             }
@@ -1725,7 +1737,7 @@
 
         window.revealFull = function() {
             if (!currentDrawResult) return;
-            playSound('fanfare');
+            playSound('winning');
             createConfetti();
             const name = currentDrawResult.name;
             const resultBox = el('result-name-placeholder');
