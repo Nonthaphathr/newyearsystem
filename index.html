@@ -6,7 +6,6 @@
     <title>ระบบจับสลากงานเลี้ยงปีใหม่ 🎉</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
@@ -22,11 +21,7 @@
             --blue: #3498db;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Prompt', sans-serif;
@@ -49,23 +44,8 @@
             100% { background-position: 0% 50%; }
         }
 
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: float 10s infinite;
-        }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .particle { position: absolute; background: white; border-radius: 50%; opacity: 0.6; animation: float 10s infinite; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -78,9 +58,7 @@
             width: 95%;
             max-width: 650px;
             border-radius: 30px;
-            box-shadow: 
-                0 20px 60px rgba(0,0,0,0.3),
-                0 0 0 1px rgba(255,255,255,0.5) inset;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.5) inset;
             padding: 30px;
             position: relative;
             min-height: 85vh;
@@ -92,14 +70,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(50px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         header {
@@ -112,20 +84,12 @@
         }
 
         #app-logo {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 15px;
-            border-radius: 50%;
-            border: 4px solid var(--secondary);
-            object-fit: cover;
+            width: 100px; height: 100px; margin-bottom: 15px; border-radius: 50%;
+            border: 4px solid var(--secondary); object-fit: cover;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            animation: logoFloat 3s ease-in-out infinite;
-            transition: transform 0.3s;
+            animation: logoFloat 3s ease-in-out infinite; transition: transform 0.3s;
         }
-
-        #app-logo:hover {
-            transform: scale(1.1) rotate(5deg);
-        }
+        #app-logo:hover { transform: scale(1.1) rotate(5deg); }
 
         @keyframes logoFloat {
             0%, 100% { transform: translateY(0px); }
@@ -135,721 +99,236 @@
         h1 {
             font-size: 1.8rem;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 10px 0;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin: 10px 0; font-weight: 700;
         }
+        h2 { font-size: 1rem; color: #7f8c8d; font-weight: 400; }
+        h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+        h3 i { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-        h2 {
-            font-size: 1rem;
-            color: #7f8c8d;
-            font-weight: 400;
-        }
-
-        h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        h3 i {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .page {
-            display: none;
-            animation: fadeInUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
+        .page { display: none; animation: fadeInUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
         .page.active { display: block; }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         input, textarea, select {
-            width: 100%;
-            padding: 15px 20px;
-            margin: 10px 0;
-            border-radius: 15px;
-            border: 2px solid #e0e0e0;
-            font-family: 'Prompt', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
-            background: white;
+            width: 100%; padding: 15px 20px; margin: 10px 0; border-radius: 15px;
+            border: 2px solid #e0e0e0; font-family: 'Prompt', sans-serif; font-size: 1rem;
+            transition: all 0.3s; background: white;
         }
-
         input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1);
-            transform: translateY(-2px);
+            outline: none; border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.1); transform: translateY(-2px);
         }
 
         button {
-            width: 100%;
-            padding: 15px 25px;
-            margin: 8px 0;
-            border-radius: 15px;
-            border: none;
-            font-family: 'Prompt', sans-serif;
-            font-weight: 600;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            width: 100%; padding: 15px 25px; margin: 8px 0; border-radius: 15px; border: none;
+            font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 1.05rem;
+            cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-
         button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+            border-radius: 50%; background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s;
         }
+        button:active::before { width: 300px; height: 300px; }
+        button:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        button:active { transform: translateY(-1px); }
 
-        button:active::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        button:active {
-            transform: translateY(-1px);
-        }
-
-        .primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .secondary {
-            background: linear-gradient(135deg, var(--dark), #34495e);
-            color: white;
-        }
-
-        .gold {
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-            color: white;
-        }
-
-        .outline {
-            background: transparent;
-            border: 3px solid var(--primary);
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .danger {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-        }
+        .primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; }
+        .secondary { background: linear-gradient(135deg, var(--dark), #34495e); color: white; }
+        .gold { background: linear-gradient(135deg, var(--secondary), var(--secondary-light)); color: white; }
+        .outline { background: transparent; border: 3px solid var(--primary); color: var(--primary); font-weight: 700; }
+        .outline:hover { background: var(--primary); color: white; }
+        .danger { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
 
         .list-container {
-            max-height: 320px;
-            overflow-y: auto;
-            border: 2px solid #f0f0f0;
-            border-radius: 15px;
-            padding: 15px;
-            margin: 15px 0;
-            background: #fafafa;
+            max-height: 320px; overflow-y: auto; border: 2px solid #f0f0f0;
+            border-radius: 15px; padding: 15px; margin: 15px 0; background: #fafafa;
         }
-
-        .list-container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .list-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        .list-container::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
+        .list-container::-webkit-scrollbar { width: 8px; }
+        .list-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .list-container::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
         .list-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            margin: 5px 0;
-            border-radius: 10px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
+            display: flex; align-items: center; padding: 12px 15px; margin: 5px 0;
+            border-radius: 10px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s;
         }
+        .list-item:hover { transform: translateX(5px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .list-item input[type="checkbox"] { width: auto; margin-right: 12px; cursor: pointer; width: 20px; height: 20px; }
+        .list-item-content { flex: 1; display: flex; align-items: center; gap: 10px; }
+        .list-item-actions { display: flex; gap: 8px; }
 
-        .list-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        .btn-icon { width: auto !important; padding: 8px 12px !important; margin: 0 !important; font-size: 0.9rem; min-width: unset; }
+        .btn-edit { background: linear-gradient(135deg, var(--blue), #2980b9); }
+        .btn-delete { background: linear-gradient(135deg, #e74c3c, #c0392b); }
 
-        .list-item input[type="checkbox"] {
-            width: auto;
-            margin-right: 12px;
-            cursor: pointer;
-            width: 20px;
-            height: 20px;
-        }
+        .tab-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
+        .tab-buttons button { padding: 12px; font-size: 0.95rem; }
 
-        .list-item-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .list-item-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-icon {
-            width: auto !important;
-            padding: 8px 12px !important;
-            margin: 0 !important;
-            font-size: 0.9rem;
-            min-width: unset;
-        }
-
-        .btn-edit {
-            background: linear-gradient(135deg, var(--blue), #2980b9);
-        }
-
-        .btn-delete {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
-
-        .tab-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .tab-buttons button {
-            padding: 12px;
-            font-size: 0.95rem;
-        }
-
-        .modal-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .modal-tabs button {
-            padding: 12px;
-            font-size: 0.95rem;
-            background: #ecf0f1;
-            color: var(--dark);
-        }
-
-        .modal-tabs button.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-        }
-
-        .modal-tab-content {
-            display: none;
-        }
-
-        .modal-tab-content.active {
-            display: block;
-        }
+        .modal-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .modal-tabs button { padding: 12px; font-size: 0.95rem; background: #ecf0f1; color: var(--dark); }
+        .modal-tabs button.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+        .modal-tab-content { display: none; }
+        .modal-tab-content.active { display: block; }
 
         .draw-button {
-            width: 200px !important;
-            height: 200px !important;
-            border-radius: 50% !important;
-            font-size: 1.8rem !important;
-            margin: 30px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #f093fb, #f5576c);
-            box-shadow: 
-                0 0 30px rgba(245, 87, 108, 0.5),
-                0 10px 40px rgba(0,0,0,0.3);
-            animation: pulse 2s infinite;
-            position: relative;
+            width: 200px !important; height: 200px !important; border-radius: 50% !important;
+            font-size: 1.8rem !important; margin: 30px auto; display: flex; align-items: center;
+            justify-content: center; background: linear-gradient(135deg, #f093fb, #f5576c);
+            box-shadow: 0 0 30px rgba(245, 87, 108, 0.5), 0 10px 40px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite; position: relative;
         }
-
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 30px rgba(245, 87, 108, 0.5);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 50px rgba(245, 87, 108, 0.8);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(245, 87, 108, 0.5); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(245, 87, 108, 0.8); }
         }
-
-        .draw-button:hover {
-            transform: scale(1.1) !important;
-            animation: none;
-        }
+        .draw-button:hover { transform: scale(1.1) !important; animation: none; }
 
         .result-box {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2.5rem; font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 30px 0;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            word-wrap: break-word;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            max-width: 100%;
-            padding: 0 10px;
-            line-height: 1.3;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin: 30px 0; min-height: 80px; display: flex; align-items: center; justify-content: center;
+            text-align: center; word-wrap: break-word; word-break: break-word; overflow-wrap: break-word;
+            max-width: 100%; padding: 0 10px; line-height: 1.3;
         }
-
         @keyframes bounceIn {
             0% { transform: scale(0); opacity: 0; }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        .name-letter {
-            display: inline-block;
-            margin: 0 2px;
-            transition: all 0.3s;
-        }
-
-        .name-letter.blur {
-            filter: blur(8px);
-            opacity: 0.5;
-        }
-
-        .name-letter.reveal {
-            animation: letterReveal 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
+        .name-letter { display: inline-block; margin: 0 2px; transition: all 0.3s; }
+        .name-letter.reveal { animation: letterReveal 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
         @keyframes letterReveal {
             0% { transform: scale(0) rotate(-180deg); filter: blur(10px); }
             100% { transform: scale(1) rotate(0deg); filter: blur(0); }
         }
 
         .mission-box {
-            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            box-shadow: 0 5px 20px rgba(253, 203, 110, 0.4);
-            display: none;
-            animation: slideInUp 0.5s;
-            text-align: center;
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e); padding: 20px; border-radius: 15px;
+            margin: 20px 0; box-shadow: 0 5px 20px rgba(253, 203, 110, 0.4); display: none;
+            animation: slideInUp 0.5s; text-align: center;
         }
-
         @keyframes slideInUp {
             from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
-
-        .mission-box small {
-            display: block;
-            color: #e17055;
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-
-        .mission-box .mission-text {
-            font-size: 1.5rem;
-            color: var(--dark);
-            font-weight: 700;
-            display: block;
-            margin-top: 10px;
-            word-wrap: break-word;
-            line-height: 1.4;
-        }
+        .mission-box small { display: block; color: #e17055; font-weight: 600; margin-bottom: 10px; font-size: 1.1rem; }
+        .mission-box .mission-text { font-size: 1.5rem; color: var(--dark); font-weight: 700; display: block; margin-top: 10px; word-wrap: break-word; line-height: 1.4; }
 
         .hint-text {
-            font-size: 1.3rem;
-            color: var(--dark);
-            background: linear-gradient(135deg, #a8edea, #fed6e3);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: center;
-            line-height: 1.6;
-            word-wrap: break-word;
-            animation: bounceIn 0.6s;
+            font-size: 1.3rem; color: var(--dark); background: linear-gradient(135deg, #a8edea, #fed6e3);
+            padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center; line-height: 1.6;
+            word-wrap: break-word; animation: bounceIn 0.6s;
         }
+        .hint-text .consonants { font-weight: 700; font-size: 1.8rem; color: var(--primary); display: block; margin: 10px 0; letter-spacing: 3px; }
 
-        .hint-text .consonants {
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--primary);
-            display: block;
-            margin: 10px 0;
-            letter-spacing: 3px;
-        }
+        .options-container { background: linear-gradient(135deg, #a8edea, #fed6e3); padding: 20px; border-radius: 15px; margin-bottom: 20px; }
+        .options-container label { display: flex; align-items: center; margin: 10px 0; cursor: pointer; font-weight: 500; transition: transform 0.2s; }
+        .options-container label:hover { transform: translateX(5px); }
+        .options-container input[type="checkbox"] { width: 24px; height: 24px; margin-right: 10px; cursor: pointer; }
 
-        .options-container {
-            background: linear-gradient(135deg, #a8edea, #fed6e3);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-        }
-
-        .options-container label {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            cursor: pointer;
-            font-weight: 500;
-            transition: transform 0.2s;
-        }
-
-        .options-container label:hover {
-            transform: translateX(5px);
-        }
-
-        .options-container input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .fab-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            z-index: 100;
-        }
-
+        .fab-container { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 100; }
         .fab {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            cursor: pointer;
-            font-size: 1.5rem;
-            transition: all 0.3s;
+            width: 60px; height: 60px; background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
+            color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3); cursor: pointer; font-size: 1.5rem; transition: all 0.3s;
         }
-
-        .fab:hover {
-            transform: scale(1.1) rotate(15deg);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4);
-        }
-
-        .fab-qr {
-            background: linear-gradient(135deg, var(--blue), var(--purple));
-        }
-
-        .fab-qr:hover {
-            transform: scale(1.1) rotate(-15deg);
-        }
+        .fab:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 12px 35px rgba(0,0,0,0.4); }
+        .fab-qr { background: linear-gradient(135deg, var(--blue), var(--purple)); }
+        .fab-qr:hover { transform: scale(1.1) rotate(-15deg); }
 
         .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(10px);
+            z-index: 1000; display: none; justify-content: center; align-items: center; animation: fadeIn 0.3s;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 25px;
-            width: 90%;
-            max-width: 450px;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            animation: modalSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            max-height: 85vh;
-            overflow-y: auto;
+            background: white; padding: 30px; border-radius: 25px; width: 90%; max-width: 450px;
+            position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            animation: modalSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); max-height: 85vh; overflow-y: auto;
         }
-
         @keyframes modalSlideIn {
-            from {
-                transform: scale(0.7) translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
+            from { transform: scale(0.7) translateY(-50px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
         }
-
         .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #95a5a6;
-            transition: all 0.3s;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            z-index: 10;
+            position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #95a5a6;
+            transition: all 0.3s; width: 35px; height: 35px; display: flex; align-items: center;
+            justify-content: center; border-radius: 50%; z-index: 10;
         }
+        .close-btn:hover { color: var(--primary); background: rgba(231, 76, 60, 0.1); transform: rotate(90deg); }
 
-        .close-btn:hover {
-            color: var(--primary);
-            background: rgba(231, 76, 60, 0.1);
-            transform: rotate(90deg);
-        }
-
-        #qrcode-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        #qrcode {
-            margin: 20px 0;
-            padding: 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .share-url {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            word-break: break-all;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            margin: 15px 0;
-            border: 2px dashed var(--primary);
-        }
+        #qrcode-container { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        #qrcode { margin: 20px 0; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .share-url { background: #f8f9fa; padding: 15px; border-radius: 10px; word-break: break-all; font-family: 'Courier New', monospace; font-size: 0.9rem; margin: 15px 0; border: 2px dashed var(--primary); }
 
         #tao-animation-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95); z-index: 2000; display: none;
+            justify-content: center; align-items: center; flex-direction: column;
         }
-
-        #tao-image {
-            max-width: 90%;
-            max-height: 60vh;
-        }
-
-        .animation-text {
-            color: white;
-            font-size: 2rem;
-            margin-top: 30px;
-            font-weight: 700;
-            animation: glow 1s infinite;
-        }
-
+        #tao-image { max-width: 90%; max-height: 60vh; }
+        .animation-text { color: white; font-size: 2rem; margin-top: 30px; font-weight: 700; animation: glow 1s infinite; }
         @keyframes glow {
             0%, 100% { text-shadow: 0 0 20px #fff, 0 0 30px #f39c12; }
             50% { text-shadow: 0 0 40px #fff, 0 0 60px #f39c12; }
         }
 
         .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: var(--secondary);
-            position: fixed;
-            top: -10px;
-            z-index: 9999;
-            animation: confetti-fall 3s linear forwards;
+            position: fixed; width: 10px; height: 10px; background: var(--secondary);
+            top: -10px; z-index: 9999; animation: confetti-fall 3s linear forwards;
         }
-
         @keyframes confetti-fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
+            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
 
-        .status-summary {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            gap: 15px;
-        }
-
-        .status-card {
-            flex: 1;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        .status-card.success {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-        }
-
-        .status-card.danger {
-            background: linear-gradient(135deg, #ee0979, #ff6a00);
-        }
-
-        .status-card b {
-            font-size: 2rem;
-            display: block;
-            margin-top: 10px;
-        }
+        .status-summary { display: flex; justify-content: space-around; margin: 20px 0; gap: 15px; }
+        .status-card { flex: 1; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .status-card.success { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .status-card.danger { background: linear-gradient(135deg, #ee0979, #ff6a00); }
+        .status-card b { font-size: 2rem; display: block; margin-top: 10px; }
 
         .hidden { display: none !important; }
         .text-center { text-align: center; }
 
-        footer {
-            margin-top: auto;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #95a5a6;
-            padding-top: 25px;
-            border-top: 2px dashed #e0e0e0;
-        }
-
-        .bulk-actions {
-            display: flex;
-            gap: 10px;
-            margin: 10px 0;
-        }
-
-        .bulk-actions button {
-            flex: 1;
-        }
+        footer { margin-top: auto; text-align: center; font-size: 0.85rem; color: #95a5a6; padding-top: 25px; border-top: 2px dashed #e0e0e0; }
+        .bulk-actions { display: flex; gap: 10px; margin: 10px 0; }
+        .bulk-actions button { flex: 1; }
 
         @media (max-width: 600px) {
-            body {
-                padding-bottom: 100px;
-            }
-            
-            .container { 
-                padding: 20px;
-                margin-bottom: 30px;
-            }
-            
+            body { padding-bottom: 100px; }
+            .container { padding: 20px; margin-bottom: 30px; }
             h1 { font-size: 1.5rem; }
             .result-box { font-size: 2rem; }
             .hint-text { font-size: 1.1rem; }
             .hint-text .consonants { font-size: 1.5rem; }
             .mission-box .mission-text { font-size: 1.2rem; }
-            
-            .draw-button {
-                width: 170px !important;
-                height: 170px !important;
-                font-size: 1.5rem !important;
-            }
-
-            .fab-container {
-                bottom: 15px;
-                right: 15px;
-                gap: 8px;
-            }
-
-            .fab, .fab-qr {
-                width: 48px;
-                height: 48px;
-                font-size: 1.1rem;
-            }
-
-            .modal-content {
-                width: 95%;
-                padding: 20px;
-                max-height: 90vh;
-            }
-
-            .modal-tabs {
-                gap: 8px;
-            }
-
-            .modal-tabs button {
-                padding: 10px;
-                font-size: 0.85rem;
-            }
-
-            .btn-icon {
-                padding: 6px 10px !important;
-                font-size: 0.8rem;
-            }
+            .draw-button { width: 170px !important; height: 170px !important; font-size: 1.5rem !important; }
+            .fab-container { bottom: 15px; right: 15px; gap: 8px; }
+            .fab, .fab-qr { width: 48px; height: 48px; font-size: 1.1rem; }
+            .modal-content { width: 95%; padding: 20px; max-height: 90vh; }
+            .modal-tabs { gap: 8px; }
+            .modal-tabs button { padding: 10px; font-size: 0.85rem; }
+            .btn-icon { padding: 6px 10px !important; font-size: 0.8rem; }
         }
     </style>
 </head>
 <body>
+    <!-- 🔧 FIX: ย้าย audio มาไว้ใน body ปกติ ไม่ใช่ hidden เพื่อให้ browser ไม่บล็อก -->
     <audio id="sound-click" preload="auto">
         <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3" type="audio/mpeg">
     </audio>
-    <audio id="sound-drumroll" preload="auto">
+    <audio id="sound-drumroll" preload="auto" loop>
+        <!-- 🔧 FIX: เพิ่ม loop เพื่อให้เสียงวนซ้ำตลอดช่วงจับสลาก แทนที่จะหยุดเองตามความยาวไฟล์ -->
         <source src="https://nonthaphathr.github.io/uploadimg/chingroi.mp3" type="audio/mpeg">
     </audio>
     <audio id="sound-fanfare" preload="auto">
@@ -879,74 +358,44 @@
             <button class="primary" onclick="loginProfile()">
                 <i class="fas fa-sign-in-alt"></i> เข้าใช้งาน
             </button>
-            
             <div style="margin-top: 30px; border-top: 2px dashed #e0e0e0; padding-top: 20px; text-align: center;">
-                <small style="color: #95a5a6;">
-                    <i class="fas fa-code"></i> พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง
-                </small>
+                <small style="color: #95a5a6;"><i class="fas fa-code"></i> พัฒนาโดย ครูนนทพัทธ์ หิรัญเรือง</small>
             </div>
         </div>
 
         <!-- Setup Page -->
         <div id="page-setup" class="page">
             <h3><i class="fas fa-list"></i> จัดการรายชื่อ & ภารกิจ</h3>
-            
             <div class="tab-buttons">
-                <button onclick="switchTab('tab-names')" class="secondary">
-                    <i class="fas fa-user-friends"></i> รายชื่อ
-                </button>
-                <button onclick="switchTab('tab-missions')" class="secondary">
-                    <i class="fas fa-tasks"></i> ภารกิจ
-                </button>
-                <button onclick="switchTab('tab-settings')" class="secondary">
-                    <i class="fas fa-cog"></i> ตั้งค่า
-                </button>
+                <button onclick="switchTab('tab-names')" class="secondary"><i class="fas fa-user-friends"></i> รายชื่อ</button>
+                <button onclick="switchTab('tab-missions')" class="secondary"><i class="fas fa-tasks"></i> ภารกิจ</button>
+                <button onclick="switchTab('tab-settings')" class="secondary"><i class="fas fa-cog"></i> ตั้งค่า</button>
             </div>
 
             <div id="tab-names">
-                <textarea id="bulk-names" rows="5" placeholder="📝 วางรายชื่อที่นี่ (1 บรรทัดต่อ 1 ชื่อ) หรือ Copy จาก Excel มาวาง"></textarea>
-                <button onclick="addNames()" class="gold">
-                    <i class="fas fa-plus-circle"></i> เพิ่มรายชื่อ
-                </button>
-                
+                <textarea id="bulk-names" rows="5" placeholder="📝 วางรายชื่อที่นี่ (1 บรรทัดต่อ 1 ชื่อ)"></textarea>
+                <button onclick="addNames()" class="gold"><i class="fas fa-plus-circle"></i> เพิ่มรายชื่อ</button>
                 <div class="bulk-actions">
-                    <button onclick="clearAllNames()" class="danger">
-                        <i class="fas fa-trash-alt"></i> ลบทั้งหมด
-                    </button>
+                    <button onclick="clearAllNames()" class="danger"><i class="fas fa-trash-alt"></i> ลบทั้งหมด</button>
                 </div>
-                
                 <div class="list-container" id="preview-names-list"></div>
             </div>
 
             <div id="tab-missions" class="hidden">
                 <input type="text" id="mission-input" placeholder="🎯 ระบุภารกิจ เช่น ร้องเพลง 1 เพลง">
-                <button onclick="addMission()" class="gold">
-                    <i class="fas fa-plus"></i> เพิ่มภารกิจ
-                </button>
-                
+                <button onclick="addMission()" class="gold"><i class="fas fa-plus"></i> เพิ่มภารกิจ</button>
                 <div class="bulk-actions">
-                    <button onclick="clearAllMissions()" class="danger">
-                        <i class="fas fa-trash-alt"></i> ลบภารกิจทั้งหมด
-                    </button>
+                    <button onclick="clearAllMissions()" class="danger"><i class="fas fa-trash-alt"></i> ลบภารกิจทั้งหมด</button>
                 </div>
-                
                 <div class="list-container" id="mission-list-display"></div>
             </div>
 
             <div id="tab-settings" class="hidden">
-                <label style="font-weight: 600; display: block; margin-top: 10px;">
-                    <i class="fas fa-heading"></i> ชื่อระบบ:
-                </label>
+                <label style="font-weight: 600; display: block; margin-top: 10px;"><i class="fas fa-heading"></i> ชื่อระบบ:</label>
                 <input type="text" id="setting-title-input">
-                
-                <label style="font-weight: 600; display: block; margin-top: 15px;">
-                    <i class="fas fa-image"></i> ลิงก์โลโก้ (URL):
-                </label>
+                <label style="font-weight: 600; display: block; margin-top: 15px;"><i class="fas fa-image"></i> ลิงก์โลโก้ (URL):</label>
                 <input type="text" id="setting-logo-input">
-                
-                <button onclick="saveSettings()" class="primary">
-                    <i class="fas fa-save"></i> บันทึกการตั้งค่า
-                </button>
+                <button onclick="saveSettings()" class="primary"><i class="fas fa-save"></i> บันทึกการตั้งค่า</button>
             </div>
 
             <button onclick="goToPage('page-check')" class="primary" style="margin-top: 20px;">
@@ -957,19 +406,11 @@
         <!-- Check Page -->
         <div id="page-check" class="page">
             <h3><i class="fas fa-user-check"></i> ตรวจสอบผู้มีสิทธิ์จับสลาก</h3>
-            <p style="margin-bottom: 15px; color: #7f8c8d;">
-                ✓ ติ๊กออกสำหรับผู้ที่ไม่มา หรือสละสิทธิ์
-            </p>
-            
+            <p style="margin-bottom: 15px; color: #7f8c8d;">✓ ติ๊กออกสำหรับผู้ที่ไม่มา หรือสละสิทธิ์</p>
             <div class="list-container" id="check-list-container"></div>
-
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                <button onclick="goToPage('page-setup')" class="secondary">
-                    <i class="fas fa-arrow-left"></i> ย้อนกลับ
-                </button>
-                <button onclick="goToPage('page-draw')" class="primary">
-                    พร้อมจับสลาก! <i class="fas fa-gift"></i>
-                </button>
+                <button onclick="goToPage('page-setup')" class="secondary"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button>
+                <button onclick="goToPage('page-draw')" class="primary">พร้อมจับสลาก! <i class="fas fa-gift"></i></button>
             </div>
         </div>
 
@@ -977,7 +418,6 @@
         <div id="page-draw" class="page">
             <div class="text-center">
                 <h3><i class="fas fa-random"></i> จับสลาก</h3>
-                
                 <div class="options-container">
                     <label>
                         <input type="checkbox" id="opt-remove-drawn" checked>
@@ -1000,19 +440,15 @@
                     <p style="font-size: 1.2rem; color: var(--success); font-weight: 600; margin-bottom: 20px;">
                         🎉 ผลการสุ่มพร้อมแล้ว! 🎉
                     </p>
-                    
                     <div class="mission-box" id="result-mission-box">
                         <small>🎯 ภารกิจพิเศษ</small>
                         <span class="mission-text" id="result-mission-text"></span>
                     </div>
-
                     <div class="hint-text hidden" id="hint-display">
                         พยัญชนะในชื่อมี
                         <span class="consonants" id="consonants-display"></span>
                     </div>
-                    
                     <div class="result-box hidden" id="result-name-placeholder"></div>
-
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px;">
                         <button onclick="revealInitial()" class="outline" id="btn-reveal-consonants">
                             <i class="fas fa-eye"></i> เผยพยัญชนะ
@@ -1021,13 +457,11 @@
                             <i class="fas fa-star"></i> เปิดชื่อจริง!
                         </button>
                     </div>
-                    
                     <button onclick="resetDrawUI()" class="secondary" style="margin-top: 15px;">
                         <i class="fas fa-redo"></i> ปิด / สุ่มใหม่
                     </button>
                 </div>
             </div>
-            
             <button onclick="goToPage('page-check')" class="secondary" style="margin-top: auto;">
                 <i class="fas fa-edit"></i> กลับไปแก้ไขรายชื่อ
             </button>
@@ -1043,18 +477,10 @@
     </div>
 
     <div class="fab-container">
-        <div class="fab fab-qr" onclick="toggleQRModal()" title="QR Code">
-            <i class="fas fa-qrcode"></i>
-        </div>
-        <div class="fab" onclick="toggleStatusModal()" title="สถานะ">
-            <i class="fas fa-clipboard-list"></i>
-        </div>
-        <div class="fab" onclick="resetAllData()" title="เริ่มจับสลากใหม่" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-            <i class="fas fa-redo-alt"></i>
-        </div>
-        <div class="fab" onclick="logout()" title="ออกจากระบบ" style="background: linear-gradient(135deg, #ee0979, #ff6a00);">
-            <i class="fas fa-sign-out-alt"></i>
-        </div>
+        <div class="fab fab-qr" onclick="toggleQRModal()" title="QR Code"><i class="fas fa-qrcode"></i></div>
+        <div class="fab" onclick="toggleStatusModal()" title="สถานะ"><i class="fas fa-clipboard-list"></i></div>
+        <div class="fab" onclick="resetAllData()" title="เริ่มจับสลากใหม่" style="background: linear-gradient(135deg, #f093fb, #f5576c);"><i class="fas fa-redo-alt"></i></div>
+        <div class="fab" onclick="logout()" title="ออกจากระบบ" style="background: linear-gradient(135deg, #ee0979, #ff6a00);"><i class="fas fa-sign-out-alt"></i></div>
     </div>
 
     <!-- Status Modal -->
@@ -1062,31 +488,17 @@
         <div class="modal-content">
             <span class="close-btn" onclick="toggleStatusModal()">&times;</span>
             <h3 style="margin-bottom: 20px;">📊 สรุปสถานะ</h3>
-            
             <div class="status-summary">
-                <div class="status-card success">
-                    <span>จับแล้ว</span>
-                    <b id="count-drawn">0</b>
-                </div>
-                <div class="status-card danger">
-                    <span>เหลือ</span>
-                    <b id="count-left">0</b>
-                </div>
+                <div class="status-card success"><span>จับแล้ว</span><b id="count-drawn">0</b></div>
+                <div class="status-card danger"><span>เหลือ</span><b id="count-left">0</b></div>
             </div>
-
             <div class="modal-tabs">
-                <button onclick="switchModalTab('drawn-tab')" class="active" id="tab-btn-drawn">
-                    <i class="fas fa-check-circle"></i> จับแล้ว
-                </button>
-                <button onclick="switchModalTab('remaining-tab')" id="tab-btn-remaining">
-                    <i class="fas fa-user-clock"></i> ยังไม่จับ
-                </button>
+                <button onclick="switchModalTab('drawn-tab')" class="active" id="tab-btn-drawn"><i class="fas fa-check-circle"></i> จับแล้ว</button>
+                <button onclick="switchModalTab('remaining-tab')" id="tab-btn-remaining"><i class="fas fa-user-clock"></i> ยังไม่จับ</button>
             </div>
-
             <div id="drawn-tab" class="modal-tab-content active">
                 <div class="list-container" id="drawn-history-list"></div>
             </div>
-
             <div id="remaining-tab" class="modal-tab-content">
                 <div class="list-container" id="remaining-list"></div>
             </div>
@@ -1097,19 +509,12 @@
     <div id="qr-modal" class="overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="toggleQRModal()">&times;</span>
-            <h3 style="margin-bottom: 20px; text-align: center;">
-                <i class="fas fa-qrcode"></i> แชร์ระบบ QR Code
-            </h3>
-            
+            <h3 style="margin-bottom: 20px; text-align: center;"><i class="fas fa-qrcode"></i> แชร์ระบบ QR Code</h3>
             <div id="qrcode-container">
-                <p style="color: #7f8c8d; margin-bottom: 15px; text-align: center;">
-                    สแกน QR Code เพื่อเข้าใช้งานระบบ
-                </p>
+                <p style="color: #7f8c8d; margin-bottom: 15px; text-align: center;">สแกน QR Code เพื่อเข้าใช้งานระบบ</p>
                 <div id="qrcode"></div>
                 <div class="share-url" id="share-url"></div>
-                <button onclick="copyURL()" class="gold" style="margin-top: 15px;">
-                    <i class="fas fa-copy"></i> คัดลอกลิงก์
-                </button>
+                <button onclick="copyURL()" class="gold" style="margin-top: 15px;"><i class="fas fa-copy"></i> คัดลอกลิงก์</button>
             </div>
         </div>
     </div>
@@ -1118,13 +523,9 @@
     <div id="edit-name-modal" class="overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeEditNameModal()">&times;</span>
-            <h3 style="margin-bottom: 20px;">
-                <i class="fas fa-edit"></i> แก้ไขชื่อ
-            </h3>
+            <h3 style="margin-bottom: 20px;"><i class="fas fa-edit"></i> แก้ไขชื่อ</h3>
             <input type="text" id="edit-name-input" placeholder="ชื่อใหม่">
-            <button onclick="saveEditedName()" class="primary">
-                <i class="fas fa-save"></i> บันทึก
-            </button>
+            <button onclick="saveEditedName()" class="primary"><i class="fas fa-save"></i> บันทึก</button>
         </div>
     </div>
 
@@ -1132,13 +533,9 @@
     <div id="edit-mission-modal" class="overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="closeEditMissionModal()">&times;</span>
-            <h3 style="margin-bottom: 20px;">
-                <i class="fas fa-edit"></i> แก้ไขภารกิจ
-            </h3>
+            <h3 style="margin-bottom: 20px;"><i class="fas fa-edit"></i> แก้ไขภารกิจ</h3>
             <input type="text" id="edit-mission-input" placeholder="ภารกิจใหม่">
-            <button onclick="saveEditedMission()" class="primary">
-                <i class="fas fa-save"></i> บันทึก
-            </button>
+            <button onclick="saveEditedMission()" class="primary"><i class="fas fa-save"></i> บันทึก</button>
         </div>
     </div>
 
@@ -1150,9 +547,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, update, push, child, remove } 
-        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+            from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } 
-        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+            from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA45AAd4b2GG0ks-03i7K5iFS8GHc94msY",
@@ -1174,7 +571,9 @@
         let audioInitialized = false;
         let currentEditingKey = null;
         let currentEditingMissionIndex = null;
-        let drumrollTimeout = null; // เก็บ timeout สำหรับการหยุดเสียง
+
+        // 🔧 FIX: ใช้ตัวแปรเดียวสำหรับ drumroll timeout ที่ชัดเจน
+        let drumrollStopTimer = null;
 
         const el = id => document.getElementById(id);
 
@@ -1192,80 +591,77 @@
                 audio.volume = 0.3;
                 audio.load();
             });
-            
-            // เพิ่มระดับเสียงพิเศษสำหรับเสียงสำคัญ
             sounds.drumroll.volume = 0.85;
             sounds.winning.volume = 0.7;
-            
-            // Force preload สำหรับเสียงที่สำคัญ
-            sounds.drumroll.load();
-            sounds.winning.load();
-            
             audioInitialized = true;
-            console.log('Audio system initialized - ready for all devices');
+            console.log('Audio initialized');
+        }
+
+        // 🔧 FIX: ฟังก์ชันหยุดเสียง drumroll อย่างปลอดภัย
+        function stopDrumroll() {
+            // ล้าง timer ก่อนเสมอ
+            if (drumrollStopTimer) {
+                clearTimeout(drumrollStopTimer);
+                drumrollStopTimer = null;
+            }
+            // หยุดเสียงทันที
+            sounds.drumroll.pause();
+            sounds.drumroll.currentTime = 0;
         }
 
         function playSound(soundName) {
             if (!audioInitialized) initAudio();
-            
             const audio = sounds[soundName];
-            if (audio) {
-                // ตั้งค่า volume ตามประเภทเสียง
-                if (soundName === 'drumroll') {
-                    audio.volume = 0.85; // เพิ่ม volume สำหรับเสียงใหม่
-                    
-                    // ล้าง timeout ก่อนหน้า (ถ้ามี)
-                    if (drumrollTimeout) {
-                        clearTimeout(drumrollTimeout);
-                        drumrollTimeout = null;
-                    }
-                } else if (soundName === 'winning') {
-                    audio.volume = 0.7;
-                } else {
-                    audio.volume = 0.3;
-                }
-                
-                // Reset และเล่นเสียง
+            if (!audio) return;
+
+            if (soundName === 'drumroll') {
+                // 🔧 FIX: หยุด drumroll เก่าก่อนเล่นใหม่ทุกครั้ง
+                stopDrumroll();
+
+                audio.volume = 0.85;
                 audio.currentTime = 0;
-                
-                // สำหรับมือถือ - ใช้ promise chain เพื่อจัดการ autoplay policy
+
                 const playPromise = audio.play();
-                
                 if (playPromise !== undefined) {
                     playPromise
                         .then(() => {
-                            console.log(`${soundName} playing successfully`);
-                            
-                            // ตัดเสียง drumroll ที่ 4.3 วินาที
-                            if (soundName === 'drumroll') {
-                                drumrollTimeout = setTimeout(() => {
-                                    audio.pause();
-                                    audio.currentTime = 0;
-                                    console.log('Drumroll stopped at 4.3 seconds');
-                                    drumrollTimeout = null;
-                                }, 4300); // 4.3 วินาที
-                            }
+                            console.log('Drumroll playing (loop mode)');
+                            // 🔧 FIX: ตั้ง timer ให้หยุดหลัง 4.3 วินาที
+                            // loop=true จะทำให้วนซ้ำ และเราจะหยุดมันด้วย timer นี้
+                            drumrollStopTimer = setTimeout(() => {
+                                stopDrumroll();
+                                console.log('Drumroll auto-stopped after 4.3s');
+                            }, 4300);
                         })
-                        .catch(error => {
-                            console.log(`Audio play failed for ${soundName}:`, error);
-                            // ลองเล่นอีกครั้งสำหรับบางอุปกรณ์
-                            setTimeout(() => {
-                                audio.play().catch(e => console.log('Retry failed:', e));
-                            }, 100);
+                        .catch(err => {
+                            console.warn('Drumroll play failed:', err);
                         });
                 }
+                return; // ออกจากฟังก์ชันหลังจัดการ drumroll แล้ว
+            }
+
+            // เสียงอื่นๆ
+            if (soundName === 'winning') {
+                audio.volume = 0.7;
+            } else {
+                audio.volume = 0.3;
+            }
+
+            audio.currentTime = 0;
+            const p = audio.play();
+            if (p !== undefined) {
+                p.catch(err => console.warn(`${soundName} play failed:`, err));
             }
         }
 
+        // Init audio on first user interaction
         document.addEventListener('click', initAudio, { once: true });
         document.addEventListener('touchstart', initAudio, { once: true });
-        
-        // สำหรับ iOS - ต้อง interact ก่อน
         document.addEventListener('touchend', initAudio, { once: true });
 
         // Add click sound to all buttons
         document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON') {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
                 playSound('click');
             }
         });
@@ -1300,22 +696,13 @@
                 container.appendChild(particle);
             }
         }
-
         createParticles();
 
         window.switchModalTab = function(tabName) {
-            document.querySelectorAll('.modal-tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.modal-tabs button').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            document.querySelectorAll('.modal-tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.modal-tabs button').forEach(b => b.classList.remove('active'));
             el(tabName).classList.add('active');
-            if (tabName === 'drawn-tab') {
-                el('tab-btn-drawn').classList.add('active');
-            } else {
-                el('tab-btn-remaining').classList.add('active');
-            }
+            el(tabName === 'drawn-tab' ? 'tab-btn-drawn' : 'tab-btn-remaining').classList.add('active');
         }
 
         window.toggleQRModal = function() {
@@ -1336,27 +723,17 @@
             const shareURL = currentURL + '?profile=' + encodeURIComponent(currentProfileId);
             shareUrlDiv.textContent = shareURL;
             new QRCode(qrcodeContainer, {
-                text: shareURL,
-                width: 256,
-                height: 256,
-                colorDark: '#2c3e50',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H
+                text: shareURL, width: 256, height: 256,
+                colorDark: '#2c3e50', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.H
             });
         }
 
         window.copyURL = function() {
-            const shareUrlDiv = el('share-url');
-            const url = shareUrlDiv.textContent;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('📋 คัดลอกลิงก์แล้ว!');
-            }).catch(() => {
-                const textArea = document.createElement('textarea');
-                textArea.value = url;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
+            const url = el('share-url').textContent;
+            navigator.clipboard.writeText(url).then(() => alert('📋 คัดลอกลิงก์แล้ว!')).catch(() => {
+                const t = document.createElement('textarea');
+                t.value = url; document.body.appendChild(t); t.select();
+                document.execCommand('copy'); document.body.removeChild(t);
                 alert('📋 คัดลอกลิงก์แล้ว!');
             });
         }
@@ -1367,21 +744,18 @@
             if (profileParam) {
                 el('profile-input').value = profileParam;
                 if (!currentProfileId && isUserLoggedIn) {
-                    setTimeout(() => {
-                        loginProfile();
-                    }, 500);
+                    setTimeout(() => loginProfile(), 500);
                 }
             }
         }
 
-        signInAnonymously(auth).catch((error) => {
+        signInAnonymously(auth).catch(error => {
             console.error("Auth Error:", error);
             alert("⚠️ ไม่สามารถเชื่อมต่อระบบความปลอดภัยได้ กรุณารีเฟรช");
         });
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                console.log("🔒 Secure Connection Established");
                 isUserLoggedIn = true;
                 checkURLParams();
                 if (currentProfileId) {
@@ -1395,10 +769,7 @@
         });
 
         window.loginProfile = function() {
-            if (!isUserLoggedIn) {
-                alert("⏳ กำลังเชื่อมต่อระบบฐานข้อมูล... กรุณารอสักครู่");
-                return;
-            }
+            if (!isUserLoggedIn) { alert("⏳ กำลังเชื่อมต่อ... กรุณารอสักครู่"); return; }
             const input = el('profile-input').value.trim();
             if (!input) return alert("⚠️ กรุณากรอกชื่อโปรไฟล์");
             const safeId = input.replace(/[^a-zA-Z0-9ก-๙]/g, "_");
@@ -1413,9 +784,7 @@
                             title: "🎊 ระบบจับสลากงานเลี้ยงปีใหม่ 🎊",
                             logo: "https://img5.pic.in.th/file/secure-sv1/-27d109079d78fadd36.png"
                         },
-                        participants: {},
-                        missions: [],
-                        history: {}
+                        participants: {}, missions: [], history: {}
                     });
                 } else {
                     profileData = data;
@@ -1428,7 +797,7 @@
         window.goToPage = function(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             el(pageId).classList.add('active');
-            if(pageId === 'page-check' || pageId === 'page-setup') renderApp();
+            if (pageId === 'page-check' || pageId === 'page-setup') renderApp();
         }
 
         function renderApp() {
@@ -1453,11 +822,7 @@
                 const name = line.trim();
                 if (name) {
                     const newKey = push(child(ref(db), 'profiles/' + currentProfileId + '/participants')).key;
-                    updates['profiles/' + currentProfileId + '/participants/' + newKey] = {
-                        name: name,
-                        active: true, 
-                        drawn: false
-                    };
+                    updates['profiles/' + currentProfileId + '/participants/' + newKey] = { name, active: true, drawn: false };
                 }
             });
             update(ref(db), updates);
@@ -1476,21 +841,11 @@
             el('edit-name-input').value = currentName;
             el('edit-name-modal').style.display = 'flex';
         }
-
-        window.closeEditNameModal = function() {
-            el('edit-name-modal').style.display = 'none';
-            currentEditingKey = null;
-        }
-
+        window.closeEditNameModal = function() { el('edit-name-modal').style.display = 'none'; currentEditingKey = null; }
         window.saveEditedName = function() {
             const newName = el('edit-name-input').value.trim();
-            if (!newName) {
-                alert("⚠️ กรุณากรอกชื่อ");
-                return;
-            }
-            update(ref(db, 'profiles/' + currentProfileId + '/participants/' + currentEditingKey), {
-                name: newName
-            });
+            if (!newName) { alert("⚠️ กรุณากรอกชื่อ"); return; }
+            update(ref(db, 'profiles/' + currentProfileId + '/participants/' + currentEditingKey), { name: newName });
             closeEditNameModal();
             alert("✅ แก้ไขชื่อเรียบร้อย");
         }
@@ -1509,43 +864,30 @@
             update(ref(db, 'profiles/' + currentProfileId), { missions: currentMissions });
             el('mission-input').value = "";
         }
-
         window.clearAllMissions = function() {
             if (!confirm("⚠️ ต้องการลบภารกิจทั้งหมดจริงหรือไม่?")) return;
             update(ref(db, 'profiles/' + currentProfileId), { missions: [] });
             alert("✅ ลบภารกิจทั้งหมดแล้ว");
         }
-
         window.editMission = function(index) {
             const currentMissions = profileData.missions || [];
-            const currentMission = currentMissions[index];
             currentEditingMissionIndex = index;
-            el('edit-mission-input').value = currentMission;
+            el('edit-mission-input').value = currentMissions[index];
             el('edit-mission-modal').style.display = 'flex';
         }
-
-        window.closeEditMissionModal = function() {
-            el('edit-mission-modal').style.display = 'none';
-            currentEditingMissionIndex = null;
-        }
-
+        window.closeEditMissionModal = function() { el('edit-mission-modal').style.display = 'none'; currentEditingMissionIndex = null; }
         window.saveEditedMission = function() {
             const newMission = el('edit-mission-input').value.trim();
-            if (!newMission) {
-                alert("⚠️ กรุณากรอกภารกิจ");
-                return;
-            }
+            if (!newMission) { alert("⚠️ กรุณากรอกภารกิจ"); return; }
             const currentMissions = profileData.missions || [];
             currentMissions[currentEditingMissionIndex] = newMission;
             update(ref(db, 'profiles/' + currentProfileId), { missions: currentMissions });
             closeEditMissionModal();
             alert("✅ แก้ไขภารกิจเรียบร้อย");
         }
-
         window.deleteMission = function(index) {
             const currentMissions = profileData.missions || [];
-            const mission = currentMissions[index];
-            if (!confirm(`ต้องการลบภารกิจ "${mission}" หรือไม่?`)) return;
+            if (!confirm(`ต้องการลบภารกิจ "${currentMissions[index]}" หรือไม่?`)) return;
             currentMissions.splice(index, 1);
             update(ref(db, 'profiles/' + currentProfileId), { missions: currentMissions });
             alert("✅ ลบภารกิจแล้ว");
@@ -1565,15 +907,13 @@
             const checkContainer = el('check-list-container');
             previewContainer.innerHTML = "";
             checkContainer.innerHTML = "";
-            let countDrawn = 0;
-            let countLeft = 0;
+            let countDrawn = 0, countLeft = 0;
 
             Object.entries(pList).forEach(([key, p]) => {
                 previewContainer.innerHTML += `
                     <div class="list-item">
                         <div class="list-item-content">
-                            <i class="fas fa-user" style="color: var(--primary);"></i>
-                            ${p.name}
+                            <i class="fas fa-user" style="color: var(--primary);"></i>${p.name}
                         </div>
                         <div class="list-item-actions">
                             <button class="btn-icon btn-edit" onclick="editName('${key}', '${p.name.replace(/'/g, "\\'")}')">
@@ -1584,7 +924,6 @@
                             </button>
                         </div>
                     </div>`;
-                
                 if (!p.drawn) {
                     const checked = p.active ? 'checked' : '';
                     checkContainer.innerHTML += `
@@ -1597,7 +936,6 @@
                     countDrawn++;
                 }
             });
-
             el('count-drawn').innerText = countDrawn;
             el('count-left').innerText = countLeft;
         }
@@ -1610,21 +948,16 @@
                 container.innerHTML += `
                     <div class="list-item">
                         <div class="list-item-content">
-                            <i class="fas fa-bullseye" style="color: var(--secondary);"></i>
-                            ${m}
+                            <i class="fas fa-bullseye" style="color: var(--secondary);"></i>${m}
                         </div>
                         <div class="list-item-actions">
-                            <button class="btn-icon btn-edit" onclick="editMission(${index})">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-icon btn-delete" onclick="deleteMission(${index})">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            <button class="btn-icon btn-edit" onclick="editMission(${index})"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon btn-delete" onclick="deleteMission(${index})"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>`;
             });
         }
-        
+
         function renderHistory() {
             const hList = profileData.history || {};
             const container = el('drawn-history-list');
@@ -1637,9 +970,7 @@
             arr.forEach(h => {
                 container.innerHTML += `
                     <div class="list-item" style="flex-direction:column; align-items:flex-start;">
-                        <strong style="color: var(--primary);">
-                            <i class="fas fa-trophy"></i> ${h.name}
-                        </strong>
+                        <strong style="color: var(--primary);"><i class="fas fa-trophy"></i> ${h.name}</strong>
                         ${h.mission ? `<small style="color: var(--secondary); margin-top: 5px;">🎯 ภารกิจ: ${h.mission}</small>` : ''}
                     </div>`;
             });
@@ -1657,8 +988,7 @@
             remaining.forEach(([key, p]) => {
                 container.innerHTML += `
                     <div class="list-item">
-                        <i class="fas fa-user-clock" style="margin-right: 10px; color: var(--blue);"></i>
-                        ${p.name}
+                        <i class="fas fa-user-clock" style="margin-right: 10px; color: var(--blue);"></i>${p.name}
                     </div>`;
             });
         }
@@ -1677,24 +1007,20 @@
         window.startDraw = function() {
             const pList = profileData.participants || {};
             const candidates = Object.entries(pList).filter(([key, val]) => val.active && !val.drawn);
-            if (candidates.length === 0) {
-                alert("⚠️ ไม่เหลือรายชื่อให้จับแล้ว!");
-                return;
-            }
-            const randomIndex = Math.floor(Math.random() * candidates.length);
-            const winnerEntry = candidates[randomIndex];
+            if (candidates.length === 0) { alert("⚠️ ไม่เหลือรายชื่อให้จับแล้ว!"); return; }
+
+            const winnerEntry = candidates[Math.floor(Math.random() * candidates.length)];
             let mission = null;
             if (el('opt-enable-missions').checked) {
                 const missions = profileData.missions || [];
-                if (missions.length > 0) {
-                    mission = missions[Math.floor(Math.random() * missions.length)];
-                }
+                if (missions.length > 0) mission = missions[Math.floor(Math.random() * missions.length)];
             }
-            currentDrawResult = {
-                key: winnerEntry[0],
-                name: winnerEntry[1].name,
-                mission: mission
-            };
+
+            currentDrawResult = { key: winnerEntry[0], name: winnerEntry[1].name, mission };
+
+            // 🔧 FIX: หยุด drumroll เก่าก่อนเริ่มรอบใหม่
+            stopDrumroll();
+            // เล่นเสียงใหม่
             playSound('drumroll');
             playTaoAnimation();
         }
@@ -1702,35 +1028,22 @@
         function playTaoAnimation() {
             const container = el('tao-animation-container');
             const img = el('tao-image');
-            
-            // สุ่มเลือกชุด animation (ชุดที่ 1 หรือชุดที่ 2)
             const animationSets = [
-                {
-                    img1: "https://nonthaphathr.github.io/uploadimg/tao1.png",
-                    img2: "https://nonthaphathr.github.io/uploadimg/tao2.png"
-                },
-                {
-                    img1: "https://nonthaphathr.github.io/uploadimg/tao3.png",
-                    img2: "https://nonthaphathr.github.io/uploadimg/tao4.png"
-                }
+                { img1: "https://nonthaphathr.github.io/uploadimg/tao1.png", img2: "https://nonthaphathr.github.io/uploadimg/tao2.png" },
+                { img1: "https://nonthaphathr.github.io/uploadimg/tao3.png", img2: "https://nonthaphathr.github.io/uploadimg/tao4.png" }
             ];
-            
-            // สุ่มเลือกชุด
             const selectedSet = animationSets[Math.floor(Math.random() * animationSets.length)];
-            const img1 = selectedSet.img1;
-            const img2 = selectedSet.img2;
-            
             container.style.display = 'flex';
             let toggle = false;
             const interval = setInterval(() => {
-                img.src = toggle ? img1 : img2;
+                img.src = toggle ? selectedSet.img1 : selectedSet.img2;
                 toggle = !toggle;
             }, 300);
             setTimeout(() => {
                 clearInterval(interval);
                 container.style.display = 'none';
                 showRevealUI();
-            }, 4300); // ปรับเวลาให้ตรงกับเสียงที่ 4.3 วินาที
+            }, 4300);
         }
 
         function showRevealUI() {
@@ -1748,21 +1061,12 @@
         function extractConsonants(name) {
             const thaiConsonants = /[ก-ฮ]/g;
             const matches = name.match(thaiConsonants);
-            
             if (!matches || matches.length === 0) {
                 return name[0] + (name.length > 1 ? ' ' + name[name.length - 1] : '');
             }
-            
-            const consonants = [];
-            consonants.push(matches[0]);
-            if (matches.length > 1) {
-                consonants.push(matches[matches.length - 1]);
-            }
-            
-            for (let i = 3; i < matches.length - 1; i += 3) {
-                consonants.push(matches[i]);
-            }
-            
+            const consonants = [matches[0]];
+            if (matches.length > 1) consonants.push(matches[matches.length - 1]);
+            for (let i = 3; i < matches.length - 1; i += 3) consonants.push(matches[i]);
             return [...new Set(consonants)].join(' ');
         }
 
@@ -1773,9 +1077,7 @@
             el('consonants-display').innerText = consonants;
             el('hint-display').classList.remove('hidden');
             el('hint-display').style.animation = 'none';
-            setTimeout(() => {
-                el('hint-display').style.animation = 'bounceIn 0.6s';
-            }, 10);
+            setTimeout(() => { el('hint-display').style.animation = 'bounceIn 0.6s'; }, 10);
         }
 
         window.revealFull = function() {
@@ -1795,9 +1097,7 @@
                     resultBox.appendChild(span);
                 }, i * 100);
             }
-            setTimeout(() => {
-                saveDrawResult();
-            }, name.length * 100 + 500);
+            setTimeout(() => saveDrawResult(), name.length * 100 + 500);
         }
 
         function saveDrawResult() {
@@ -1807,14 +1107,14 @@
             }
             const historyKey = push(child(ref(db), 'profiles/' + currentProfileId + '/history')).key;
             updates['profiles/' + currentProfileId + '/history/' + historyKey] = {
-                name: currentDrawResult.name,
-                mission: currentDrawResult.mission || null,
-                timestamp: Date.now()
+                name: currentDrawResult.name, mission: currentDrawResult.mission || null, timestamp: Date.now()
             };
             update(ref(db), updates);
         }
 
         window.resetDrawUI = function() {
+            // 🔧 FIX: หยุด drumroll ถ้ายังเล่นอยู่เมื่อกด reset
+            stopDrumroll();
             el('reveal-controls').classList.add('hidden');
             el('hint-display').classList.add('hidden');
             el('result-name-placeholder').classList.add('hidden');
@@ -1833,50 +1133,29 @@
         }
 
         window.resetAllData = function() {
-            if (!confirm("⚠️ ต้องการเริ่มจับสลากใหม่หรือไม่?\n\n• ประวัติการจับสลากจะถูกลบทั้งหมด\n• รายชื่อทุกคนจะกลับมาให้จับได้อีกครั้ง\n• รายชื่อและภารกิจจะยังอยู่")) {
-                return;
-            }
-
+            if (!confirm("⚠️ ต้องการเริ่มจับสลากใหม่หรือไม่?\n\n• ประวัติการจับสลากจะถูกลบทั้งหมด\n• รายชื่อทุกคนจะกลับมาให้จับได้อีกครั้ง\n• รายชื่อและภารกิจจะยังอยู่")) return;
             const pList = profileData.participants || {};
             const updates = {};
-
-            // Reset ทุกคนให้ drawn = false
             Object.keys(pList).forEach(key => {
                 updates['profiles/' + currentProfileId + '/participants/' + key + '/drawn'] = false;
             });
-
-            // ล้าง history
             updates['profiles/' + currentProfileId + '/history'] = {};
-
             update(ref(db), updates);
-            
-            // Reset UI
             resetDrawUI();
-            
             alert("✅ เริ่มจับสลากใหม่แล้ว! พร้อมจับสลากอีกครั้ง 🎉");
-            
-            // กลับไปหน้า setup
             goToPage('page-setup');
         }
 
         window.logout = function() {
-            if (!confirm("ต้องการออกจากระบบและกลับไปหน้าเข้าสู่ระบบหรือไม่?")) {
-                return;
-            }
-
-            // ล้าง localStorage
+            if (!confirm("ต้องการออกจากระบบและกลับไปหน้าเข้าสู่ระบบหรือไม่?")) return;
             localStorage.removeItem('ny_profile_id');
             currentProfileId = "";
             profileData = {};
-            
-            // กลับไปหน้า login
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             el('page-login').classList.add('active');
             el('profile-input').value = "";
-            
             alert("👋 ออกจากระบบเรียบร้อย");
         }
-
     </script>
 </body>
 </html>
