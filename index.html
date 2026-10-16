@@ -747,6 +747,125 @@
         .reveal-actions { display: grid; gap: 10px; margin-top: 22px; }
         .reveal-actions .big { font-size: 1.3rem; padding: 18px; }
 
+        /* ===== กระดาษคลี่เปิดชื่อ ===== */
+        .result-box.paper-mode {
+            background: none;
+            -webkit-text-fill-color: initial;
+            display: block;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .paper {
+            position: relative;
+            margin: 0 auto;
+            width: min(94%, 980px);
+            padding: clamp(28px, 5vw, 64px) clamp(16px, 4vw, 48px);
+            background: linear-gradient(180deg, #fffdf6, #fbf1d9);
+            border-radius: 6px;
+            box-shadow: 0 18px 40px rgba(0,0,0,0.28), 0 0 0 1px rgba(160,120,60,0.25) inset;
+            perspective: 1100px;
+            color: #4a2c12;
+            animation: paperIn 0.7s cubic-bezier(.2,.9,.3,1.3) both;
+        }
+        /* รอยพับ 2 เส้น แบ่งกระดาษเป็น 3 ท่อน */
+        .paper::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            pointer-events: none;
+            background: linear-gradient(180deg,
+                transparent 33%, rgba(120,80,30,0.16) 33.3%, transparent 34.6%,
+                transparent 66%, rgba(120,80,30,0.16) 66.4%, transparent 67.7%);
+        }
+        .paper-name {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            row-gap: 6px;
+            line-height: 1.3;
+            font-weight: 700;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+        }
+        .paper-name .name-letter { animation: none; }
+        .paper-flap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 33.4%;
+            transform-origin: top center;
+            backface-visibility: hidden;
+            background: linear-gradient(180deg, #f3e4bf, #fffaf0 55%, #efdfb6);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.28);
+            z-index: 2;
+        }
+        .paper-flap.f1 { top: 0; border-radius: 6px 6px 0 0; }
+        .paper-flap.f2 { top: 33.3%; }
+        .paper-flap.f3 { top: 66.6%; border-radius: 0 0 6px 6px; }
+        .paper-flap.open { animation: flapOpen var(--dur, 1.1s) cubic-bezier(.45,0,.25,1) forwards; }
+        @keyframes flapOpen {
+            0%   { transform: rotateX(0); opacity: 1; }
+            70%  { opacity: 1; }
+            100% { transform: rotateX(-178deg); opacity: 0; }
+        }
+        .paper.wiggle { animation: paperWiggle 0.5s ease-in-out; }
+        @keyframes paperWiggle {
+            0%, 100% { transform: rotate(0) scale(1); }
+            20% { transform: rotate(-1.6deg) scale(1.015); }
+            45% { transform: rotate(1.6deg) scale(1.02); }
+            70% { transform: rotate(-0.8deg) scale(1.01); }
+        }
+        @keyframes paperIn {
+            from { transform: translateY(-50px) scale(0.5) rotate(-6deg); opacity: 0; }
+            to   { transform: none; opacity: 1; }
+        }
+        .paper.done { animation: paperGlow 1.4s ease-out; }
+        @keyframes paperGlow {
+            0%   { box-shadow: 0 0 0 0 rgba(254,202,87,0.9), 0 18px 40px rgba(0,0,0,0.28); transform: scale(1); }
+            35%  { box-shadow: 0 0 60px 20px rgba(254,202,87,0.85), 0 18px 40px rgba(0,0,0,0.28); transform: scale(1.04); }
+            100% { box-shadow: 0 0 0 0 rgba(254,202,87,0), 0 18px 40px rgba(0,0,0,0.28); transform: scale(1); }
+        }
+
+        /* ===== จอคอมพิวเตอร์: ขยายเต็มจอ อ่านง่าย ===== */
+        @media (min-width: 1024px) {
+            .container {
+                max-width: min(1500px, calc(100vw - 170px));
+                width: 100%;
+                padding: 32px 56px;
+                min-height: calc(100vh - 50px);
+            }
+            #app-logo { width: 84px; height: 84px; margin-bottom: 8px; }
+            h1 { font-size: 2.6rem; }
+            .page:not(#page-draw) { max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+            .draw-wrap {
+                display: grid;
+                grid-template-columns: 400px 1fr;
+                gap: 20px 44px;
+                align-items: start;
+            }
+            .draw-wrap.revealing { grid-template-columns: 1fr; }
+            .draw-topbar { grid-column: 1 / -1; }
+            #setup-area { text-align: left; }
+            .draw-stage {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 62vh;
+                width: 100%;
+            }
+            .draw-button { width: 300px !important; height: 300px !important; font-size: 2.4rem !important; }
+            .result-box { font-size: clamp(3rem, 5.2vw, 6rem); }
+            #reveal-controls { width: 100%; }
+            .reveal-actions { max-width: 640px; margin: 24px auto 0; width: 100%; }
+            .hint-text { font-size: 1.8rem; }
+            .hint-text .consonants { font-size: 3rem; }
+            .mission-box .mission-text { font-size: 2.2rem; }
+            .mission-box small { font-size: 1.4rem; }
+            #result-drawer { font-size: 1.9rem !important; }
+            #tao-image { height: min(72vh, 640px); width: auto; max-width: 92vw; object-fit: contain; }
+        }
+
         /* ซ่อนปุ่ม QR/สถานะ ตอนยังไม่ได้เข้าห้อง */
         .no-profile .needs-profile { display: none; }
 
@@ -1045,7 +1164,7 @@
 
     <div class="container">
         <header>
-            <img id="app-logo" src="https://img5.pic.in.th/file/secure-sv1/-27d109079d78fadd36.png" alt="Logo">
+            <img id="app-logo" src="https://img5.pic.in.th/file/secure-sv1/-27d109079d78fadd36.png" alt="Logo" referrerpolicy="no-referrer">
             <h1 id="app-title">🎊 ระบบจับสลากปีใหม่ 🎊</h1>
             <h2 id="current-profile-name">-</h2>
         </header>
@@ -1162,7 +1281,7 @@
 
         <!-- Draw Page -->
         <div id="page-draw" class="page">
-            <div class="text-center">
+            <div class="text-center draw-wrap" id="draw-wrap">
                 <div class="draw-topbar">
                     <button onclick="goToPage('page-check')" class="secondary">
                         <i class="fas fa-arrow-left"></i> แก้ไขรายชื่อ
@@ -1189,7 +1308,7 @@
                             <i class="fas fa-hand-point-up"></i> ใครเป็นคนจับ?
                         </label>
                         <div class="drawer-row" id="drawer-row">
-                            <select id="drawer-select" onchange="updateDrawButton()"></select>
+                            <select id="drawer-select" onchange="onDrawerChange()"></select>
                             <button onclick="randomizeDrawer()" class="gold" title="สุ่มชื่อผู้จับ">
                                 <i class="fas fa-dice"></i> สุ่ม
                             </button>
@@ -1213,6 +1332,7 @@
                     </details>
                 </div>
 
+                <div class="draw-stage">
                 <button class="draw-button" id="btn-draw" data-quiet onclick="startDraw()">
                     <div style="text-align: center;">
                         <i class="fas fa-dice" style="display: block; font-size: 2.5rem; margin-bottom: 10px;"></i>
@@ -1256,6 +1376,7 @@
                         </button>
                     </div>
                 </div>
+                </div><!-- /draw-stage -->
             </div>
 
         <footer>
@@ -2008,7 +2129,8 @@
             try { window.history.replaceState(null, '', window.location.pathname); } catch (e) {} // ลบ ?profile= ออกจาก URL
             el('profile-input').value = "";
             el('app-title').innerText = "🎊 ระบบจับสลากปีใหม่ 🎊";
-            el('app-logo').src = DEFAULT_LOGO;
+            setLogo(DEFAULT_LOGO);
+            nextDrawerKey = null;
             el('current-profile-name').innerText = "-";
             document.body.classList.add('no-profile');
             el('opt-pairing-mode').checked = false; // กันโหมดจับคู่ของห้องเก่าติดไปห้องใหม่
@@ -2050,7 +2172,7 @@
             if (!profileData.settings) return;
 
             el('app-title').innerText = profileData.settings.title || DEFAULT_TITLE;
-            el('app-logo').src = profileData.settings.logo || DEFAULT_LOGO;
+            setLogo(profileData.settings.logo);
             el('current-profile-name').innerText = "📁 Profile: " + currentProfileId;
 
             el('setting-title-input').value = profileData.settings.title || "";
@@ -2192,12 +2314,48 @@
             alert("✅ ลบภารกิจแล้ว");
         };
 
+        // แปลงลิงก์แชร์ยอดนิยมให้เป็นลิงก์รูปตรง ๆ (Google Drive / GitHub blob / Dropbox)
+        function normalizeLogoUrl(raw) {
+            let u = (raw || '').trim();
+            if (!u) return '';
+            let m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || u.match(/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([\w-]+)/);
+            if (m) return 'https://lh3.googleusercontent.com/d/' + m[1];
+            m = u.match(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/(.+)$/);
+            if (m) return 'https://raw.githubusercontent.com/' + m[1] + '/' + m[2] + '/' + m[3];
+            if (/dropbox\.com/.test(u)) return u.replace(/[?&]dl=0/, '').replace('www.dropbox.com', 'dl.dropboxusercontent.com');
+            return u;
+        }
+
+        // ภาพสำรองเมื่อโหลดโลโก้ไม่ได้ (วงกลมไล่สีมีอีโมจิ) ดีกว่าไอคอนรูปแตก
+        const LOGO_FALLBACK = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f093fb"/><stop offset="1" stop-color="#f5576c"/></linearGradient></defs><rect width="100" height="100" fill="url(#g)"/><text x="50" y="66" font-size="52" text-anchor="middle">🎊</text></svg>');
+
+        function setLogo(url) {
+            const img = el('app-logo');
+            const target = normalizeLogoUrl(url) || DEFAULT_LOGO;
+            if (img.dataset.src === target) return; // ไม่โหลดซ้ำทุกครั้งที่ข้อมูลอัปเดต
+            img.dataset.src = target;
+            img.referrerPolicy = 'no-referrer'; // กันเว็บฝากรูปบล็อกเพราะ referrer
+            img.onerror = () => { img.onerror = null; img.src = LOGO_FALLBACK; };
+            img.src = target;
+        }
+
         window.saveSettings = function () {
-            update(ref(db, 'profiles/' + currentProfileId + '/settings'), {
-                title: el('setting-title-input').value.trim() || DEFAULT_TITLE,
-                logo: el('setting-logo-input').value.trim() || DEFAULT_LOGO
-            }).catch(onWriteError);
-            alert("💾 บันทึกตั้งค่าแล้ว");
+            const logo = normalizeLogoUrl(el('setting-logo-input').value) || DEFAULT_LOGO;
+            const title = el('setting-title-input').value.trim() || DEFAULT_TITLE;
+            const save = () => {
+                update(ref(db, 'profiles/' + currentProfileId + '/settings'), { title: title, logo: logo }).catch(onWriteError);
+                el('setting-logo-input').value = logo;
+                alert("💾 บันทึกตั้งค่าแล้ว");
+            };
+            // ลองโหลดรูปก่อนบันทึก จะได้รู้ทันทีถ้าลิงก์ใช้ไม่ได้
+            const test = new Image();
+            test.referrerPolicy = 'no-referrer';
+            test.onload = save;
+            test.onerror = () => {
+                if (confirm("⚠️ โหลดรูปจากลิงก์นี้ไม่ได้\n\nต้องเป็นลิงก์ที่เปิดแล้วเห็นรูปตรง ๆ (ลงท้าย .png .jpg .webp เป็นต้น) ไม่ใช่หน้าเว็บที่มีรูปอยู่\n\nต้องการบันทึกต่อไปหรือไม่?")) save();
+            };
+            test.src = logo;
         };
 
         window.toggleActive = function (key, isActive) {
@@ -2382,7 +2540,15 @@
             sel.innerHTML = '<option value="">— เลือกผู้จับ —</option>' +
                 drawers.map(([k, p]) => `<option value="${esc(k)}">${esc(p.name)}</option>`).join('');
             if (drawers.some(([k]) => k === prev)) sel.value = prev;
+            // คนที่เพิ่งถูกสุ่มได้ จะเป็นผู้จับคนถัดไปโดยอัตโนมัติ (ถ้ายังไม่ได้จับ) เปลี่ยนเองได้
+            else if (nextDrawerKey && drawers.some(([k]) => k === nextDrawerKey)) sel.value = nextDrawerKey;
         }
+
+        let nextDrawerKey = null;
+        window.onDrawerChange = function () {
+            nextDrawerKey = null; // ผู้ใช้เลือกเอง ยกเลิกค่าเริ่มต้นอัตโนมัติ
+            updateDrawButton();
+        };
 
         function updatePairingStatus() {
             const box = el('pairing-status');
@@ -2436,6 +2602,7 @@
             } else if (pair) {
                 const who = sel.options[sel.selectedIndex];
                 sub = who ? who.text + ' จับ' : '';
+                if (who && nextDrawerKey && sel.value === nextDrawerKey) sub += ' (ต่อจากคนที่เพิ่งสุ่มได้)';
             }
             el('draw-btn-label').innerText = label;
             el('draw-btn-sub').innerText = sub;
@@ -2463,6 +2630,7 @@
             setTimeout(() => {
                 clearInterval(timer);
                 sel.value = finalValue;
+                nextDrawerKey = null;
                 pickingDrawer = false;
                 updateDrawButton();
             }, 1000);
@@ -2489,6 +2657,7 @@
                 if (h.roundId === pairing.roundId) updates[base + '/history/' + hk] = null;
             });
             update(ref(db), updates).catch(onWriteError);
+            nextDrawerKey = null;
             resetDrawUI();
         };
 
@@ -2614,6 +2783,7 @@
             if (!currentDrawResult) return;
             // ซ่อนตัวเลือกและปุ่มสุ่ม เหลือเฉพาะขั้นตอนเปิดผล
             el('setup-area').classList.add('hidden');
+            el('draw-wrap').classList.add('revealing');
             el('btn-draw').classList.add('hidden');
             el('btn-reveal-full').classList.remove('hidden');
             el('btn-reveal-consonants').classList.remove('hidden');
@@ -2691,36 +2861,66 @@
             const result = currentDrawResult;
             if (!result || result.revealed) return; // กันกดซ้ำ ไม่ให้บันทึกประวัติซ้ำ
             result.revealed = true;
+            if (result.drawerKey) nextDrawerKey = result.key; // คนที่สุ่มได้ = ผู้จับคนต่อไป
             setRevealButtons(false);
             el('btn-reveal-full').classList.add('hidden');
             el('btn-reveal-consonants').classList.add('hidden');
-            el('btn-next-draw').classList.remove('hidden');
 
-            playSound('winning');
-            createConfetti();
-            saveDrawResult(result); // บันทึกทันที ไม่รอให้ตัวอักษรขึ้นครบ (กันค่าหายถ้ารีเซ็ตกลางทาง)
+            saveDrawResult(result); // บันทึกทันที ไม่รอให้กระดาษคลี่จบ (กันค่าหายถ้ารีเซ็ตกลางทาง)
 
+            // ----- สร้างกระดาษ: ชื่ออยู่ใต้ 3 ท่อนที่พับปิดไว้ -----
             const resultBox = el('result-name-placeholder');
             resultBox.innerHTML = '';
+            resultBox.classList.add('paper-mode');
             resultBox.classList.remove('hidden');
             el('hint-display').classList.add('hidden');
 
-            let delay = 0;
+            const paper = document.createElement('div');
+            paper.className = 'paper';
+            const nameEl = document.createElement('div');
+            nameEl.className = 'paper-name';
             result.name.split(/\s+/).filter(Boolean).forEach(word => {
                 const wrap = document.createElement('span');
                 wrap.className = 'name-word';
-                resultBox.appendChild(wrap);
                 splitGraphemes(word).forEach(ch => {
-                    revealTimers.push(setTimeout(() => {
-                        const span = document.createElement('span');
-                        span.className = 'name-letter reveal';
-                        span.textContent = ch;
-                        wrap.appendChild(span);
-                    }, delay));
-                    delay += 100;
+                    const span = document.createElement('span');
+                    span.className = 'name-letter';
+                    span.textContent = ch;
+                    wrap.appendChild(span);
                 });
-                delay += 100; // เว้นจังหวะระหว่างคำ
+                nameEl.appendChild(wrap);
             });
+            paper.appendChild(nameEl);
+            const flaps = [1, 2, 3].map(i => {
+                const f = document.createElement('div');
+                f.className = 'paper-flap f' + i;
+                paper.appendChild(f);
+                return f;
+            });
+            resultBox.appendChild(paper);
+
+            // ----- จังหวะลุ้น: คลี่ทีละท่อน มีหยุดสั่นกระดาษคั่น -----
+            const at = (ms, fn) => revealTimers.push(setTimeout(fn, ms));
+            const openFlap = (f, dur) => { f.style.setProperty('--dur', dur + 's'); f.classList.add('open'); playSound('reveal'); };
+            const wiggle = () => {
+                paper.classList.remove('wiggle');
+                void paper.offsetWidth;
+                paper.classList.add('wiggle');
+            };
+            at(900,  () => openFlap(flaps[0], 1.2));
+            at(2300, wiggle);
+            at(2900, () => openFlap(flaps[1], 1.2));
+            at(4300, wiggle);
+            at(5000, () => openFlap(flaps[2], 1.5));
+            at(5800, () => {               // ท่อนสุดท้ายเปิดจนเห็นชื่อ: เสียงชนะ + พลุ + เรืองแสง
+                playSound('winning');
+                createConfetti();
+                paper.classList.remove('wiggle');
+                void paper.offsetWidth;
+                paper.classList.add('done');
+                try { paper.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {}
+            });
+            at(6600, () => el('btn-next-draw').classList.remove('hidden'));
         };
 
         function saveDrawResult(result) {
@@ -2753,9 +2953,13 @@
             el('hint-display').classList.add('hidden');
             el('result-name-placeholder').classList.add('hidden');
             el('result-name-placeholder').innerHTML = '';
+            el('result-name-placeholder').classList.remove('paper-mode');
             el('setup-area').classList.remove('hidden');
             el('btn-draw').classList.remove('hidden');
+            el('draw-wrap').classList.remove('revealing');
             currentDrawResult = null;
+            const sel = el('drawer-select');
+            if (nextDrawerKey && !sel.value) renderDrawerSelect(); // ตั้งผู้จับคนต่อไปให้ทันที
             updateDrawButton();
         };
 
