@@ -705,6 +705,11 @@
         .pair-card .who { font-size: 1.35rem; font-weight: 700; color: var(--dark); word-break: break-word; }
         .pair-card .role { font-size: 0.8rem; color: #7f8c8d; margin-top: 10px; }
         .pair-card .hand { font-size: 1.05rem; font-weight: 600; color: #e17055; word-break: break-word; }
+        .pair-card .hand-list { display: flex; flex-direction: column; gap: 3px; margin-top: 2px; }
+        .pair-card .hand-list .hand { font-size: 0.95rem; }
+        .gdot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+        .actor.hand .actor-name.list { font-size: 1.05rem; line-height: 1.5; }
+        .actor.hand .actor-name.list div { padding: 1px 0; }
 
         .round-steps { display: flex; gap: 8px; justify-content: center; margin-bottom: 14px; }
         .round-steps span { width: 14px; height: 14px; border-radius: 50%; background: #dfe6e9; }
@@ -1518,7 +1523,7 @@
                 <div class="game-hero">
                     <div class="game-hero-title">🎮 เกมปาร์ตี้ ป.โท บริหารการศึกษา</div>
                     <ol>
-                        <li>สุ่มตัวแทนฝ่ายงาน <b class="gs-reps-t">4</b> คน และสุ่มมือติดโพสต์อิทอีก <b class="gs-reps-t">4</b> คน ยืนล้อมตัวแทนคนละ 1 คน</li>
+                        <li>สุ่มตัวแทนฝ่ายงาน <b class="gs-reps-t">4</b> คน (คนละฝ่าย ไม่ซ้ำกัน) และสุ่มมือติดโพสต์อิทเซตละ <b class="gs-hands-t">4</b> คน ยืนล้อมตัวแทนแต่ละคน โดยมือต้องไม่ใช่ฝ่ายเดียวกับตัวแทน</li>
                         <li>สุ่มคำถามให้ตัวแทนคนละ 1 ข้อ (มีทั้งง่ายและยาก) จับเวลา <b class="gs-ans-t">20</b> วิ ระหว่างนั้นให้มือติดโพสต์อิทบนตัวตัวแทนให้มากที่สุด หยุดเมื่อตอบได้</li>
                         <li>ครบทุกคนแล้วเปิดเพลงแดนซ์ <b class="gs-dance-t">20</b> วิ ให้ทุกคนเต้นสลัดโพสต์อิท ใครเหลือน้อยสุดชนะ 🏆</li>
                     </ol>
@@ -1586,7 +1591,10 @@
                                 <input type="number" id="gs-music-start" min="0" onchange="saveGameSettings()">
                             </div>
                         </div>
-                        <label class="lbl" for="gs-depts">ชื่อฝ่ายงาน (คั่นด้วย , เรียงตามตัวแทนคนที่ 1, 2, 3...)</label>
+                        <label class="lbl" for="gs-hands">จำนวนมือติดโพสต์อิทต่อตัวแทน (คน)</label>
+                        <input type="number" id="gs-hands" min="1" max="6" onchange="saveGameSettings()">
+                        <p class="hint-s">ตัวแทนสุ่มจากฝ่ายที่กำหนดไว้ในรายชื่อห้อง คนละฝ่าย ถ้าตั้งจำนวนตัวแทนมากกว่าจำนวนฝ่าย ระบบจะใช้เท่าจำนวนฝ่าย</p>
+                        <label class="lbl" for="gs-depts">ชื่อฝ่ายสำรอง (ใช้กับคนที่ไม่มีฝ่ายในรายชื่อ คั่นด้วย ,)</label>
                         <input type="text" id="gs-depts" onchange="saveGameSettings()" placeholder="ฝ่ายวิชาการ, ฝ่ายงบประมาณ, ฝ่ายบุคคล, ฝ่ายบริหารทั่วไป">
                         <label class="lbl" for="gs-music-url">ลิงก์เพลงเต้น (ลิงก์ตรงไฟล์เสียง เช่น .mp3)</label>
                         <input type="text" id="gs-music-url" onchange="saveGameSettings()" placeholder="https://.../song.mp3 (เว้นว่าง = ใช้จังหวะแดนซ์ในระบบ)">
@@ -1606,6 +1614,7 @@
             <!-- ผลสุ่มทีม -->
             <div id="gv-pick" class="hidden text-center">
                 <h3 style="justify-content:center;"><i class="fas fa-users"></i> ผลการสุ่มตัวแทนและมือติดโพสต์อิท</h3>
+                <p class="hint-s hidden" id="pick-note" style="margin-bottom:10px;"></p>
                 <div class="pair-grid" id="pick-grid"></div>
                 <div class="btn-row">
                     <button onclick="rollGameTeams()" class="outline"><i class="fas fa-dice"></i> สุ่มใหม่</button>
@@ -1624,7 +1633,7 @@
                     </div>
                     <div class="actor hand">
                         <div class="actor-label">🖐️ มือติดโพสต์อิท</div>
-                        <div class="actor-name" id="r-hand"></div>
+                        <div class="actor-name list" id="r-hand"></div>
                     </div>
                 </div>
 
@@ -3392,6 +3401,7 @@
             const num = (v, d, min, max) => { v = parseInt(v, 10); return isFinite(v) ? Math.min(max, Math.max(min, v)) : d; };
             return {
                 reps: num(s.reps, 4, 2, 8),
+                hands: num(s.hands, 4, 1, 6),
                 answerSec: num(s.answerSec, 20, 5, 120),
                 danceSec: num(s.danceSec, 20, 5, 300),
                 musicStart: num(s.musicStart, 0, 0, 3600),
@@ -3438,6 +3448,8 @@
                 '<p style="text-align:center;color:#95a5a6;padding:16px;">ยังไม่มีคำถาม เพิ่มเองด้านบน หรือกด "โหลดคำถามตัวอย่าง"</p>';
 
             setIfIdle('gs-reps', st.reps);
+            setIfIdle('gs-hands', st.hands);
+            document.querySelectorAll('.gs-hands-t').forEach(n => { n.innerText = st.hands; });
             setIfIdle('gs-answer-sec', st.answerSec);
             setIfIdle('gs-dance-sec', st.danceSec);
             setIfIdle('gs-music-start', st.musicStart);
@@ -3454,6 +3466,7 @@
             const url = normalizeMusicUrl(el('gs-music-url').value);
             update(ref(db, gameBase() + '/settings'), {
                 reps: Math.min(8, Math.max(2, num('gs-reps', 4))),
+                hands: Math.min(6, Math.max(1, num('gs-hands', 4))),
                 answerSec: Math.min(120, Math.max(5, num('gs-answer-sec', 20))),
                 danceSec: Math.min(300, Math.max(5, num('gs-dance-sec', 20))),
                 musicStart: Math.max(0, num('gs-music-start', 0)),
@@ -3580,37 +3593,82 @@
             const st = getGameSettings();
             if (!getGameQuestions().length) { alert("⚠️ ยังไม่มีคำถามในคลัง กรุณาเพิ่มคำถามก่อน"); return; }
             const people = Object.values(profileData.participants || {}).filter(p => p.active);
-            if (people.length < st.reps * 2) {
-                alert('⚠️ ต้องมีผู้เข้าร่วมอย่างน้อย ' + (st.reps * 2) + ' คน (ตัวแทน ' + st.reps + ' + มือติดโพสต์อิท ' + st.reps + ') ตอนนี้มี ' + people.length + ' คน');
+            const need = st.reps * (1 + st.hands);
+            if (people.length < need) {
+                alert('⚠️ ต้องมีผู้เข้าร่วมอย่างน้อย ' + need + ' คน (ตัวแทน ' + st.reps + ' + มือติดโพสต์อิท ' + st.hands + ' คน × ' + st.reps + ' เซต) ตอนนี้มี ' + people.length + ' คน');
                 return;
             }
             rollGameTeams();
         };
 
+        // สุ่มตัวแทน (คนละฝ่าย) + มือติดโพสต์อิทเซตละ nHands คน (ไม่ซ้ำคน และไม่ใช่ฝ่ายเดียวกับตัวแทน)
+        function pickGameTeams(people, nReps, nHands) {
+            const gids = [...new Set(people.filter(p => GROUPS[p.group]).map(p => p.group))];
+            const useGroups = gids.length >= 2;
+            const repCount = useGroups ? Math.min(nReps, gids.length) : nReps;
+            const capped = repCount < nReps;
+            for (let attempt = 0; attempt < 400; attempt++) {
+                let reps;
+                if (useGroups) {
+                    reps = shuffleArr(gids).slice(0, repCount).map(g => {
+                        const pool = people.filter(p => p.group === g);
+                        return pool[Math.floor(Math.random() * pool.length)];
+                    });
+                } else {
+                    reps = shuffleArr(people).slice(0, repCount);
+                }
+                const taken = new Set(reps.map(r => r.key));
+                const sets = [];
+                let ok = true;
+                for (const r of shuffleArr(reps)) {
+                    const pool = shuffleArr(people.filter(p => !taken.has(p.key) && !(useGroups && r.group && p.group === r.group)));
+                    if (pool.length < nHands) { ok = false; break; }
+                    const mine = pool.slice(0, nHands);
+                    mine.forEach(p => taken.add(p.key));
+                    sets.push([r.key, mine]);
+                }
+                if (ok) {
+                    const byRep = new Map(sets);
+                    return { reps, hands: reps.map(r => byRep.get(r.key)), capped, relaxed: false, groupsOn: useGroups };
+                }
+            }
+            // จัดตามเงื่อนไขฝ่ายไม่ได้ (คนไม่พอ) → ผ่อนเงื่อนไข สุ่มธรรมดาและแจ้งผู้ใช้
+            const sh = shuffleArr(people);
+            const reps = sh.slice(0, repCount);
+            const hands = reps.map((r, i) => sh.slice(repCount + i * nHands, repCount + (i + 1) * nHands));
+            return { reps, hands, capped, relaxed: true, groupsOn: useGroups };
+        }
+
         window.rollGameTeams = function () {
             const st = getGameSettings();
             const people = Object.entries(profileData.participants || {})
                 .filter(([k, p]) => p.active).map(([k, p]) => ({ key: k, name: p.name, group: p.group || 0 }));
-            if (people.length < st.reps * 2) { alert("⚠️ ผู้เข้าร่วมไม่พอ"); return; }
+            if (people.length < st.reps * (1 + st.hands)) { alert("⚠️ ผู้เข้าร่วมไม่พอ"); return; }
             stopGameTimer();
             stopDanceMusic(0);
-            const sh = shuffleArr(people);
             const depts = st.depts.split(',').map(s => s.trim()).filter(Boolean);
+            const t = pickGameTeams(people, st.reps, st.hands);
             G = {
-                // ถ้าตัวแทนมีฝ่ายประจำตัว (จากรายชื่อห้อง) ใช้ฝ่ายนั้น ไม่งั้นใช้ชื่อฝ่ายตามลำดับในตั้งค่า
-                reps: sh.slice(0, st.reps).map((p, i) => ({ ...p, dept: GROUPS[p.group] ? GROUPS[p.group].name : (depts[i] || ('ฝ่ายที่ ' + (i + 1))), stuck: 0, remain: null, result: null })),
-                hands: sh.slice(st.reps, st.reps * 2),
+                // ตัวแทนที่มีฝ่ายประจำตัว (จากรายชื่อห้อง) ใช้ฝ่ายนั้น ไม่งั้นใช้ชื่อฝ่ายสำรองตามลำดับ
+                reps: t.reps.map((p, i) => ({ ...p, dept: GROUPS[p.group] ? GROUPS[p.group].name : (depts[i] || ('ฝ่ายที่ ' + (i + 1))), stuck: 0, remain: null, result: null })),
+                hands: t.hands,            // อาร์เรย์ของเซตมือ (1 เซตต่อตัวแทน)
                 idx: 0,
-                used: new Set(),
+                used: loadUsedQ(),
                 cur: null
             };
+            const note = [];
+            if (t.capped) note.push('มีเพียง ' + t.reps.length + ' ฝ่าย จึงสุ่มตัวแทน ' + t.reps.length + ' คน (คนละฝ่าย)');
+            if (t.relaxed) note.push('⚠️ จัดตามเงื่อนไขฝ่ายไม่ได้ (คนไม่พอ) จึงสุ่มแบบไม่แบ่งฝ่าย');
+            if (!t.groupsOn) note.push('ห้องนี้ยังไม่ได้กำหนดฝ่ายในรายชื่อ จึงสุ่มแบบไม่แบ่งฝ่าย');
+            el('pick-note').innerText = note.join(' · ');
+            el('pick-note').classList.toggle('hidden', !note.length);
             el('pick-grid').innerHTML = G.reps.map((r, i) => `
                 <div class="pair-card" style="animation-delay:${i * 0.25}s">
                     <span class="dept" ${GROUPS[r.group] ? `style="background:${GROUPS[r.group].color}"` : ''}>${esc(r.dept)}</span>
                     <div class="role">ตัวแทน</div>
                     <div class="who">${esc(r.name)}</div>
-                    <div class="role">🖐️ มือติดโพสต์อิท</div>
-                    <div class="hand">${esc(G.hands[i].name)}</div>
+                    <div class="role">🖐️ มือติดโพสต์อิท ${G.hands[i].length} คน</div>
+                    <div class="hand-list">${G.hands[i].map(h => `<div class="hand">${GROUPS[h.group] ? `<i class="gdot" style="background:${GROUPS[h.group].color}"></i>` : ''}${esc(h.name)}</div>`).join('')}</div>
                 </div>`).join('');
             playSound('reveal');
             showGameView('pick');
@@ -3652,7 +3710,7 @@
             G.cur = { q: null, started: false, ended: false, correct: null, left: 0, stuck: 0, answerShown: false };
             el('r-dept').innerText = rep.dept;
             el('r-rep').innerText = rep.name;
-            el('r-hand').innerText = G.hands[G.idx].name;
+            el('r-hand').innerHTML = G.hands[G.idx].map(h => '<div>' + esc(h.name) + '</div>').join('');
             el('round-steps').innerHTML = G.reps.map((r, i) => '<span class="' + (i < G.idx ? 'done' : i === G.idx ? 'now' : '') + '"></span>').join('');
             el('r-qbox').classList.add('hidden');
             el('g-ring').classList.add('hidden');
@@ -3681,13 +3739,32 @@
             box.innerHTML = html;
         }
 
+        // จำคำถามที่ถูกสุ่มไปแล้ว (ในเครื่องนี้) ข้ามเกม จะได้ไม่ซ้ำจนกว่าจะใช้ครบทั้งคลัง
+        function usedQKey() { return 'gq_used_' + currentProfileId; }
+        function loadUsedQ() {
+            try {
+                const arr = JSON.parse(localStorage.getItem(usedQKey()) || '[]');
+                const valid = new Set(getGameQuestions().map(x => x.key));
+                return new Set((Array.isArray(arr) ? arr : []).filter(k => valid.has(k)));
+            } catch (e) { return new Set(); }
+        }
+        function saveUsedQ() {
+            try { localStorage.setItem(usedQKey(), JSON.stringify([...G.used])); } catch (e) { /* ไม่มีที่เก็บก็ไม่เป็นไร */ }
+        }
+
         let pickingQ = false;
         window.pickQuestion = function () {
             if (pickingQ || !G || G.cur.started) return;
             const all = getGameQuestions();
             if (!all.length) { alert("⚠️ ไม่มีคำถามในคลัง"); return; }
-            let pool = all.filter(x => !G.used.has(x.key));
-            if (!pool.length) { G.used.clear(); pool = all; } // ใช้ครบแล้ว วนใหม่
+            const lastKey = G.cur && G.cur.q ? G.cur.q.key : G.lastQ;
+            let pool = all.filter(x => !G.used.has(x.key) && x.key !== lastKey);
+            if (!pool.length) {
+                // ใช้ครบทั้งคลังแล้ว → เริ่มรอบใหม่ แต่ไม่หยิบข้อที่เพิ่งออกซ้ำทันที
+                G.used.clear();
+                pool = all.filter(x => x.key !== lastKey);
+                if (!pool.length) pool = all; // มีข้อเดียวในคลัง
+            }
             const chosen = pool[Math.floor(Math.random() * pool.length)];
             pickingQ = true;
             const box = el('r-qbox');
@@ -3705,6 +3782,8 @@
                     clearInterval(iv);
                     pickingQ = false;
                     G.used.add(chosen.key);
+                    G.lastQ = chosen.key;
+                    saveUsedQ();
                     G.cur.q = chosen;
                     el('r-qtext').innerText = chosen.q;
                     el('r-qbadge').className = 'q-badge ' + chosen.level;
