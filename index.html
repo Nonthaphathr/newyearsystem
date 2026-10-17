@@ -629,6 +629,37 @@
 
         .bulk-actions button { flex: 1; }
 
+        /* โหมดมือถือ (สแกน QR): ซ่อนปุ่มลอยและปุ่มเฉพาะเครื่องหลัก */
+        .remote-mode .fab-container, .remote-mode .only-host { display: none !important; }
+        .qr-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
+        .qr-tabs button { padding: 10px 4px; font-size: 0.82rem; background: #ecf0f1; color: var(--dark); margin: 0; }
+        .qr-tabs button.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; }
+        .gift-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0 8px; }
+        .gift-stats .gs { background: #fff; border-radius: 14px; padding: 10px 6px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+        .gift-stats .gs b { display: block; font-size: 1.7rem; line-height: 1.1; }
+        .gift-stats .gs span { font-size: 0.78rem; color: #7f8c8d; }
+        .gift-stats .gs.ok b { color: #27ae60; }
+        .gift-stats .gs.no b { color: #e67e22; }
+        .gift-bar { height: 10px; background: #ecf0f1; border-radius: 999px; overflow: hidden; margin-bottom: 12px; }
+        .gift-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #2ecc71, #27ae60); transition: width .3s; }
+        .gift-filter { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 8px 0; }
+        .gift-filter button { padding: 9px 4px; font-size: 0.88rem; background: #ecf0f1; color: var(--dark); margin: 0; }
+        .gift-filter button.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; }
+        .gift-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; margin: 6px 0; background: #fff; border-radius: 12px; border-left: 5px solid #dfe6e9; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,.06); -webkit-tap-highlight-color: transparent; }
+        .gift-item input { width: 28px; height: 28px; min-width: 28px; margin: 0; padding: 0; flex: none; accent-color: #27ae60; }
+        .gift-item .gname { flex: 1; min-width: 0; font-weight: 600; word-break: break-word; }
+        .gift-item .gtime { font-size: 0.75rem; color: #27ae60; white-space: nowrap; }
+        .gift-item.sent { background: #eafaf1; border-left-color: #27ae60; }
+        .gift-item.sent .gname { color: #1e8449; }
+        .ans-wait { text-align: center; padding: 50px 10px; color: #7f8c8d; font-size: 1.15rem; }
+        .ans-card { background: #fff; border-radius: 18px; padding: 16px; box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+        .ans-head { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; margin-bottom: 8px; }
+        .ans-pill { font-size: 0.8rem; font-weight: 700; color: #fff; padding: 2px 12px; border-radius: 999px; background: var(--secondary); }
+        .ans-rep { text-align: center; font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+        .ans-q { font-size: 1.15rem; line-height: 1.55; padding: 12px; background: #f8f9fa; border-radius: 12px; margin-bottom: 12px; }
+        .ans-a-label { font-size: 0.8rem; font-weight: 700; color: #1e8449; margin-bottom: 4px; }
+        .ans-a { font-size: 1.5rem; font-weight: 800; line-height: 1.45; padding: 14px; border-radius: 14px; background: #eafaf1; border: 2px solid #27ae60; color: #145a32; word-break: break-word; }
+
         .group-summary { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 8px; }
         .group-chip { font-size: 0.8rem; font-weight: 600; color: #fff; padding: 3px 12px; border-radius: 999px; }
         .group-pill { font-size: 0.72rem; font-weight: 600; color: #fff; padding: 1px 9px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
@@ -1378,6 +1409,9 @@
             <button onclick="openGame()" class="gold" style="margin-top: 10px;">
                 <i class="fas fa-gamepad"></i> 🎮 เกมปาร์ตี้ ป.โท บริหารการศึกษา
             </button>
+            <button onclick="openRemotePage('gifts')" class="outline" style="margin-top: 10px;">
+                <i class="fas fa-gift"></i> 🎁 เช็คการส่งของขวัญ (สแกน QR ติ๊กจากมือถือได้)
+            </button>
             <details class="extra-options" style="margin-top: 15px;">
                 <summary>🛠️ จัดการห้อง</summary>
                 <button onclick="resetAllData()" class="outline" style="margin-top: 12px;">
@@ -1509,11 +1543,48 @@
             </div>
         </div><!-- /page-draw -->
 
+        <!-- Gifts Page: เช็คการส่งของขวัญจับสลาก (ใช้ได้ทั้งเครื่องหลักและมือถือที่สแกน QR) -->
+        <div id="page-gifts" class="page">
+            <h3><i class="fas fa-gift"></i> เช็คการส่งของขวัญจับสลาก</h3>
+            <p class="hint-s">แตะชื่อเพื่อติ๊กว่าส่งของขวัญแล้ว บันทึกและซิงก์ทุกเครื่องทันที (รายชื่อมีทุกคน รวมคนที่มาแต่ไม่ได้จับสลาก)</p>
+            <div class="gift-stats">
+                <div class="gs ok"><b id="gift-sent">0</b><span>ส่งแล้ว</span></div>
+                <div class="gs no"><b id="gift-left">0</b><span>ยังไม่ส่ง</span></div>
+                <div class="gs"><b id="gift-total">0</b><span>ทั้งหมด</span></div>
+            </div>
+            <div class="gift-bar"><i id="gift-bar-fill"></i></div>
+            <input type="text" id="gift-search" placeholder="🔍 ค้นหาชื่อ..." oninput="renderGiftList()" autocomplete="off">
+            <div class="gift-filter">
+                <button data-f="all" class="active" onclick="setGiftFilter('all')">ทั้งหมด</button>
+                <button data-f="left" onclick="setGiftFilter('left')">ยังไม่ส่ง</button>
+                <button data-f="sent" onclick="setGiftFilter('sent')">ส่งแล้ว</button>
+            </div>
+            <div class="list-container" id="gift-list" style="max-height:none; overflow:visible; padding:8px;"></div>
+            <div class="only-host" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <button onclick="closeRemotePage()" class="secondary"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button>
+                <button onclick="toggleQRModal('gifts')" class="outline"><i class="fas fa-qrcode"></i> QR ให้มือถือ</button>
+                <button onclick="clearGiftChecks()" class="danger" style="grid-column: 1 / -1;"><i class="fas fa-eraser"></i> ล้างการติ๊กทั้งหมด</button>
+            </div>
+        </div>
+
+        <!-- Answer Page: ผู้ตรวจเฉลย (เห็นคำถามที่กำลังเล่นพร้อมเฉลยแบบเรียลไทม์) -->
+        <div id="page-answer" class="page">
+            <h3><i class="fas fa-clipboard-check"></i> ตรวจเฉลยเกม</h3>
+            <div id="ans-view"></div>
+            <div class="only-host" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:14px;">
+                <button onclick="closeRemotePage()" class="secondary"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button>
+                <button onclick="toggleQRModal('answer')" class="outline"><i class="fas fa-qrcode"></i> QR ให้มือถือ</button>
+            </div>
+        </div>
+
         <!-- Game Page: เกมปาร์ตี้ -->
         <div id="page-game" class="page">
             <div class="draw-topbar">
                 <button onclick="exitGame()" class="secondary">
                     <i class="fas fa-arrow-left"></i> ออกจากเกม
+                </button>
+                <button onclick="toggleQRModal('answer')" class="outline" style="width:auto; margin:0;">
+                    <i class="fas fa-qrcode"></i> QR ตรวจเฉลย
                 </button>
                 <span class="remaining-chip" id="game-chip">🎮 เกมปาร์ตี้</span>
             </div>
@@ -1704,7 +1775,7 @@
         <div class="fab fab-sound" id="fab-sound" onclick="toggleSound()" title="เปิด/ปิดเสียง" role="button" aria-label="เปิดหรือปิดเสียง">
             <i class="fas fa-volume-high" id="fab-sound-icon"></i>
         </div>
-        <div class="fab fab-qr needs-profile" onclick="toggleQRModal()" title="QR Code" role="button" aria-label="แชร์ QR Code">
+        <div class="fab fab-qr needs-profile" onclick="toggleQRModal()" title="QR Code เช็คของขวัญ / ตรวจเฉลย" role="button" aria-label="QR Code เช็คของขวัญและตรวจเฉลย">
             <i class="fas fa-qrcode"></i>
         </div>
         <div class="fab needs-profile" onclick="toggleStatusModal()" title="สถานะ" role="button" aria-label="ดูสถานะ">
@@ -1755,19 +1826,24 @@
     <div id="qr-modal" class="overlay">
         <div class="modal-content">
             <span class="close-btn" onclick="toggleQRModal()">&times;</span>
-            <h3 style="margin-bottom: 20px; text-align: center;">
-                <i class="fas fa-qrcode"></i> แชร์ระบบ QR Code
+            <h3 style="margin-bottom: 14px; text-align: center;">
+                <i class="fas fa-qrcode"></i> สแกน QR Code
             </h3>
 
+            <div class="qr-tabs">
+                <button id="qrt-gifts" onclick="setQRMode('gifts')">🎁 เช็คของขวัญ</button>
+                <button id="qrt-answer" onclick="setQRMode('answer')">📝 ตรวจเฉลยเกม</button>
+                <button id="qrt-room" onclick="setQRMode('room')">🚪 เข้าห้อง</button>
+            </div>
+
             <div id="qrcode-container">
-                <p style="color: #7f8c8d; margin-bottom: 15px; text-align: center;">
-                    สแกน QR Code เพื่อเข้าใช้งานระบบ
-                </p>
+                <p id="qr-desc" style="color: #7f8c8d; margin-bottom: 15px; text-align: center; font-size: 0.92rem;"></p>
                 <div id="qrcode"></div>
                 <div class="share-url" id="share-url"></div>
                 <button onclick="copyURL()" class="gold" style="margin-top: 15px;">
                     <i class="fas fa-copy"></i> คัดลอกลิงก์
                 </button>
+                <button id="qr-open-here" onclick="openQRTarget()" class="outline" style="margin-top: 8px;"></button>
             </div>
         </div>
     </div>
@@ -1856,6 +1932,11 @@
         let backendReady = false;
         let offlineMode = false;
         let readyHandled = false;
+        // เปิดผ่านลิงก์ QR บนมือถือ: ?view=gifts (เช็คของขวัญ) หรือ ?view=answer (ตรวจเฉลย)
+        const remoteView = (() => {
+            const v = new URLSearchParams(window.location.search).get('view');
+            return v === 'gifts' || v === 'answer' ? v : '';
+        })();
 
         let currentProfileId = "";
         try { currentProfileId = localStorage.getItem('ny_profile_id') || ""; } catch (e) {}
@@ -2145,8 +2226,23 @@
             el(id).addEventListener('click', e => { if (e.target === el(id)) el(id).style.display = 'none'; });
         });
 
-        window.toggleQRModal = function () {
+        // โหมด QR: gifts = เช็คการส่งของขวัญ, answer = ผู้ตรวจเฉลยเกม, room = เข้าห้องปกติ
+        const QR_INFO = {
+            gifts: { view: 'gifts', desc: 'ให้ผู้ตรวจสแกนด้วยมือถือ แล้วติ๊กชื่อคนที่ส่งของขวัญจับสลากแล้ว (บันทึกลงฐานข้อมูลเดียวกัน ซิงก์ทุกเครื่องแบบเรียลไทม์)', here: '🎁 เปิดหน้าเช็คของขวัญในเครื่องนี้' },
+            answer: { view: 'answer', desc: 'ให้ผู้ตรวจเฉลยสแกนด้วยมือถือ จะเห็นคำถามและเฉลยของข้อที่กำลังเล่นอยู่แบบเรียลไทม์ (เปลี่ยนข้อเองเมื่อเริ่มรอบใหม่)', here: '📝 เปิดหน้าตรวจเฉลยในเครื่องนี้' },
+            room: { view: '', desc: 'สแกนเพื่อเข้าใช้งานห้องนี้ตามปกติ', here: '' }
+        };
+        let qrMode = 'gifts';
+        let prevRemotePage = 'page-setup';
+
+        window.toggleQRModal = function (mode) {
             const modal = el('qr-modal');
+            if (mode && QR_INFO[mode]) {
+                qrMode = mode;
+                generateQRCode();
+                modal.style.display = 'flex';
+                return;
+            }
             if (modal.style.display === 'flex') {
                 modal.style.display = 'none';
             } else {
@@ -2155,13 +2251,35 @@
             }
         };
 
+        window.setQRMode = function (mode) {
+            if (!QR_INFO[mode]) return;
+            qrMode = mode;
+            generateQRCode();
+        };
+
+        // เปิดหน้าเช็คของขวัญ/ตรวจเฉลยในเครื่องนี้ (จำหน้าเดิมไว้ให้ย้อนกลับได้)
+        window.openRemotePage = function (kind) {
+            const cur = document.querySelector('.page.active');
+            if (cur && cur.id !== 'page-gifts' && cur.id !== 'page-answer') prevRemotePage = cur.id;
+            el('qr-modal').style.display = 'none';
+            goToPage(kind === 'answer' ? 'page-answer' : 'page-gifts');
+        };
+        window.openQRTarget = function () { if (qrMode !== 'room') openRemotePage(qrMode); };
+        window.closeRemotePage = function () { goToPage(prevRemotePage || 'page-setup'); };
+
         function generateQRCode() {
             const qrcodeContainer = el('qrcode');
             const shareUrlDiv = el('share-url');
             qrcodeContainer.innerHTML = '';
 
+            const info = QR_INFO[qrMode];
+            ['gifts', 'answer', 'room'].forEach(m => el('qrt-' + m).classList.toggle('active', m === qrMode));
+            el('qr-desc').textContent = info.desc;
+            el('qr-open-here').textContent = info.here;
+            el('qr-open-here').style.display = info.here ? '' : 'none';
+
             const baseURL = window.location.href.split(/[?#]/)[0];
-            const shareURL = baseURL + '?profile=' + encodeURIComponent(currentProfileId);
+            const shareURL = baseURL + '?profile=' + encodeURIComponent(currentProfileId) + (info.view ? '&view=' + info.view : '');
             shareUrlDiv.textContent = shareURL;
 
             if (typeof QRCode === 'undefined') {
@@ -2335,7 +2453,12 @@
             document.body.classList.remove('no-profile');
             profileData = {};
             subscribeProfile();
-            goToPage('page-setup');
+            if (remoteView) {
+                document.body.classList.add('remote-mode');
+                goToPage(remoteView === 'answer' ? 'page-answer' : 'page-gifts');
+            } else {
+                goToPage('page-setup');
+            }
         }
 
         // รายชื่อเริ่มต้นของแต่ละห้อง (คีย์ = ชื่อห้องแบบไม่มีช่องว่าง/_)
@@ -2540,7 +2663,114 @@
             el(pageId).classList.add('active');
             window.scrollTo(0, 0);
             if (pageId === 'page-check' || pageId === 'page-setup') renderApp();
+            if (pageId === 'page-gifts') renderGifts();
+            if (pageId === 'page-answer') renderAnswer();
         };
+
+        // =====================================================================
+        // เช็คการส่งของขวัญ: participants/<key>/giftSent (ซิงก์เรียลไทม์ทุกเครื่อง)
+        // =====================================================================
+        let giftFilter = 'all';
+
+        function renderGifts() {
+            if (!el('page-gifts').classList.contains('active')) return;
+            const list = Object.values(profileData.participants || {});
+            const sent = list.filter(p => p.giftSent).length;
+            el('gift-sent').innerText = sent;
+            el('gift-left').innerText = list.length - sent;
+            el('gift-total').innerText = list.length;
+            el('gift-bar-fill').style.width = (list.length ? Math.round(sent * 100 / list.length) : 0) + '%';
+            renderGiftList();
+        }
+
+        window.setGiftFilter = function (f) {
+            giftFilter = f;
+            document.querySelectorAll('.gift-filter button').forEach(b => b.classList.toggle('active', b.dataset.f === f));
+            renderGiftList();
+        };
+
+        window.renderGiftList = function () {
+            const q = (el('gift-search').value || '').trim().toLowerCase();
+            const rows = Object.entries(profileData.participants || {}).filter(([k, p]) => {
+                if (giftFilter === 'left' && p.giftSent) return false;
+                if (giftFilter === 'sent' && !p.giftSent) return false;
+                return !q || String(p.name || '').toLowerCase().includes(q);
+            });
+            const fmt = ts => { const d = new Date(ts); return d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0'); };
+            el('gift-list').innerHTML = rows.length ? rows.map(([k, p]) => `
+                <label class="gift-item ${p.giftSent ? 'sent' : ''}" ${GROUPS[p.group] ? `style="border-left-color:${GROUPS[p.group].color}"` : ''}>
+                    <input type="checkbox" ${p.giftSent ? 'checked' : ''} onchange="setGift('${esc(k)}', this.checked)">
+                    <span class="gname">${esc(p.name)}</span>
+                    ${p.giftSent ? `<span class="gtime">🎁 ส่งแล้ว${p.giftAt ? ' ' + fmt(p.giftAt) : ''}</span>` : ''}
+                </label>`).join('') :
+                '<p style="text-align:center;color:#95a5a6;padding:16px;">ไม่พบรายชื่อ</p>';
+        };
+
+        window.setGift = function (key, checked) {
+            update(ref(db, 'profiles/' + currentProfileId + '/participants/' + key),
+                { giftSent: !!checked, giftAt: checked ? Date.now() : null }).catch(onWriteError);
+        };
+
+        window.clearGiftChecks = function () {
+            const keys = Object.entries(profileData.participants || {}).filter(([k, p]) => p.giftSent).map(([k]) => k);
+            if (!keys.length) { alert("ℹ️ ยังไม่มีใครถูกติ๊ก"); return; }
+            if (!confirm('ล้างการติ๊ก "ส่งของขวัญแล้ว" ของ ' + keys.length + ' คน?')) return;
+            const upd = {};
+            keys.forEach(k => {
+                upd['profiles/' + currentProfileId + '/participants/' + k + '/giftSent'] = false;
+                upd['profiles/' + currentProfileId + '/participants/' + k + '/giftAt'] = null;
+            });
+            update(ref(db), upd).catch(onWriteError);
+        };
+
+        // =====================================================================
+        // ผู้ตรวจเฉลย: อ่านสถานะข้อที่กำลังเล่นจาก game/live (เครื่องหลักเป็นคนเขียน)
+        // =====================================================================
+        function renderAnswer() {
+            if (!el('page-answer').classList.contains('active')) return;
+            const live = (profileData.game || {}).live;
+            const box = el('ans-view');
+            if (!live || live.state === 'idle' || !live.rep) {
+                box.innerHTML = '<div class="ans-wait">⏳ ' + esc((live && live.msg) || 'รอเริ่มรอบถัดไป...') + '<br><small>หน้านี้จะอัปเดตเองเมื่อมีคำถามใหม่</small></div>';
+                return;
+            }
+            const status = { waiting: ['⏳ รอสุ่มคำถาม', '#95a5a6'], picking: ['🎲 กำลังสุ่มคำถาม', '#f39c12'], ready: ['📣 พร้อมถาม', '#2e86de'],
+                timing: ['⏱ กำลังจับเวลา', '#e67e22'], correct: ['✅ ตอบได้แล้ว', '#27ae60'], timeout: ['⏰ หมดเวลา', '#c0392b'] }[live.state] || ['', '#95a5a6'];
+            const lv = live.level === 'hard' ? '🔴 ยาก' : live.level === 'easy' ? '🟢 ง่าย' : '';
+            let body;
+            if (live.q) {
+                body = `<div class="ans-q">${esc(live.q)}</div>
+                        <div class="ans-a-label">✔ เฉลย</div>
+                        <div class="ans-a">${esc(live.a) || '-'}</div>`;
+            } else {
+                body = '<div class="ans-wait" style="padding:30px 0;">ยังไม่มีคำถามในรอบนี้</div>';
+            }
+            box.innerHTML = `<div class="ans-card">
+                <div class="ans-head">
+                    <span class="ans-pill" style="background:${esc(live.color || '#764ba2')}">${esc(live.dept || '')}</span>
+                    <span class="ans-pill" style="background:#34495e">รอบ ${esc(live.round)}/${esc(live.total)}</span>
+                    ${lv ? `<span class="ans-pill" style="background:${live.level === 'hard' ? '#c0392b' : '#27ae60'}">${lv}</span>` : ''}
+                    <span class="ans-pill" style="background:${status[1]}">${status[0]}</span>
+                </div>
+                <div class="ans-rep">ตัวแทน: ${esc(live.rep)}</div>
+                ${body}
+            </div>`;
+        }
+
+        // เขียนสถานะข้อที่กำลังเล่นให้ผู้ตรวจเฉลย (ล้มเหลวก็ไม่กระทบเกม)
+        function liveWrite(obj) {
+            if (!currentProfileId) return;
+            try { set(ref(db, 'profiles/' + currentProfileId + '/game/live'), Object.assign({ ts: Date.now() }, obj)).catch(() => {}); } catch (e) {}
+        }
+        function liveRound(state) {
+            if (!G || !G.reps[G.idx]) return;
+            const rep = G.reps[G.idx], c = G.cur || {};
+            liveWrite({
+                state, rep: rep.name, dept: rep.dept, color: GROUPS[rep.group] ? GROUPS[rep.group].color : '',
+                round: G.idx + 1, total: G.reps.length,
+                q: state === 'picking' || !c.q ? null : c.q.q, a: state === 'picking' || !c.q ? null : c.q.a, level: state === 'picking' || !c.q ? null : c.q.level
+            });
+        }
 
         function renderApp() {
             if (!profileData.settings) return;
@@ -2562,6 +2792,8 @@
             renderRemaining();
             syncPairingUI();
             renderGameBank();
+            renderGifts();
+            renderAnswer();
         }
 
         // =====================================================================
@@ -3576,6 +3808,7 @@
             stopDanceMusic(0);
             stopPreview();
             G = null;
+            liveWrite({ state: 'idle', msg: 'ยังไม่ได้เริ่มเกม' });
             showGameView('setup');
             goToPage('page-setup');
         };
@@ -3584,6 +3817,7 @@
             stopGameTimer();
             stopDanceMusic(0);
             G = null;
+            liveWrite({ state: 'idle', msg: 'ยังไม่ได้เริ่มเกม' });
             renderGameBank();
             showGameView('setup');
         };
@@ -3660,6 +3894,7 @@
             if (t.capped) note.push('มีเพียง ' + t.reps.length + ' ฝ่าย จึงสุ่มตัวแทน ' + t.reps.length + ' คน (คนละฝ่าย)');
             if (t.relaxed) note.push('⚠️ จัดตามเงื่อนไขฝ่ายไม่ได้ (คนไม่พอ) จึงสุ่มแบบไม่แบ่งฝ่าย');
             if (!t.groupsOn) note.push('ห้องนี้ยังไม่ได้กำหนดฝ่ายในรายชื่อ จึงสุ่มแบบไม่แบ่งฝ่าย');
+            liveWrite({ state: 'idle', msg: 'สุ่มตัวแทนแล้ว รอเริ่มรอบที่ 1' });
             el('pick-note').innerText = note.join(' · ');
             el('pick-note').classList.toggle('hidden', !note.length);
             el('pick-grid').innerHTML = G.reps.map((r, i) => `
@@ -3718,6 +3953,7 @@
             el('r-stuck').classList.add('hidden');
             showGameView('round');
             renderRoundActions();
+            liveRound('waiting');
         }
 
         function renderRoundActions() {
@@ -3767,6 +4003,7 @@
             }
             const chosen = pool[Math.floor(Math.random() * pool.length)];
             pickingQ = true;
+            liveRound('picking');
             const box = el('r-qbox');
             box.classList.remove('hidden');
             el('r-ans').classList.add('hidden');
@@ -3791,6 +4028,7 @@
                     el('r-ans').innerText = chosen.a;
                     playSound('reveal');
                     renderRoundActions();
+                    liveRound('ready');
                 }
             }, 110);
             el('r-actions').innerHTML = '';
@@ -3811,6 +4049,7 @@
             el('g-ring').classList.remove('hidden');
             playSound('drumroll');
             renderRoundActions();
+            liveRound('timing');
             runTimer(total, left => { c.left = left; setRing('g', left, total); }, () => endRound(false));
         };
 
@@ -3838,6 +4077,7 @@
             el('r-stuck').classList.remove('hidden');
             if (correct) { playSound('winning'); createConfetti(); } else { playSound('reveal'); }
             renderRoundActions();
+            liveRound(correct ? 'correct' : 'timeout');
         }
 
         window.stepStuck = function (d) {
@@ -3881,6 +4121,7 @@
             renderDanceGrid(false);
             renderDanceActions('ready');
             showGameView('dance');
+            liveWrite({ state: 'idle', msg: 'ช่วงเต้นสลัดโพสต์อิท ไม่มีคำถาม' });
         }
 
         function renderDanceActions(state) {
@@ -3929,6 +4170,7 @@
 
         // ---------- ผู้ชนะ ----------
         window.finishGame = function () {
+            liveWrite({ state: 'idle', msg: 'จบเกมแล้ว' });
             const sorted = G.reps.slice().sort((a, b) => a.remain - b.remain);
             const best = sorted[0].remain;
             const winners = sorted.filter(r => r.remain === best);
