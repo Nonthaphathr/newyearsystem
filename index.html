@@ -629,6 +629,14 @@
 
         .bulk-actions button { flex: 1; }
 
+        .group-summary { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 8px; }
+        .group-chip { font-size: 0.8rem; font-weight: 600; color: #fff; padding: 3px 12px; border-radius: 999px; }
+        .group-pill { font-size: 0.72rem; font-weight: 600; color: #fff; padding: 1px 9px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+        .group-select { width: auto; margin: 0; padding: 4px 6px; font-size: 0.8rem; border-radius: 8px; min-height: 0; flex-shrink: 0; }
+        .list-item.g-1 { border-left: 5px solid #2e86de; }
+        .list-item.g-2 { border-left: 5px solid #e84393; }
+        .list-item.g-3 { border-left: 5px solid #20a05a; }
+
         @media (max-width: 600px) {
             .btn-icon {
                 padding: 6px 10px !important;
@@ -1323,6 +1331,10 @@
                         <i class="fas fa-trash-alt"></i> ลบทั้งหมด
                     </button>
                 </div>
+                <button id="btn-apply-groups" onclick="applyDefaultGroups()" class="outline" style="display:none;margin-bottom:8px;">
+                    <i class="fas fa-palette"></i> จัดฝ่ายตามใบรายชื่อ (ฟ้า/ชมพู/เขียว)
+                </button>
+                <div id="group-summary" class="group-summary"></div>
                 <div class="list-container" id="preview-names-list"></div>
             </div>
 
@@ -2343,8 +2355,22 @@
                 "สิริวรรณ โทนะพันธ์ (บี)",
                 "นางสาวสุดารัตน์ จันทเสน (เก๋)",
                 "นางสาวสุทธิดา ทองอินทร์ (นิว)",
-                "นางอรทัย กุลสิงห์ (นุช)"
+                "นางอรทัย กุลสิงห์ (นุช)",
+                "นายพชรกฤต สฤษฎ์เศรษฐการ",
+                "นายเพ็ง แซ่กัง",
+                "นางสาวใบแพร มารมย์"
             ]
+        };
+
+        // ฝ่ายงาน (1 = วิชาการ ฟ้า, 2 = การเงินและปฏิคม ชมพู, 3 = นันทนาการ เขียว)
+        const GROUPS = {
+            1: { name: 'ฝ่ายวิชาการ', short: 'วิชาการ', color: '#2e86de', dot: '🔵' },
+            2: { name: 'ฝ่ายการเงินและปฏิคม', short: 'การเงิน+ปฏิคม', color: '#e84393', dot: '🩷' },
+            3: { name: 'ฝ่ายนันทนาการ', short: 'นันทนาการ', color: '#20a05a', dot: '🟢' }
+        };
+        // เรียงตรงกับ DEFAULT_ROOM_NAMES ของแต่ละห้อง (ตามใบรายชื่อที่ทำสีไว้)
+        const DEFAULT_ROOM_GROUPS = {
+            "ห้อง1": [3, 1, 3, 2, 3, 2, 2, 1, 1, 3, 3, 3, 1, 1, 2, 1, 3, 1, 1, 2, 3, 2, 2, 3, 1, 2, 2]
         };
 
         function getDefaultNames(profileId) {
@@ -2352,13 +2378,50 @@
             return DEFAULT_ROOM_NAMES[k] || null;
         }
 
+        function getDefaultGroupMap(profileId) {
+            const k = String(profileId || '').replace(/[_\s]+/g, '');
+            const names = DEFAULT_ROOM_NAMES[k], gs = DEFAULT_ROOM_GROUPS[k];
+            if (!names || !gs) return null;
+            const m = {};
+            names.forEach((n, i) => { if (gs[i]) m[n] = gs[i]; });
+            return m;
+        }
+
         function buildDefaultParticipants(names) {
+            const gs = DEFAULT_ROOM_GROUPS[String(currentProfileId || '').replace(/[_\s]+/g, '')] || [];
             const out = {};
             names.forEach((name, i) => {
-                out['d' + String(i + 1).padStart(3, '0')] = { name: name, active: true, drawn: false };
+                const o = { name: name, active: true, drawn: false };
+                if (gs[i]) o.group = gs[i];
+                out['d' + String(i + 1).padStart(3, '0')] = o;
             });
             return out;
         }
+
+        // สร้างชุดอัปเดตฝ่ายให้คนที่ชื่อตรงกับรายชื่อเริ่มต้น (override=true ทับของเดิมด้วย)
+        function groupUpdates(participants, override) {
+            const gm = getDefaultGroupMap(currentProfileId);
+            const upd = {};
+            if (!gm) return upd;
+            Object.entries(participants || {}).forEach(([k, p]) => {
+                if (!p || !gm[p.name]) return;
+                if (override || !p.group) upd['profiles/' + currentProfileId + '/participants/' + k + '/group'] = gm[p.name];
+            });
+            return upd;
+        }
+
+        window.applyDefaultGroups = function () {
+            const upd = groupUpdates(profileData.participants, true);
+            const n = Object.keys(upd).length;
+            if (!n) { alert("ℹ️ ไม่พบรายชื่อที่ตรงกับรายชื่อเริ่มต้น"); return; }
+            if (!confirm("กำหนดฝ่ายตามใบรายชื่อให้ " + n + " คน? (ทับฝ่ายที่ตั้งไว้เดิมของคนเหล่านี้)")) return;
+            update(ref(db), upd).catch(onWriteError);
+        };
+
+        window.setGroup = function (key, val) {
+            const g = parseInt(val, 10);
+            update(ref(db, 'profiles/' + currentProfileId + '/participants/' + key), { group: GROUPS[g] ? g : null }).catch(onWriteError);
+        };
 
         // ปุ่ม "โหลดรายชื่อเริ่มต้น" ใช้เติมรายชื่อที่ยังไม่มีในห้อง (ไม่ซ้ำกับที่มีอยู่)
         window.loadDefaultNames = function () {
@@ -2373,9 +2436,12 @@
             if (!confirm("เพิ่มรายชื่อเริ่มต้นอีก " + toAdd.length + " รายการ?")) return;
             const base = 'profiles/' + currentProfileId + '/participants';
             const updates = {};
+            const gm = getDefaultGroupMap(currentProfileId) || {};
             toAdd.forEach(name => {
                 const key = push(child(ref(db), base)).key;
-                updates[base + '/' + key] = { name: name, active: true, drawn: false };
+                const o = { name: name, active: true, drawn: false };
+                if (gm[name]) o.group = gm[name];
+                updates[base + '/' + key] = o;
             });
             update(ref(db), updates).catch(onWriteError);
         };
@@ -2392,14 +2458,23 @@
                         participants: defaults ? buildDefaultParticipants(defaults) : {},
                         missions: [],
                         history: {},
-                        defaultsSeeded: !!defaults
+                        defaultsSeeded: !!defaults,
+                        groupsSeeded: !!defaults
                     }).catch(onWriteError);
                 } else if (defaults && !data.defaultsSeeded) {
                     // ห้องเดิมที่ยังไม่เคยใส่ค่าเริ่มต้น: ใส่ให้ครั้งเดียวถ้ายังว่าง (กันใส่ซ้ำหลังผู้ใช้ลบเอง)
                     const hasPeople = data.participants && Object.keys(data.participants).length > 0;
-                    const upd = { defaultsSeeded: true };
+                    const upd = { defaultsSeeded: true, groupsSeeded: true };
                     if (!hasPeople) upd.participants = buildDefaultParticipants(defaults);
                     update(profileRef, upd).catch(onWriteError);
+                    if (hasPeople) { const gu = groupUpdates(data.participants, false); if (Object.keys(gu).length) update(ref(db), gu).catch(onWriteError); }
+                    profileData = data;
+                    renderApp();
+                } else if (defaults && !data.groupsSeeded) {
+                    // ห้องที่ใส่รายชื่อไว้แล้วแต่ยังไม่เคยกำหนดฝ่าย: กำหนดให้ครั้งเดียว (เฉพาะคนที่ยังไม่มีฝ่าย)
+                    const gu = groupUpdates(data.participants, false);
+                    gu['profiles/' + currentProfileId + '/groupsSeeded'] = true;
+                    update(ref(db), gu).catch(onWriteError);
                     profileData = data;
                     renderApp();
                 } else {
@@ -2673,12 +2748,18 @@
             let countDrawn = 0;
             let countLeft = 0;
 
+            const gCount = { 1: 0, 2: 0, 3: 0, 0: 0 };
             Object.entries(pList).forEach(([key, p]) => {
+                const g = GROUPS[p.group] ? p.group : 0;
+                gCount[g]++;
+                const gOpts = '<option value="">- ฝ่าย -</option>' + [1, 2, 3].map(n =>
+                    `<option value="${n}" ${g === n ? 'selected' : ''}>${GROUPS[n].short}</option>`).join('');
                 previewHtml += `
-                    <div class="list-item">
+                    <div class="list-item ${g ? 'g-' + g : ''}">
                         <div class="list-item-content">
                             <i class="fas fa-user" style="color: var(--primary);"></i>${esc(p.name)}
                         </div>
+                        <select class="group-select" aria-label="ฝ่ายงาน" onchange="setGroup('${esc(key)}', this.value)">${gOpts}</select>
                         <div class="list-item-actions">
                             <button class="btn-icon btn-edit" aria-label="แก้ไขชื่อ" onclick="editName('${esc(key)}')">
                                 <i class="fas fa-edit"></i>
@@ -2691,7 +2772,7 @@
 
                 if (!p.drawn) {
                     checkHtml += `
-                        <div class="list-item">
+                        <div class="list-item ${g ? 'g-' + g : ''}">
                             <input type="checkbox" ${p.active ? 'checked' : ''} onchange="toggleActive('${esc(key)}', this.checked)">
                             ${esc(p.name)}
                         </div>`;
@@ -2703,6 +2784,10 @@
 
             previewContainer.innerHTML = previewHtml;
             checkContainer.innerHTML = checkHtml;
+            el('group-summary').innerHTML = [1, 2, 3].map(n =>
+                `<span class="group-chip" style="background:${GROUPS[n].color}">${GROUPS[n].name} ${gCount[n]} คน</span>`).join('') +
+                (gCount[0] ? `<span class="group-chip" style="background:#95a5a6">ยังไม่กำหนดฝ่าย ${gCount[0]} คน</span>` : '');
+            el('btn-apply-groups').style.display = getDefaultGroupMap(currentProfileId) ? '' : 'none';
             el('count-drawn').innerText = countDrawn;
             el('count-left').innerText = countLeft;
         }
@@ -3505,14 +3590,15 @@
         window.rollGameTeams = function () {
             const st = getGameSettings();
             const people = Object.entries(profileData.participants || {})
-                .filter(([k, p]) => p.active).map(([k, p]) => ({ key: k, name: p.name }));
+                .filter(([k, p]) => p.active).map(([k, p]) => ({ key: k, name: p.name, group: p.group || 0 }));
             if (people.length < st.reps * 2) { alert("⚠️ ผู้เข้าร่วมไม่พอ"); return; }
             stopGameTimer();
             stopDanceMusic(0);
             const sh = shuffleArr(people);
             const depts = st.depts.split(',').map(s => s.trim()).filter(Boolean);
             G = {
-                reps: sh.slice(0, st.reps).map((p, i) => ({ ...p, dept: depts[i] || ('ฝ่ายที่ ' + (i + 1)), stuck: 0, remain: null, result: null })),
+                // ถ้าตัวแทนมีฝ่ายประจำตัว (จากรายชื่อห้อง) ใช้ฝ่ายนั้น ไม่งั้นใช้ชื่อฝ่ายตามลำดับในตั้งค่า
+                reps: sh.slice(0, st.reps).map((p, i) => ({ ...p, dept: GROUPS[p.group] ? GROUPS[p.group].name : (depts[i] || ('ฝ่ายที่ ' + (i + 1))), stuck: 0, remain: null, result: null })),
                 hands: sh.slice(st.reps, st.reps * 2),
                 idx: 0,
                 used: new Set(),
@@ -3520,7 +3606,7 @@
             };
             el('pick-grid').innerHTML = G.reps.map((r, i) => `
                 <div class="pair-card" style="animation-delay:${i * 0.25}s">
-                    <span class="dept">${esc(r.dept)}</span>
+                    <span class="dept" ${GROUPS[r.group] ? `style="background:${GROUPS[r.group].color}"` : ''}>${esc(r.dept)}</span>
                     <div class="role">ตัวแทน</div>
                     <div class="who">${esc(r.name)}</div>
                     <div class="role">🖐️ มือติดโพสต์อิท</div>
