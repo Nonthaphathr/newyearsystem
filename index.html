@@ -653,6 +653,115 @@
             line-height: 1.5;
         }
 
+        /* ===== เกมปาร์ตี้ ===== */
+        .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+        .btn-row > button { flex: 1 1 160px; width: auto !important; margin: 0 !important; }
+        .game-hero {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            border-radius: 20px;
+            padding: 20px 24px;
+            margin-bottom: 18px;
+        }
+        .game-hero-title { font-size: 1.6rem; font-weight: 700; }
+        .game-hero ol { margin: 10px 0 0 20px; line-height: 1.7; font-size: 0.95rem; opacity: 0.95; }
+        .game-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+        .game-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.06);
+            text-align: left;
+        }
+        .game-card h4 { font-size: 1.15rem; margin-bottom: 12px; color: var(--primary); }
+        .game-card label.lbl { display: block; font-weight: 600; font-size: 0.9rem; margin: 10px 0 4px; color: #555; }
+        .game-card .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .game-card .hint-s { font-size: 0.82rem; color: #7f8c8d; margin-top: 4px; line-height: 1.5; }
+        .q-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 12px; background: #f8f9fa; margin-bottom: 8px; }
+        .q-item .q-body { flex: 1; min-width: 0; }
+        .q-item .q-t { font-weight: 600; word-break: break-word; }
+        .q-item .q-a { font-size: 0.88rem; color: #27ae60; margin-top: 2px; word-break: break-word; }
+        .lv { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; color: #fff; margin-right: 6px; }
+        .lv.easy { background: #2ecc71; }
+        .lv.hard { background: #e74c3c; }
+        #gq-list { max-height: 360px; overflow-y: auto; margin-top: 8px; }
+
+        .pair-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 16px 0 20px; }
+        .pair-card {
+            background: #fff; border-radius: 18px; padding: 18px; box-shadow: 0 6px 22px rgba(0,0,0,0.15);
+            border-top: 6px solid var(--primary);
+            animation: bounceIn 0.6s both;
+        }
+        .pair-card .dept { font-size: 0.85rem; font-weight: 700; color: #fff; background: var(--secondary); display: inline-block; padding: 2px 12px; border-radius: 999px; margin-bottom: 8px; }
+        .pair-card .who { font-size: 1.35rem; font-weight: 700; color: var(--dark); word-break: break-word; }
+        .pair-card .role { font-size: 0.8rem; color: #7f8c8d; margin-top: 10px; }
+        .pair-card .hand { font-size: 1.05rem; font-weight: 600; color: #e17055; word-break: break-word; }
+
+        .round-steps { display: flex; gap: 8px; justify-content: center; margin-bottom: 14px; }
+        .round-steps span { width: 14px; height: 14px; border-radius: 50%; background: #dfe6e9; }
+        .round-steps span.done { background: #2ecc71; }
+        .round-steps span.now { background: var(--secondary); transform: scale(1.35); }
+        .round-actors { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+        .actor { border-radius: 18px; padding: 16px; text-align: center; color: #fff; }
+        .actor.rep { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .actor.hand { background: linear-gradient(135deg, #feca57, #ff9f43); color: #4a2c12; }
+        .actor small { display: block; font-weight: 700; opacity: 0.9; }
+        .actor-label { font-size: 0.85rem; opacity: 0.9; font-weight: 600; }
+        .actor-name { font-size: 1.5rem; font-weight: 700; line-height: 1.3; word-break: break-word; }
+        .q-card {
+            background: linear-gradient(135deg, #fffdf6, #fbf1d9);
+            border-radius: 20px; padding: 22px; margin: 14px 0; text-align: center;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.18); border: 2px solid #f1d79b;
+        }
+        .q-badge { display: inline-block; padding: 4px 16px; border-radius: 999px; font-weight: 700; color: #fff; margin-bottom: 10px; animation: bounceIn 0.5s; }
+        .q-badge.easy { background: #2ecc71; }
+        .q-badge.hard { background: #e74c3c; }
+        .q-text { font-size: 1.7rem; font-weight: 700; line-height: 1.45; color: #4a2c12; word-break: break-word; }
+        .a-box { margin-top: 12px; }
+        .a-text { font-size: 1.3rem; font-weight: 700; color: #27ae60; margin-top: 6px; word-break: break-word; }
+
+        .g-ring { position: relative; width: 190px; height: 190px; margin: 10px auto; }
+        .g-ring.big { width: 260px; height: 260px; }
+        .g-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+        .g-ring circle { fill: none; stroke-width: 10; }
+        .g-ring .bg { stroke: #dfe6e9; }
+        .g-ring .fg { stroke: #2ecc71; stroke-linecap: round; stroke-dasharray: 339.3; stroke-dashoffset: 0; transition: stroke 0.3s; }
+        .g-ring.warn .fg { stroke: #e74c3c; }
+        .g-ring.warn .g-ring-num { color: #e74c3c; animation: numPulse 0.5s infinite; }
+        @keyframes numPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        .g-ring-num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 4.2rem; font-weight: 800; color: var(--dark); }
+        .g-ring.big .g-ring-num { font-size: 5.6rem; }
+        .r-result { font-size: 1.5rem; font-weight: 700; margin: 10px 0; text-align: center; }
+        .r-result.ok { color: #27ae60; }
+        .r-result.no { color: #e74c3c; }
+        .stepper-box { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 10px 0; font-weight: 600; }
+        .stepper { display: inline-flex; align-items: center; gap: 10px; }
+        .stepper button { width: 44px !important; height: 44px; margin: 0 !important; padding: 0 !important; font-size: 1.4rem; border-radius: 50%; background: var(--secondary); color: #fff; }
+        .stepper .n { min-width: 48px; text-align: center; font-size: 1.8rem; font-weight: 800; }
+        .dance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin: 16px 0; }
+        .dance-card { background: #fff; border-radius: 16px; padding: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); text-align: center; }
+        .dance-card .nm { font-weight: 700; font-size: 1.1rem; word-break: break-word; }
+        .dance-card .st { font-size: 0.9rem; color: #7f8c8d; margin: 4px 0 8px; }
+        .final-winner { background: linear-gradient(135deg, #feca57, #ff9f43); border-radius: 22px; padding: 24px; margin: 14px 0; color: #4a2c12; animation: bounceIn 0.7s; }
+        .final-winner .trophy { font-size: 3.4rem; }
+        .final-winner .wn { font-size: 2.2rem; font-weight: 800; line-height: 1.3; word-break: break-word; }
+        .final-table { width: 100%; border-collapse: collapse; margin: 14px 0; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .final-table th, .final-table td { padding: 10px 12px; text-align: center; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+        .final-table th { background: var(--primary); color: #fff; }
+        .final-table tr.win td { background: #fff7d6; font-weight: 700; }
+        @media (min-width: 1024px) {
+            .game-grid { grid-template-columns: 1.15fr 1fr; align-items: start; }
+            .q-text { font-size: 2.2rem; }
+            .actor-name { font-size: 1.8rem; }
+            .g-ring { width: 170px; height: 170px; margin: 4px auto; }
+            .g-ring.big { width: 260px; height: 260px; }
+            .g-ring-num { font-size: 3.8rem; }
+            .g-ring.big .g-ring-num { font-size: 5.6rem; }
+            .a-text { font-size: 1.8rem; }
+            .pair-card .who { font-size: 1.6rem; }
+        }
+
         /* ===== หน้าสุ่ม (UX ใหม่) ===== */
         .draw-topbar {
             display: flex;
@@ -836,7 +945,7 @@
             }
             #app-logo { width: 84px; height: 84px; margin-bottom: 8px; }
             h1 { font-size: 2.6rem; }
-            .page:not(#page-draw) { max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
+            .page:not(#page-draw):not(#page-game) { max-width: 900px; width: 100%; margin-left: auto; margin-right: auto; }
             .draw-wrap {
                 display: grid;
                 grid-template-columns: 400px 1fr;
@@ -1249,6 +1358,9 @@
             <button onclick="goToPage('page-check')" class="primary" style="margin-top: 20px;">
                 ถัดไป: ตรวจสอบรายชื่อ <i class="fas fa-arrow-right"></i>
             </button>
+            <button onclick="openGame()" class="gold" style="margin-top: 10px;">
+                <i class="fas fa-gamepad"></i> 🎮 เกมปาร์ตี้ ป.โท บริหารการศึกษา
+            </button>
             <details class="extra-options" style="margin-top: 15px;">
                 <summary>🛠️ จัดการห้อง</summary>
                 <button onclick="resetAllData()" class="outline" style="margin-top: 12px;">
@@ -1378,6 +1490,184 @@
                 </div>
                 </div><!-- /draw-stage -->
             </div>
+        </div><!-- /page-draw -->
+
+        <!-- Game Page: เกมปาร์ตี้ -->
+        <div id="page-game" class="page">
+            <div class="draw-topbar">
+                <button onclick="exitGame()" class="secondary">
+                    <i class="fas fa-arrow-left"></i> ออกจากเกม
+                </button>
+                <span class="remaining-chip" id="game-chip">🎮 เกมปาร์ตี้</span>
+            </div>
+
+            <!-- ตั้งค่า / คลังคำถาม -->
+            <div id="gv-setup">
+                <div class="game-hero">
+                    <div class="game-hero-title">🎮 เกมปาร์ตี้ ป.โท บริหารการศึกษา</div>
+                    <ol>
+                        <li>สุ่มตัวแทนฝ่ายงาน <b class="gs-reps-t">4</b> คน และสุ่มมือติดโพสต์อิทอีก <b class="gs-reps-t">4</b> คน ยืนล้อมตัวแทนคนละ 1 คน</li>
+                        <li>สุ่มคำถามให้ตัวแทนคนละ 1 ข้อ (มีทั้งง่ายและยาก) จับเวลา <b class="gs-ans-t">20</b> วิ ระหว่างนั้นให้มือติดโพสต์อิทบนตัวตัวแทนให้มากที่สุด หยุดเมื่อตอบได้</li>
+                        <li>ครบทุกคนแล้วเปิดเพลงแดนซ์ <b class="gs-dance-t">20</b> วิ ให้ทุกคนเต้นสลัดโพสต์อิท ใครเหลือน้อยสุดชนะ 🏆</li>
+                    </ol>
+                </div>
+
+                <div class="game-grid">
+                    <section class="game-card">
+                        <h4>📚 คลังคำถาม (<span id="gq-count">0</span> ข้อ)</h4>
+
+                        <label class="lbl" for="gq-q">คำถาม</label>
+                        <textarea id="gq-q" rows="2" placeholder="พิมพ์คำถาม"></textarea>
+                        <div class="row2">
+                            <div>
+                                <label class="lbl" for="gq-a">เฉลย</label>
+                                <input type="text" id="gq-a" placeholder="คำตอบที่ถูกต้อง">
+                            </div>
+                            <div>
+                                <label class="lbl" for="gq-level">ระดับ</label>
+                                <select id="gq-level">
+                                    <option value="easy">🟢 ง่าย</option>
+                                    <option value="hard">🔴 ยาก</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="btn-row">
+                            <button id="gq-save-btn" onclick="saveGameQ()" class="primary">
+                                <i class="fas fa-plus"></i> เพิ่มคำถาม
+                            </button>
+                            <button id="gq-cancel-btn" onclick="cancelEditGameQ()" class="secondary hidden">ยกเลิกแก้ไข</button>
+                        </div>
+
+                        <details class="extra-options">
+                            <summary>📥 เพิ่มหลายข้อพร้อมกัน</summary>
+                            <p class="hint-s">1 บรรทัด = 1 ข้อ รูปแบบ <b>คำถาม | เฉลย | ระดับ</b> (ระดับพิมพ์ ง่าย หรือ ยาก ถ้าไม่ใส่ = ง่าย)</p>
+                            <textarea id="gq-bulk" rows="5" placeholder="ตัวอย่าง&#10;SWOT ย่อมาจากอะไร | Strengths Weaknesses Opportunities Threats | ง่าย"></textarea>
+                            <button onclick="bulkAddGameQ()" class="gold"><i class="fas fa-file-import"></i> นำเข้า</button>
+                        </details>
+
+                        <div class="btn-row">
+                            <button onclick="loadGameSamples()" class="outline"><i class="fas fa-lightbulb"></i> โหลดคำถามตัวอย่าง</button>
+                            <button onclick="clearGameQs()" class="danger"><i class="fas fa-trash-alt"></i> ลบทั้งหมด</button>
+                        </div>
+                        <div class="list-container" id="gq-list"></div>
+                    </section>
+
+                    <section class="game-card">
+                        <h4>⚙️ ตั้งค่าเกม</h4>
+                        <div class="row2">
+                            <div>
+                                <label class="lbl" for="gs-reps">จำนวนตัวแทน (คน)</label>
+                                <input type="number" id="gs-reps" min="2" max="8" onchange="saveGameSettings()">
+                            </div>
+                            <div>
+                                <label class="lbl" for="gs-answer-sec">เวลาตอบ (วินาที)</label>
+                                <input type="number" id="gs-answer-sec" min="5" max="120" onchange="saveGameSettings()">
+                            </div>
+                        </div>
+                        <div class="row2">
+                            <div>
+                                <label class="lbl" for="gs-dance-sec">เวลาเต้น (วินาที)</label>
+                                <input type="number" id="gs-dance-sec" min="5" max="300" onchange="saveGameSettings()">
+                            </div>
+                            <div>
+                                <label class="lbl" for="gs-music-start">เริ่มเพลงที่วินาทีที่</label>
+                                <input type="number" id="gs-music-start" min="0" onchange="saveGameSettings()">
+                            </div>
+                        </div>
+                        <label class="lbl" for="gs-depts">ชื่อฝ่ายงาน (คั่นด้วย , เรียงตามตัวแทนคนที่ 1, 2, 3...)</label>
+                        <input type="text" id="gs-depts" onchange="saveGameSettings()" placeholder="ฝ่ายวิชาการ, ฝ่ายงบประมาณ, ฝ่ายบุคคล, ฝ่ายบริหารทั่วไป">
+                        <label class="lbl" for="gs-music-url">ลิงก์เพลงเต้น (ลิงก์ตรงไฟล์เสียง เช่น .mp3)</label>
+                        <input type="text" id="gs-music-url" onchange="saveGameSettings()" placeholder="https://.../song.mp3 (เว้นว่าง = ใช้จังหวะแดนซ์ในระบบ)">
+                        <div class="btn-row">
+                            <button onclick="previewMusic()" class="outline" id="gs-preview-btn"><i class="fas fa-headphones"></i> ทดลองเปิดเพลง</button>
+                        </div>
+                        <p class="hint-s" id="gs-music-status">รองรับลิงก์ Google Drive / Dropbox / GitHub ที่แชร์ไว้ ถ้าเปิดไม่ได้ ระบบจะใช้จังหวะสำรองให้อัตโนมัติ</p>
+
+                        <p class="hint-s" style="margin-top:14px;">👥 ผู้เข้าร่วมที่พร้อม (ติ๊กไว้ในรายชื่อ): <b id="gs-people">0</b> คน</p>
+                        <button onclick="startGame()" class="draw-cta primary" style="font-size:1.25rem; padding:18px;">
+                            🎲 สุ่มตัวแทนและมือติดโพสต์อิท
+                        </button>
+                    </section>
+                </div>
+            </div>
+
+            <!-- ผลสุ่มทีม -->
+            <div id="gv-pick" class="hidden text-center">
+                <h3 style="justify-content:center;"><i class="fas fa-users"></i> ผลการสุ่มตัวแทนและมือติดโพสต์อิท</h3>
+                <div class="pair-grid" id="pick-grid"></div>
+                <div class="btn-row">
+                    <button onclick="rollGameTeams()" class="outline"><i class="fas fa-dice"></i> สุ่มใหม่</button>
+                    <button onclick="beginGameRounds()" class="primary"><i class="fas fa-play"></i> เริ่มรอบที่ 1</button>
+                </div>
+            </div>
+
+            <!-- รอบตอบคำถาม -->
+            <div id="gv-round" class="hidden text-center">
+                <div class="round-steps" id="round-steps"></div>
+                <div class="round-actors">
+                    <div class="actor rep">
+                        <small id="r-dept"></small>
+                        <div class="actor-label">ตัวแทน</div>
+                        <div class="actor-name" id="r-rep"></div>
+                    </div>
+                    <div class="actor hand">
+                        <div class="actor-label">🖐️ มือติดโพสต์อิท</div>
+                        <div class="actor-name" id="r-hand"></div>
+                    </div>
+                </div>
+
+                <div id="r-qbox" class="q-card hidden">
+                    <span class="q-badge" id="r-qbadge"></span>
+                    <div class="q-text" id="r-qtext"></div>
+                    <div class="a-box">
+                        <button class="link-btn" id="r-ans-toggle" onclick="toggleAnswer()">👁 แสดงเฉลย</button>
+                        <div class="a-text hidden" id="r-ans"></div>
+                    </div>
+                </div>
+
+                <div class="g-ring hidden" id="g-ring">
+                    <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="54"/><circle class="fg" id="g-ring-fg" cx="60" cy="60" r="54"/></svg>
+                    <div class="g-ring-num" id="g-ring-num">20</div>
+                </div>
+                <div class="r-result hidden" id="r-result"></div>
+                <div class="stepper-box hidden" id="r-stuck">
+                    <span>🟨 โพสต์อิทที่ติดบนตัวตัวแทน</span>
+                    <span class="stepper">
+                        <button onclick="stepStuck(-1)">−</button>
+                        <span class="n" id="r-stuck-n">0</span>
+                        <button onclick="stepStuck(1)">+</button>
+                    </span>
+                    <span>แผ่น</span>
+                </div>
+                <div class="btn-row" id="r-actions"></div>
+            </div>
+
+            <!-- ช่วงเต้น -->
+            <div id="gv-dance" class="hidden text-center">
+                <h3 style="justify-content:center;">💃 ช่วงเต้นสลัดโพสต์อิท</h3>
+                <p id="d-hint" style="color:#7f8c8d;">เปิดเพลงแล้วให้ทุกคนเต้นแรง ๆ เพื่อสลัดโพสต์อิทออกจากตัว</p>
+                <div class="g-ring big" id="d-ring">
+                    <svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="54"/><circle class="fg" id="d-ring-fg" cx="60" cy="60" r="54"/></svg>
+                    <div class="g-ring-num" id="d-ring-num">20</div>
+                </div>
+                <div class="btn-row" id="d-actions"></div>
+                <div class="dance-grid" id="dance-grid"></div>
+                <button id="d-finish" onclick="finishGame()" class="gold hidden" style="font-size:1.3rem; padding:18px;">
+                    🏆 ประกาศผู้ชนะ
+                </button>
+            </div>
+
+            <!-- ผลสุดท้าย -->
+            <div id="gv-final" class="hidden text-center">
+                <h3 style="justify-content:center;">🏆 ผลการแข่งขัน</h3>
+                <div id="final-winner"></div>
+                <div style="overflow-x:auto;"><table class="final-table" id="final-table"></table></div>
+                <div class="btn-row">
+                    <button onclick="rollGameTeams()" class="outline"><i class="fas fa-dice"></i> สุ่มทีมใหม่เล่นอีกรอบ</button>
+                    <button onclick="backToGameSetup()" class="primary"><i class="fas fa-cog"></i> กลับหน้าตั้งค่า</button>
+                </div>
+            </div>
+        </div>
 
         <footer>
             <p>
@@ -2187,6 +2477,7 @@
             renderHistory();
             renderRemaining();
             syncPairingUI();
+            renderGameBank();
         }
 
         // =====================================================================
@@ -2753,13 +3044,28 @@
             return Math.min(DRAW_ANIMATION_MAX_MS, Math.max(DRAW_ANIMATION_MIN_MS, ms));
         }
 
+        // สุ่มแบบ "ถุงสลาก": ใช้ครบทุกชุดก่อนค่อยวนใหม่ และชุดแรกของรอบใหม่ไม่ซ้ำกับชุดสุดท้ายของรอบก่อน
+        let taoBag = [];
+        let lastTaoIdx = -1;
+        function pickTaoSet() {
+            if (taoBag.length === 0) {
+                taoBag = shuffleArr(TAO_SETS.map((_, i) => i));
+                if (taoBag.length > 1 && taoBag[taoBag.length - 1] === lastTaoIdx) {
+                    // ตัวที่ถูกหยิบก่อนเป็นตัวท้ายของ array (pop) จึงสลับไม่ให้ซ้ำกับครั้งก่อน
+                    [taoBag[0], taoBag[taoBag.length - 1]] = [taoBag[taoBag.length - 1], taoBag[0]];
+                }
+            }
+            lastTaoIdx = taoBag.pop();
+            return TAO_SETS[lastTaoIdx];
+        }
+
         function playTaoAnimation() {
             const drawMs = getDrawDurationMs();
             const container = el('tao-animation-container');
             const img = el('tao-image');
 
             let n = 0;
-            const taoSet = TAO_SETS[Math.floor(Math.random() * TAO_SETS.length)];
+            const taoSet = pickTaoSet();
             const order = taoSet.order;
             const stepMs = taoSet.once ? Math.max(400, Math.floor(drawMs / order.length)) : taoSet.ms;
             img.src = taoSet.frames[order[0]];
@@ -2961,6 +3267,645 @@
             const sel = el('drawer-select');
             if (nextDrawerKey && !sel.value) renderDrawerSelect(); // ตั้งผู้จับคนต่อไปให้ทันที
             updateDrawButton();
+        };
+
+        // =====================================================================
+        // เกมปาร์ตี้ ป.โท บริหารการศึกษา
+        // =====================================================================
+        const GAME_SAMPLES = [
+            { q: 'ตำแหน่ง "ผอ." ในโรงเรียน ย่อมาจากอะไร', a: 'ผู้อำนวยการ', level: 'easy' },
+            { q: 'วงจรคุณภาพ PDCA ประกอบด้วยอะไรบ้าง', a: 'Plan - Do - Check - Act (วางแผน ปฏิบัติ ตรวจสอบ ปรับปรุง)', level: 'easy' },
+            { q: 'SWOT ย่อมาจากอะไร', a: 'Strengths, Weaknesses, Opportunities, Threats', level: 'easy' },
+            { q: '"สพฐ." ย่อมาจากอะไร', a: 'สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน', level: 'easy' },
+            { q: 'PLC ในวงการการศึกษา ย่อมาจากอะไร', a: 'Professional Learning Community (ชุมชนแห่งการเรียนรู้ทางวิชาชีพ)', level: 'easy' },
+            { q: 'ทฤษฎี X และทฤษฎี Y เป็นของใคร', a: 'ดักลาส แมคเกรเกอร์ (Douglas McGregor)', level: 'hard' },
+            { q: 'หลักการบริหาร POSDCORB เป็นของใคร', a: 'ลูเธอร์ กูลิค (Luther Gulick) และ ลินดอลล์ เออร์วิค', level: 'hard' },
+            { q: 'ทฤษฎีลำดับขั้นความต้องการ (Hierarchy of Needs) เป็นของใคร', a: 'อับราฮัม มาสโลว์ (Abraham Maslow)', level: 'hard' },
+            { q: 'ทฤษฎีสองปัจจัย (Two-Factor Theory) เป็นของใคร', a: 'เฟรเดอริก เฮิร์ซเบิร์ก (Frederick Herzberg)', level: 'hard' },
+            { q: 'ทฤษฎีการบริหารเชิงวิทยาศาสตร์ (Scientific Management) เป็นของใคร', a: 'เฟรเดอริก เทย์เลอร์ (Frederick W. Taylor)', level: 'hard' }
+        ];
+
+        let G = null;                 // สถานะเกมที่กำลังเล่น (เก็บในเครื่อง ไม่ซิงก์)
+        let gamePhase = 'setup';
+        let editingQKey = null;
+        let gTimer = null;
+        let gDanceAudio = null;
+        let gSynth = null;
+        let previewTimer = null;
+
+        // ---------- ข้อมูลในห้อง ----------
+        function getGame() { return profileData.game || {}; }
+
+        function getGameQuestions() {
+            return Object.entries(getGame().questions || {})
+                .filter(([k, v]) => v && v.q)
+                .map(([k, v]) => ({ key: k, q: v.q, a: v.a || '', level: v.level === 'hard' ? 'hard' : 'easy' }));
+        }
+
+        function getGameSettings() {
+            const s = getGame().settings || {};
+            const num = (v, d, min, max) => { v = parseInt(v, 10); return isFinite(v) ? Math.min(max, Math.max(min, v)) : d; };
+            return {
+                reps: num(s.reps, 4, 2, 8),
+                answerSec: num(s.answerSec, 20, 5, 120),
+                danceSec: num(s.danceSec, 20, 5, 300),
+                musicStart: num(s.musicStart, 0, 0, 3600),
+                depts: typeof s.depts === 'string' ? s.depts : 'ฝ่ายวิชาการ, ฝ่ายงบประมาณ, ฝ่ายบุคคล, ฝ่ายบริหารทั่วไป',
+                musicUrl: s.musicUrl || ''
+            };
+        }
+
+        function gameBase() { return 'profiles/' + currentProfileId + '/game'; }
+
+        function normalizeMusicUrl(raw) {
+            const u = (raw || '').trim();
+            if (!u) return '';
+            let m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || u.match(/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([\w-]+)/);
+            if (m) return 'https://drive.google.com/uc?export=download&id=' + m[1];
+            m = u.match(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/(.+)$/);
+            if (m) return 'https://raw.githubusercontent.com/' + m[1] + '/' + m[2] + '/' + m[3];
+            if (/dropbox\.com/.test(u)) return u.replace(/[?&]dl=0/, '').replace('www.dropbox.com', 'dl.dropboxusercontent.com');
+            return u;
+        }
+
+        // ---------- หน้าตั้งค่า / คลังคำถาม ----------
+        function setIfIdle(id, value) {
+            const input = el(id);
+            if (document.activeElement !== input) input.value = value;
+        }
+
+        function renderGameBank() {
+            if (!el('gq-list')) return;
+            const list = getGameQuestions();
+            const st = getGameSettings();
+            el('gq-count').innerText = list.length;
+            el('gq-list').innerHTML = list.length ? list.map(x => `
+                <div class="q-item">
+                    <div class="q-body">
+                        <div class="q-t"><span class="lv ${x.level}">${x.level === 'hard' ? 'ยาก' : 'ง่าย'}</span>${esc(x.q)}</div>
+                        <div class="q-a">เฉลย: ${esc(x.a) || '-'}</div>
+                    </div>
+                    <div class="list-item-actions">
+                        <button class="btn-icon btn-edit" aria-label="แก้ไขคำถาม" onclick="editGameQ('${esc(x.key)}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon btn-delete" aria-label="ลบคำถาม" onclick="deleteGameQ('${esc(x.key)}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`).join('') :
+                '<p style="text-align:center;color:#95a5a6;padding:16px;">ยังไม่มีคำถาม เพิ่มเองด้านบน หรือกด "โหลดคำถามตัวอย่าง"</p>';
+
+            setIfIdle('gs-reps', st.reps);
+            setIfIdle('gs-answer-sec', st.answerSec);
+            setIfIdle('gs-dance-sec', st.danceSec);
+            setIfIdle('gs-music-start', st.musicStart);
+            setIfIdle('gs-depts', st.depts);
+            setIfIdle('gs-music-url', st.musicUrl);
+            el('gs-people').innerText = Object.values(profileData.participants || {}).filter(p => p.active).length;
+            document.querySelectorAll('.gs-reps-t').forEach(n => { n.innerText = st.reps; });
+            document.querySelectorAll('.gs-ans-t').forEach(n => { n.innerText = st.answerSec; });
+            document.querySelectorAll('.gs-dance-t').forEach(n => { n.innerText = st.danceSec; });
+        }
+
+        window.saveGameSettings = function () {
+            const num = (id, d) => { const v = parseInt(el(id).value, 10); return isFinite(v) ? v : d; };
+            const url = normalizeMusicUrl(el('gs-music-url').value);
+            update(ref(db, gameBase() + '/settings'), {
+                reps: Math.min(8, Math.max(2, num('gs-reps', 4))),
+                answerSec: Math.min(120, Math.max(5, num('gs-answer-sec', 20))),
+                danceSec: Math.min(300, Math.max(5, num('gs-dance-sec', 20))),
+                musicStart: Math.max(0, num('gs-music-start', 0)),
+                depts: el('gs-depts').value.trim(),
+                musicUrl: url
+            }).catch(onWriteError);
+            el('gs-music-url').value = url;
+        };
+
+        window.saveGameQ = function () {
+            const q = el('gq-q').value.trim();
+            const a = el('gq-a').value.trim();
+            const level = el('gq-level').value === 'hard' ? 'hard' : 'easy';
+            if (!q) { alert("⚠️ กรุณาพิมพ์คำถาม"); return; }
+            if (!a) { alert("⚠️ กรุณาใส่เฉลย"); return; }
+            const key = editingQKey || push(child(ref(db), gameBase() + '/questions')).key;
+            update(ref(db, gameBase() + '/questions/' + key), { q: q, a: a, level: level }).catch(onWriteError);
+            cancelEditGameQ();
+        };
+
+        window.editGameQ = function (key) {
+            const x = getGameQuestions().find(i => i.key === key);
+            if (!x) return;
+            editingQKey = key;
+            el('gq-q').value = x.q;
+            el('gq-a').value = x.a;
+            el('gq-level').value = x.level;
+            el('gq-save-btn').innerHTML = '<i class="fas fa-save"></i> บันทึกการแก้ไข';
+            el('gq-cancel-btn').classList.remove('hidden');
+            el('gq-q').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el('gq-q').focus();
+        };
+
+        window.cancelEditGameQ = function () {
+            editingQKey = null;
+            el('gq-q').value = '';
+            el('gq-a').value = '';
+            el('gq-level').value = 'easy';
+            el('gq-save-btn').innerHTML = '<i class="fas fa-plus"></i> เพิ่มคำถาม';
+            el('gq-cancel-btn').classList.add('hidden');
+        };
+
+        window.deleteGameQ = function (key) {
+            const x = getGameQuestions().find(i => i.key === key);
+            if (!x || !confirm('ลบคำถามนี้หรือไม่?\n\n' + x.q)) return;
+            update(ref(db, gameBase() + '/questions'), { [key]: null }).catch(onWriteError);
+            if (editingQKey === key) cancelEditGameQ();
+        };
+
+        window.clearGameQs = function () {
+            if (!getGameQuestions().length) return;
+            if (!confirm("⚠️ ต้องการลบคำถามทั้งหมดหรือไม่?")) return;
+            update(ref(db, gameBase()), { questions: null }).catch(onWriteError);
+            cancelEditGameQ();
+        };
+
+        function addQuestionsBatch(items) {
+            const base = gameBase() + '/questions';
+            const updates = {};
+            items.forEach(it => {
+                const key = push(child(ref(db), base)).key;
+                updates[base + '/' + key] = { q: it.q, a: it.a, level: it.level };
+            });
+            update(ref(db), updates).catch(onWriteError);
+        }
+
+        window.loadGameSamples = function () {
+            const have = new Set(getGameQuestions().map(x => x.q));
+            const items = GAME_SAMPLES.filter(s => !have.has(s.q));
+            if (!items.length) { alert("ℹ️ มีคำถามตัวอย่างครบแล้ว"); return; }
+            addQuestionsBatch(items);
+        };
+
+        window.bulkAddGameQ = function () {
+            const items = [];
+            el('gq-bulk').value.split(/\r?\n/).forEach(line => {
+                const parts = line.split(/[|｜\t]/).map(s => s.trim());
+                if (!parts[0] || !parts[1]) return;
+                const lv = /ยาก|hard|^ย$/i.test(parts[2] || '') ? 'hard' : 'easy';
+                items.push({ q: parts[0], a: parts[1], level: lv });
+            });
+            if (!items.length) { alert("⚠️ ไม่พบข้อมูล ต้องมีอย่างน้อย คำถาม | เฉลย"); return; }
+            addQuestionsBatch(items);
+            el('gq-bulk').value = '';
+            alert("✅ เพิ่มคำถามแล้ว " + items.length + " ข้อ");
+        };
+
+        // ---------- ควบคุมหน้า ----------
+        function showGameView(name) {
+            gamePhase = name;
+            ['setup', 'pick', 'round', 'dance', 'final'].forEach(v => el('gv-' + v).classList.toggle('hidden', v !== name));
+            el('game-chip').innerText = name === 'setup' ? '🎮 เกมปาร์ตี้' :
+                name === 'round' ? '❓ รอบที่ ' + (G.idx + 1) + '/' + G.reps.length :
+                name === 'dance' ? '💃 ช่วงเต้น' : name === 'final' ? '🏆 ผลการแข่งขัน' : '🎲 ผลการสุ่ม';
+            window.scrollTo(0, 0);
+        }
+
+        window.openGame = function () {
+            goToPage('page-game');
+            renderGameBank();
+            showGameView(G ? gamePhase : 'setup');
+        };
+
+        window.exitGame = function () {
+            if (G && gamePhase !== 'setup' && gamePhase !== 'final' && !confirm("ออกจากเกมตอนนี้หรือไม่? ความคืบหน้าของรอบนี้จะหายไป")) return;
+            stopGameTimer();
+            stopDanceMusic(0);
+            stopPreview();
+            G = null;
+            showGameView('setup');
+            goToPage('page-setup');
+        };
+
+        window.backToGameSetup = function () {
+            stopGameTimer();
+            stopDanceMusic(0);
+            G = null;
+            renderGameBank();
+            showGameView('setup');
+        };
+
+        // ---------- สุ่มทีม ----------
+        window.startGame = function () {
+            const st = getGameSettings();
+            if (!getGameQuestions().length) { alert("⚠️ ยังไม่มีคำถามในคลัง กรุณาเพิ่มคำถามก่อน"); return; }
+            const people = Object.values(profileData.participants || {}).filter(p => p.active);
+            if (people.length < st.reps * 2) {
+                alert('⚠️ ต้องมีผู้เข้าร่วมอย่างน้อย ' + (st.reps * 2) + ' คน (ตัวแทน ' + st.reps + ' + มือติดโพสต์อิท ' + st.reps + ') ตอนนี้มี ' + people.length + ' คน');
+                return;
+            }
+            rollGameTeams();
+        };
+
+        window.rollGameTeams = function () {
+            const st = getGameSettings();
+            const people = Object.entries(profileData.participants || {})
+                .filter(([k, p]) => p.active).map(([k, p]) => ({ key: k, name: p.name }));
+            if (people.length < st.reps * 2) { alert("⚠️ ผู้เข้าร่วมไม่พอ"); return; }
+            stopGameTimer();
+            stopDanceMusic(0);
+            const sh = shuffleArr(people);
+            const depts = st.depts.split(',').map(s => s.trim()).filter(Boolean);
+            G = {
+                reps: sh.slice(0, st.reps).map((p, i) => ({ ...p, dept: depts[i] || ('ฝ่ายที่ ' + (i + 1)), stuck: 0, remain: null, result: null })),
+                hands: sh.slice(st.reps, st.reps * 2),
+                idx: 0,
+                used: new Set(),
+                cur: null
+            };
+            el('pick-grid').innerHTML = G.reps.map((r, i) => `
+                <div class="pair-card" style="animation-delay:${i * 0.25}s">
+                    <span class="dept">${esc(r.dept)}</span>
+                    <div class="role">ตัวแทน</div>
+                    <div class="who">${esc(r.name)}</div>
+                    <div class="role">🖐️ มือติดโพสต์อิท</div>
+                    <div class="hand">${esc(G.hands[i].name)}</div>
+                </div>`).join('');
+            playSound('reveal');
+            showGameView('pick');
+        };
+
+        window.beginGameRounds = function () {
+            G.idx = 0;
+            startRound();
+        };
+
+        // ---------- ตัวจับเวลา ----------
+        function stopGameTimer() { if (gTimer) { clearInterval(gTimer); gTimer = null; } }
+
+        function runTimer(total, onTick, onEnd) {
+            stopGameTimer();
+            const t0 = performance.now();
+            let lastSec = Math.ceil(total);
+            onTick(total);
+            gTimer = setInterval(() => {
+                const left = Math.max(0, total - (performance.now() - t0) / 1000);
+                const sec = Math.ceil(left);
+                if (sec !== lastSec && sec <= 5 && sec > 0) playSound('click');
+                lastSec = sec;
+                onTick(left);
+                if (left <= 0) { stopGameTimer(); onEnd(); }
+            }, 100);
+        }
+
+        function setRing(prefix, left, total) {
+            el(prefix + '-ring-fg').style.strokeDashoffset = String(339.3 * (1 - Math.max(0, left) / total));
+            el(prefix + '-ring-num').innerText = Math.ceil(left);
+            el(prefix === 'g' ? 'g-ring' : 'd-ring').classList.toggle('warn', left > 0 && left <= 5);
+        }
+
+        // ---------- รอบตอบคำถาม ----------
+        function startRound() {
+            stopGameTimer();
+            const rep = G.reps[G.idx];
+            G.cur = { q: null, started: false, ended: false, correct: null, left: 0, stuck: 0, answerShown: false };
+            el('r-dept').innerText = rep.dept;
+            el('r-rep').innerText = rep.name;
+            el('r-hand').innerText = G.hands[G.idx].name;
+            el('round-steps').innerHTML = G.reps.map((r, i) => '<span class="' + (i < G.idx ? 'done' : i === G.idx ? 'now' : '') + '"></span>').join('');
+            el('r-qbox').classList.add('hidden');
+            el('g-ring').classList.add('hidden');
+            el('r-result').classList.add('hidden');
+            el('r-stuck').classList.add('hidden');
+            showGameView('round');
+            renderRoundActions();
+        }
+
+        function renderRoundActions() {
+            const c = G.cur;
+            const box = el('r-actions');
+            const last = G.idx >= G.reps.length - 1;
+            let html = '';
+            if (!c.q) {
+                html = '<button class="primary" data-quiet onclick="pickQuestion()" style="font-size:1.3rem;padding:18px;"><i class="fas fa-dice"></i> สุ่มคำถาม</button>';
+            } else if (!c.started) {
+                html = '<button class="outline" data-quiet onclick="pickQuestion()"><i class="fas fa-rotate"></i> เปลี่ยนคำถาม</button>' +
+                       '<button class="gold" data-quiet onclick="startAnswerTimer()" style="font-size:1.3rem;padding:18px;"><i class="fas fa-stopwatch"></i> เริ่มจับเวลา ' + getGameSettings().answerSec + ' วิ</button>';
+            } else if (!c.ended) {
+                html = '<button class="primary" data-quiet onclick="answeredCorrect()" style="font-size:1.4rem;padding:20px;background:linear-gradient(135deg,#2ecc71,#27ae60);"><i class="fas fa-check"></i> ตอบได้แล้ว! (หยุดเวลา)</button>';
+            } else {
+                html = '<button class="primary" data-quiet onclick="nextRound()" style="font-size:1.2rem;padding:18px;">' +
+                       (last ? '<i class="fas fa-music"></i> ไปช่วงเต้นสลัดโพสต์อิท' : '<i class="fas fa-forward"></i> ตัวแทนคนต่อไป') + '</button>';
+            }
+            box.innerHTML = html;
+        }
+
+        let pickingQ = false;
+        window.pickQuestion = function () {
+            if (pickingQ || !G || G.cur.started) return;
+            const all = getGameQuestions();
+            if (!all.length) { alert("⚠️ ไม่มีคำถามในคลัง"); return; }
+            let pool = all.filter(x => !G.used.has(x.key));
+            if (!pool.length) { G.used.clear(); pool = all; } // ใช้ครบแล้ว วนใหม่
+            const chosen = pool[Math.floor(Math.random() * pool.length)];
+            pickingQ = true;
+            const box = el('r-qbox');
+            box.classList.remove('hidden');
+            el('r-ans').classList.add('hidden');
+            el('r-ans-toggle').innerText = '👁 แสดงเฉลย';
+            let n = 0;
+            const iv = setInterval(() => { // วนข้อความให้ลุ้นก่อนเฉลยคำถาม
+                const t = all[Math.floor(Math.random() * all.length)];
+                el('r-qtext').innerText = t.q;
+                el('r-qbadge').className = 'q-badge ' + t.level;
+                el('r-qbadge').innerText = t.level === 'hard' ? '🔴 ยาก' : '🟢 ง่าย';
+                playSound('click');
+                if (++n >= 10) {
+                    clearInterval(iv);
+                    pickingQ = false;
+                    G.used.add(chosen.key);
+                    G.cur.q = chosen;
+                    el('r-qtext').innerText = chosen.q;
+                    el('r-qbadge').className = 'q-badge ' + chosen.level;
+                    el('r-qbadge').innerText = chosen.level === 'hard' ? '🔴 คำถามยาก' : '🟢 คำถามง่าย';
+                    el('r-ans').innerText = chosen.a;
+                    playSound('reveal');
+                    renderRoundActions();
+                }
+            }, 110);
+            el('r-actions').innerHTML = '';
+        };
+
+        window.toggleAnswer = function () {
+            const a = el('r-ans');
+            const show = a.classList.contains('hidden');
+            a.classList.toggle('hidden', !show);
+            el('r-ans-toggle').innerText = show ? '🙈 ซ่อนเฉลย' : '👁 แสดงเฉลย';
+        };
+
+        window.startAnswerTimer = function () {
+            const c = G.cur;
+            if (!c.q || c.started) return;
+            const total = getGameSettings().answerSec;
+            c.started = true;
+            el('g-ring').classList.remove('hidden');
+            playSound('drumroll');
+            renderRoundActions();
+            runTimer(total, left => { c.left = left; setRing('g', left, total); }, () => endRound(false));
+        };
+
+        window.answeredCorrect = function () {
+            if (!G.cur.started || G.cur.ended) return;
+            stopGameTimer();
+            endRound(true);
+        };
+
+        function endRound(correct) {
+            const c = G.cur;
+            if (c.ended) return;
+            stopSound('drumroll', 0.2);
+            c.ended = true;
+            c.correct = correct;
+            el('g-ring').classList.remove('warn');
+            const used = getGameSettings().answerSec - c.left;
+            const res = el('r-result');
+            res.className = 'r-result ' + (correct ? 'ok' : 'no');
+            res.innerText = correct ? '✅ ตอบได้! ใช้เวลา ' + used.toFixed(1) + ' วินาที' : '⏰ หมดเวลา! ตอบไม่ทัน';
+            res.classList.remove('hidden');
+            el('r-ans').classList.remove('hidden'); // เฉลยให้ทุกคนเห็นตอนจบรอบ
+            el('r-ans-toggle').innerText = '🙈 ซ่อนเฉลย';
+            el('r-stuck-n').innerText = c.stuck;
+            el('r-stuck').classList.remove('hidden');
+            if (correct) { playSound('winning'); createConfetti(); } else { playSound('reveal'); }
+            renderRoundActions();
+        }
+
+        window.stepStuck = function (d) {
+            if (!G || !G.cur) return;
+            G.cur.stuck = Math.max(0, Math.min(99, G.cur.stuck + d));
+            el('r-stuck-n').innerText = G.cur.stuck;
+        };
+
+        window.nextRound = function () {
+            const rep = G.reps[G.idx];
+            rep.stuck = G.cur.stuck;
+            rep.remain = G.cur.stuck;
+            rep.result = { q: G.cur.q, correct: G.cur.correct, left: G.cur.left };
+            if (G.idx >= G.reps.length - 1) { startDancePhase(); return; }
+            G.idx++;
+            startRound();
+        };
+
+        // ---------- ช่วงเต้น ----------
+        function renderDanceGrid(editable) {
+            el('dance-grid').innerHTML = G.reps.map((r, i) => `
+                <div class="dance-card">
+                    <div class="nm">${esc(r.name)}</div>
+                    <div class="st">${esc(r.dept)} · ติดไว้ ${r.stuck} แผ่น</div>
+                    ${editable ? `
+                    <div class="st" style="color:#555;font-weight:600;">เหลือติดตัวกี่แผ่น?</div>
+                    <span class="stepper">
+                        <button onclick="stepRemain(${i}, -1)">−</button>
+                        <span class="n" id="remain-${i}">${r.remain}</span>
+                        <button onclick="stepRemain(${i}, 1)">+</button>
+                    </span>` : '<div style="font-size:2rem;">🟨 ×' + r.stuck + '</div>'}
+                </div>`).join('');
+        }
+
+        function startDancePhase() {
+            stopGameTimer();
+            const st = getGameSettings();
+            el('d-hint').innerText = 'เปิดเพลงแล้วให้ทุกคนเต้นแรง ๆ เพื่อสลัดโพสต์อิทออกจากตัว (' + st.danceSec + ' วินาที)';
+            setRing('d', st.danceSec, st.danceSec);
+            el('d-finish').classList.add('hidden');
+            renderDanceGrid(false);
+            renderDanceActions('ready');
+            showGameView('dance');
+        }
+
+        function renderDanceActions(state) {
+            const box = el('d-actions');
+            if (state === 'ready') {
+                box.innerHTML = '<button class="primary" data-quiet onclick="startDance()" style="font-size:1.5rem;padding:22px;background:linear-gradient(135deg,#f093fb,#f5576c);"><i class="fas fa-play"></i> เปิดเพลงเต้น!</button>';
+            } else if (state === 'playing') {
+                box.innerHTML = '<button class="outline" data-quiet onclick="stopDanceNow()"><i class="fas fa-stop"></i> หยุดเพลงก่อนเวลา</button>';
+            } else {
+                box.innerHTML = '<button class="outline" data-quiet onclick="startDance()"><i class="fas fa-rotate"></i> เต้นอีกรอบ</button>';
+            }
+        }
+
+        window.startDance = function () {
+            const st = getGameSettings();
+            G.reps.forEach(r => { r.remain = r.stuck; });
+            el('d-finish').classList.add('hidden');
+            renderDanceGrid(false);
+            renderDanceActions('playing');
+            startDanceMusic();
+            runTimer(st.danceSec, left => setRing('d', left, st.danceSec), () => endDance());
+        };
+
+        window.stopDanceNow = function () {
+            stopGameTimer();
+            endDance();
+        };
+
+        function endDance() {
+            stopDanceMusic(0.8);
+            el('d-ring').classList.remove('warn');
+            setRing('d', 0, getGameSettings().danceSec);
+            el('d-ring-num').innerText = '0';
+            playSound('reveal');
+            renderDanceGrid(true);
+            renderDanceActions('done');
+            el('d-hint').innerText = '⏹ หมดเวลาเต้น! นับโพสต์อิทที่ยังเหลือติดตัวของแต่ละคน แล้วกดปุ่มเพื่อกรอก';
+            el('d-finish').classList.remove('hidden');
+        }
+
+        window.stepRemain = function (i, d) {
+            const r = G.reps[i];
+            r.remain = Math.max(0, Math.min(r.stuck, (r.remain == null ? r.stuck : r.remain) + d));
+            el('remain-' + i).innerText = r.remain;
+        };
+
+        // ---------- ผู้ชนะ ----------
+        window.finishGame = function () {
+            const sorted = G.reps.slice().sort((a, b) => a.remain - b.remain);
+            const best = sorted[0].remain;
+            const winners = sorted.filter(r => r.remain === best);
+            const wBox = el('final-winner');
+            wBox.innerHTML = '<div class="final-winner"><div class="trophy">🏆</div>' +
+                '<div>' + (winners.length > 1 ? 'เสมอกัน! ผู้ชนะ ' + winners.length + ' คน' : 'ผู้ชนะ') + ' · เหลือโพสต์อิทน้อยสุด ' + best + ' แผ่น</div>' +
+                winners.map(w => '<div class="wn">' + esc(w.name) + '</div><div>' + esc(w.dept) + '</div>').join('') + '</div>';
+            el('final-table').innerHTML = '<tr><th>อันดับ</th><th>ตัวแทน</th><th>ฝ่ายงาน</th><th>คำถาม</th><th>ติดไว้</th><th>เหลือ</th><th>สลัดออก</th></tr>' +
+                sorted.map(r => {
+                    const rank = 1 + sorted.filter(x => x.remain < r.remain).length;
+                    const qr = r.result ? (r.result.correct ? '✅' : '⏰') : '-';
+                    return '<tr class="' + (r.remain === best ? 'win' : '') + '"><td>' + rank + (rank === 1 ? ' 🥇' : '') + '</td><td>' + esc(r.name) +
+                        '</td><td>' + esc(r.dept) + '</td><td>' + qr + '</td><td>' + r.stuck + '</td><td>' + r.remain + '</td><td>' + (r.stuck - r.remain) + '</td></tr>';
+                }).join('');
+            showGameView('final');
+            playSound('winning');
+            createConfetti();
+            setTimeout(createConfetti, 900);
+        };
+
+        // ---------- เพลงเต้น ----------
+        function stopSynth() {
+            if (gSynth) {
+                clearInterval(gSynth.iv);
+                try { gSynth.master.gain.setTargetAtTime(0, gSynth.ctx.currentTime, 0.15); } catch (e) {}
+                const ctx = gSynth.ctx;
+                setTimeout(() => { try { ctx.close(); } catch (e) {} }, 600);
+                gSynth = null;
+            }
+        }
+
+        // จังหวะแดนซ์สังเคราะห์ (ใช้เมื่อไม่ได้ใส่ลิงก์เพลง หรือโหลดเพลงไม่ได้)
+        function startSynthBeat() {
+            stopSynth();
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return;
+            const ctx = new AC();
+            if (ctx.resume) ctx.resume();
+            const master = ctx.createGain();
+            master.gain.value = 0.9;
+            master.connect(ctx.destination);
+            const bpm = 128, eighth = 60 / bpm / 2;
+            const notes = [55, 55, 82.41, 73.42];
+            const kick = t => {
+                const o = ctx.createOscillator(), g = ctx.createGain();
+                o.frequency.setValueAtTime(150, t);
+                o.frequency.exponentialRampToValueAtTime(45, t + 0.12);
+                g.gain.setValueAtTime(1, t);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 0.28);
+                o.connect(g); g.connect(master); o.start(t); o.stop(t + 0.3);
+            };
+            const hat = (t, len) => {
+                const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * len), ctx.sampleRate);
+                const d = buf.getChannelData(0);
+                for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+                const s = ctx.createBufferSource(); s.buffer = buf;
+                const f = ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = 7000;
+                const g = ctx.createGain(); g.gain.value = 0.4;
+                s.connect(f); f.connect(g); g.connect(master); s.start(t);
+            };
+            const bass = (t, freq) => {
+                const o = ctx.createOscillator(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+                o.type = 'sawtooth'; o.frequency.value = freq;
+                f.type = 'lowpass'; f.frequency.value = 600;
+                g.gain.setValueAtTime(0.35, t);
+                g.gain.exponentialRampToValueAtTime(0.001, t + eighth * 0.95);
+                o.connect(f); f.connect(g); g.connect(master); o.start(t); o.stop(t + eighth);
+            };
+            const clap = t => hat(t, 0.1);
+            let step = 0, next = ctx.currentTime + 0.05;
+            const sched = () => {
+                while (next < ctx.currentTime + 0.25) {
+                    const s = step % 8;
+                    if (s % 2 === 0) { kick(next); if (s === 2 || s === 6) clap(next); }
+                    else { hat(next, 0.1); bass(next, notes[Math.floor(step / 8) % 4] * 2); }
+                    next += eighth; step++;
+                }
+            };
+            sched();
+            gSynth = { ctx: ctx, master: master, iv: setInterval(sched, 60) };
+        }
+
+        function setMusicStatus(msg) { const s = el('gs-music-status'); if (s) s.innerText = msg; }
+
+        function startDanceMusic() {
+            stopDanceMusic(0);
+            const st = getGameSettings();
+            if (!st.musicUrl) { startSynthBeat(); return; }
+            const a = new Audio();
+            a.preload = 'auto';
+            a.src = normalizeMusicUrl(st.musicUrl);
+            a.volume = 1;
+            gDanceAudio = a;
+            const fallback = msg => {
+                if (gDanceAudio !== a) return;
+                gDanceAudio = null;
+                setMusicStatus(msg);
+                startSynthBeat();
+            };
+            a.addEventListener('error', () => fallback('⚠️ เปิดเพลงจากลิงก์ไม่ได้ ใช้จังหวะสำรองแทน (ลิงก์ต้องเป็นไฟล์เสียงตรง ๆ เช่น .mp3)'));
+            const go = () => {
+                try { if (st.musicStart) a.currentTime = st.musicStart; } catch (e) {}
+                a.play().catch(() => fallback('⚠️ เบราว์เซอร์เล่นเพลงจากลิงก์ไม่ได้ ใช้จังหวะสำรองแทน'));
+            };
+            if (a.readyState >= 1) go(); else a.addEventListener('loadedmetadata', go, { once: true });
+        }
+
+        function stopDanceMusic(fade) {
+            const a = gDanceAudio;
+            gDanceAudio = null;
+            if (a) {
+                if (fade > 0) {
+                    let v = a.volume;
+                    const iv = setInterval(() => {
+                        v -= 0.1;
+                        if (v <= 0) { clearInterval(iv); a.pause(); } else a.volume = v;
+                    }, fade * 100);
+                } else a.pause();
+            }
+            stopSynth();
+        }
+
+        function stopPreview() {
+            if (previewTimer) { clearTimeout(previewTimer); previewTimer = null; }
+            stopDanceMusic(0.3);
+            const b = el('gs-preview-btn');
+            if (b) b.innerHTML = '<i class="fas fa-headphones"></i> ทดลองเปิดเพลง';
+        }
+
+        window.previewMusic = function () {
+            if (previewTimer) { stopPreview(); return; }
+            saveGameSettings();
+            // ใช้ค่าที่เพิ่งกรอก (ฐานข้อมูลอาจยังไม่ตอบกลับ) จึงอัปเดตในเครื่องก่อน
+            profileData.game = profileData.game || {};
+            profileData.game.settings = Object.assign({}, profileData.game.settings, {
+                musicUrl: normalizeMusicUrl(el('gs-music-url').value),
+                musicStart: parseInt(el('gs-music-start').value, 10) || 0
+            });
+            setMusicStatus('🎧 กำลังเปิดเพลงทดลอง 10 วินาที...');
+            startDanceMusic();
+            el('gs-preview-btn').innerHTML = '<i class="fas fa-stop"></i> หยุดทดลอง';
+            previewTimer = setTimeout(() => { stopPreview(); setMusicStatus('รองรับลิงก์ Google Drive / Dropbox / GitHub ที่แชร์ไว้ ถ้าเปิดไม่ได้ ระบบจะใช้จังหวะสำรองให้อัตโนมัติ'); }, 10000);
         };
 
         // =====================================================================
