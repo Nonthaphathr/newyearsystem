@@ -1662,6 +1662,7 @@
                                 <input type="number" id="gs-music-start" min="0" onchange="saveGameSettings()">
                             </div>
                         </div>
+                        <label class="lbl" style="display:flex;align-items:center;gap:10px;cursor:pointer;"><input type="checkbox" id="gs-show-ans" style="width:22px;height:22px;margin:0;flex:none;" onchange="saveGameSettings()"> แสดงเฉลยบนจอเครื่องหลัก (ปิดไว้ = ซ่อน เหมาะกับจอฉาย ดูเฉลยผ่าน QR ตรวจเฉลย)</label>
                         <label class="lbl" for="gs-hands">จำนวนมือติดโพสต์อิทต่อตัวแทน (คน)</label>
                         <input type="number" id="gs-hands" min="1" max="6" onchange="saveGameSettings()">
                         <p class="hint-s">ตัวแทนสุ่มจากฝ่ายที่กำหนดไว้ในรายชื่อห้อง คนละฝ่าย ถ้าตั้งจำนวนตัวแทนมากกว่าจำนวนฝ่าย ระบบจะใช้เท่าจำนวนฝ่าย</p>
@@ -1711,7 +1712,7 @@
                 <div id="r-qbox" class="q-card hidden">
                     <span class="q-badge" id="r-qbadge"></span>
                     <div class="q-text" id="r-qtext"></div>
-                    <div class="a-box">
+                    <div class="a-box hidden" id="r-abox">
                         <button class="link-btn" id="r-ans-toggle" onclick="toggleAnswer()">👁 แสดงเฉลย</button>
                         <div class="a-text hidden" id="r-ans"></div>
                     </div>
@@ -3634,6 +3635,7 @@
             return {
                 reps: num(s.reps, 4, 2, 8),
                 hands: num(s.hands, 4, 1, 6),
+                showAns: s.showAns === true,
                 answerSec: num(s.answerSec, 20, 5, 120),
                 danceSec: num(s.danceSec, 20, 5, 300),
                 musicStart: num(s.musicStart, 0, 0, 3600),
@@ -3681,6 +3683,7 @@
 
             setIfIdle('gs-reps', st.reps);
             setIfIdle('gs-hands', st.hands);
+            if (document.activeElement !== el('gs-show-ans')) el('gs-show-ans').checked = st.showAns;
             document.querySelectorAll('.gs-hands-t').forEach(n => { n.innerText = st.hands; });
             setIfIdle('gs-answer-sec', st.answerSec);
             setIfIdle('gs-dance-sec', st.danceSec);
@@ -3699,6 +3702,7 @@
             update(ref(db, gameBase() + '/settings'), {
                 reps: Math.min(8, Math.max(2, num('gs-reps', 4))),
                 hands: Math.min(6, Math.max(1, num('gs-hands', 4))),
+                showAns: el('gs-show-ans').checked,
                 answerSec: Math.min(120, Math.max(5, num('gs-answer-sec', 20))),
                 danceSec: Math.min(300, Math.max(5, num('gs-dance-sec', 20))),
                 musicStart: Math.max(0, num('gs-music-start', 0)),
@@ -4025,7 +4029,10 @@
                     el('r-qtext').innerText = chosen.q;
                     el('r-qbadge').className = 'q-badge ' + chosen.level;
                     el('r-qbadge').innerText = chosen.level === 'hard' ? '🔴 คำถามยาก' : '🟢 คำถามง่าย';
-                    el('r-ans').innerText = chosen.a;
+                    // เฉลยไม่ขึ้นจอหลัก (จอฉาย) ถ้าไม่ได้เปิดตัวเลือก ผู้ตรวจดูเฉลยผ่าน QR ตรวจเฉลยแทน
+                    const showAns = getGameSettings().showAns;
+                    el('r-abox').classList.toggle('hidden', !showAns);
+                    el('r-ans').innerText = showAns ? chosen.a : '';
                     playSound('reveal');
                     renderRoundActions();
                     liveRound('ready');
@@ -4071,8 +4078,10 @@
             res.className = 'r-result ' + (correct ? 'ok' : 'no');
             res.innerText = correct ? '✅ ตอบได้! ใช้เวลา ' + used.toFixed(1) + ' วินาที' : '⏰ หมดเวลา! ตอบไม่ทัน';
             res.classList.remove('hidden');
-            el('r-ans').classList.remove('hidden'); // เฉลยให้ทุกคนเห็นตอนจบรอบ
-            el('r-ans-toggle').innerText = '🙈 ซ่อนเฉลย';
+            if (getGameSettings().showAns) { // เฉลยตอนจบรอบ เฉพาะเมื่อเปิดตัวเลือกแสดงเฉลยบนจอ
+                el('r-ans').classList.remove('hidden');
+                el('r-ans-toggle').innerText = '🙈 ซ่อนเฉลย';
+            }
             el('r-stuck-n').innerText = c.stuck;
             el('r-stuck').classList.remove('hidden');
             if (correct) { playSound('winning'); createConfetti(); } else { playSound('reveal'); }
